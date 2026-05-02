@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slimydotcom &#x2014; Singapore's First Borax Free Slime Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+:root{--mint:#00e5b0;--bubblegum:#ff6eb4;--lavender:#c67eff;--lemon:#ffe84d;--sky:#5cdfff;--bg:#fdf4ff;--text:#1a0a2e;--muted:#7e6a96;--badge:#ff3e6c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 700px 500px at 0% 10%,#c67eff1a,transparent),radial-gradient(ellipse 600px 400px at 100% 0%,#5cdfff1a,transparent),radial-gradient(ellipse 600px 500px at 100% 100%,#ff6eb41a,transparent),radial-gradient(ellipse 500px 400px at 0% 100%,#00e5b01a,transparent)}
+header{position:sticky;top:0;z-index:100;background:rgba(253,244,255,.95);backdrop-filter:blur(22px);border-bottom:3px solid #e8d6ff;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo{display:flex;flex-direction:column;line-height:1.1}
+.logo-name{font-family:'Fredoka One',cursive;font-size:1.75rem;background:linear-gradient(135deg,var(--bubblegum),var(--lavender),var(--sky));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-tagline{font-size:.58rem;font-weight:800;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;margin-top:1px}
+.header-right{display:flex;align-items:center;gap:9px}
+.sg-badge{background:linear-gradient(135deg,#e6001a 50%,#fff 50%);color:#fff;font-weight:800;font-size:.66rem;padding:5px 10px;border-radius:20px}
+
+.cart-btn{background:linear-gradient(135deg,var(--bubblegum),var(--lavender));border:none;border-radius:50px;padding:9px 20px;color:#fff;font-family:'Quicksand',sans-serif;font-weight:800;font-size:.92rem;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 18px #ff6eb455;transition:transform .15s,box-shadow .15s}
+.cart-btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px #ff6eb466}
+.cart-count{background:var(--badge);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900}
+.cart-count.bump{animation:bump .35s cubic-bezier(.36,2,.2,1)}
+@keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.7)}100%{transform:scale(1)}}
+.hero{position:relative;z-index:1;text-align:center;padding:52px 24px 32px}
+.hero-eye{display:inline-block;background:linear-gradient(135deg,#ff6eb422,#c67eff22);border:1.5px solid #e8d6ff;border-radius:30px;padding:5px 18px;font-size:.74rem;font-weight:800;color:var(--lavender);letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(1.9rem,5vw,3.6rem);line-height:1.05;background:linear-gradient(135deg,#ff6eb4,#c67eff,#5cdfff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+.hero p{color:var(--muted);font-size:1rem;font-weight:700;margin-bottom:4px}
+.borax-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#e8fff8,#f0fff4);border:2px solid var(--mint);border-radius:30px;padding:6px 18px;font-size:.82rem;font-weight:800;color:#006650;margin-top:10px}
+.drip-row{display:flex;justify-content:center;gap:7px;margin-top:16px;flex-wrap:wrap}
+.drip{display:inline-block;padding:5px 13px;border-radius:30px;font-weight:800;font-size:.77rem;animation:float 3s ease-in-out infinite}
+.drip:nth-child(1){background:var(--mint);color:#005a45}
+.drip:nth-child(2){background:var(--bubblegum);color:#7a003d;animation-delay:.3s}
+.drip:nth-child(3){background:var(--lemon);color:#6b5900;animation-delay:.6s}
+.drip:nth-child(4){background:var(--lavender);color:#3d0077;animation-delay:.9s}
+.drip:nth-child(5){background:var(--sky);color:#004d6b;animation-delay:1.2s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.texture-row{position:relative;z-index:1;display:flex;justify-content:center;gap:7px;flex-wrap:wrap;padding:14px 20px 0}
+.tex-pill{padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:800;border:1.5px solid;letter-spacing:.2px}
+.filter-bar{position:relative;z-index:1;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:16px 20px 12px}
+.filter-btn{padding:6px 16px;border-radius:30px;border:2px solid #e8d6ff;background:#fff;font-family:'Quicksand',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer;color:var(--muted);transition:all .15s}
+.filter-btn:hover{border-color:var(--lavender);color:var(--lavender)}
+.filter-btn.active{background:linear-gradient(135deg,#ffc8e8,#e8c0ff);color:#8b1a6b;border-color:#f0a8d8;box-shadow:0 3px 12px #ffc8e844;font-weight:700}
+.products-section{position:relative;z-index:1;padding:0 18px 80px;max-width:1320px;margin:0 auto}
+.section-title{font-family:'Fredoka One',cursive;font-size:1.85rem;margin-bottom:22px;text-align:center}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.product-card{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 4px 20px rgba(100,50,180,.09);transition:transform .25s cubic-bezier(.2,.8,.4,1),box-shadow .25s;border:2px solid transparent;display:flex;flex-direction:column;cursor:pointer}
+.product-card:hover{transform:translateY(-10px) scale(1.015);box-shadow:0 24px 55px rgba(100,50,180,.2);border-color:var(--lavender)}
+.slime-art{position:relative;overflow:visible!important;background:linear-gradient(135deg,#fdf0ff,#f0f8ff);}
+.slime-art svg{overflow:visible;width:100%;height:100%;display:block}
+.card-badges{position:absolute;top:9px;left:9px;display:flex;flex-direction:column;gap:4px;z-index:5}
+.cbadge{font-size:.61rem;font-weight:900;padding:3px 8px;border-radius:20px;letter-spacing:.3px;text-transform:uppercase;backdrop-filter:blur(4px)}
+.cbadge-sc{background:rgba(255,110,180,.9);color:#fff}
+.quick-overlay{display:none!important}
+.product-info{padding:12px 14px 14px;flex:1;display:flex;flex-direction:column}
+.product-name{font-weight:900;font-size:.97rem;margin-bottom:4px;line-height:1.25}
+.product-desc{color:var(--muted);font-size:.75rem;line-height:1.5;margin-bottom:auto;padding-bottom:10px}
+.product-footer{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.product-price{font-family:'Fredoka One',cursive;font-size:1.3rem}
+.add-btn{background:linear-gradient(135deg,#b8f0e0,#a8e8ff);border:2px solid #80d8c8;border-radius:24px;padding:7px 14px;color:#006650;font-family:'Quicksand',sans-serif;font-weight:700;font-size:.75rem;cursor:pointer;transition:transform .18s,box-shadow .18s,background .18s;box-shadow:0 3px 12px #00e5b022;white-space:nowrap;letter-spacing:.2px}
+.add-btn:hover{transform:scale(1.06);box-shadow:0 6px 18px #00e5b055;background:linear-gradient(135deg,#a0e8d4,#90d8ff)}
+.add-btn.added{background:linear-gradient(135deg,#ffc8e8,#e8c0ff);border-color:#f0a8d8;color:#8b1a6b;box-shadow:0 3px 12px #ff6eb422}
+.size-row{display:flex;gap:7px;margin:8px 0 5px}
+.sz-btn{flex:1;padding:7px 4px;border-radius:20px;border:2px solid #e8d6ff;background:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:.72rem;cursor:pointer;color:var(--muted);transition:all .18s;line-height:1.3;text-align:center}
+.sz-btn:hover{border-color:var(--lavender);color:var(--lavender)}
+.sz-btn.active{background:linear-gradient(135deg,#ffc8e8,#e8c0ff);color:#8b1a6b;border-color:#f0a8d8;box-shadow:0 2px 8px #ff6eb422;font-weight:700}
+.cart-overlay{position:fixed;inset:0;background:rgba(26,10,46,.5);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(5px)}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-sidebar{position:fixed;top:0;right:0;height:100vh;width:min(420px,100vw);background:#fff;z-index:201;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.8,.4,1);box-shadow:-10px 0 50px rgba(100,50,180,.15)}
+.cart-sidebar.open{transform:translateX(0)}
+.cart-header{padding:18px 22px;border-bottom:2px solid #f0e6ff;display:flex;align-items:center;justify-content:space-between}
+.cart-header h2{font-family:'Fredoka One',cursive;font-size:1.45rem}
+.close-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);transition:transform .15s}
+.close-btn:hover{transform:rotate(90deg)}
+.cart-items{flex:1;overflow-y:auto;padding:14px 22px}
+.empty-cart{text-align:center;color:var(--muted);margin-top:60px}
+.empty-cart .emoji{font-size:4rem;display:block;margin-bottom:12px}
+.cart-item{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid #f5eeff}
+.cart-thumb{width:52px;height:52px;border-radius:10px;overflow:hidden;flex-shrink:0;background:#f5ecff}
+.cart-thumb svg{width:52px;height:52px;display:block}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-weight:800;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-price{color:var(--muted);font-size:.78rem;margin-top:2px}
+.cart-item-controls{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.qty-btn{width:26px;height:26px;border-radius:50%;border:2px solid #e8d6ff;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--text);font-size:.9rem;transition:background .15s}
+.qty-btn:hover{background:#f0e6ff;border-color:var(--lavender)}
+.qty-num{font-weight:800;min-width:18px;text-align:center;font-size:.88rem}
+.cart-footer{padding:16px 22px;border-top:2px solid #f0e6ff;background:#fdf4ff}
+.cart-subtotal{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.cart-subtotal span{color:var(--muted);font-weight:700}
+.cart-subtotal strong{font-family:'Fredoka One',cursive;font-size:1.4rem}
+.delivery-note{font-size:.72rem;color:var(--muted);margin-bottom:13px;line-height:1.5}
+.checkout-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--bubblegum),var(--lavender));border:none;border-radius:16px;color:#fff;font-family:'Fredoka One',cursive;font-size:1.15rem;cursor:pointer;box-shadow:0 6px 20px #ff6eb455;transition:transform .15s}
+.checkout-btn:hover{transform:translateY(-2px)}
+.checkout-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.modal-overlay{position:fixed;inset:0;background:rgba(26,10,46,.58);z-index:300;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(6px)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:#fff;border-radius:28px;width:100%;max-width:520px;padding:28px 30px;max-height:92vh;overflow-y:auto;transform:scale(.9) translateY(20px);transition:transform .3s cubic-bezier(.2,.8,.4,1);box-shadow:0 28px 70px rgba(100,50,180,.25)}
+.modal-overlay.open .modal{transform:scale(1) translateY(0)}
+.modal h2{font-family:'Fredoka One',cursive;font-size:1.65rem;margin-bottom:4px}
+.modal .subtitle{color:var(--muted);font-size:.86rem;margin-bottom:20px}
+.order-type-toggle{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.ot-btn{padding:13px 10px;border:2.5px solid #e8d6ff;border-radius:16px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;text-align:center;transition:all .18s}
+.ot-btn .ot-icon{font-size:1.55rem;display:block;margin-bottom:4px}
+.ot-btn .ot-title{font-weight:800;font-size:.9rem;color:var(--text);display:block}
+.ot-btn .ot-sub{font-size:.7rem;font-weight:700;color:var(--muted);display:block;margin-top:2px}
+.ot-btn.active{border-color:var(--lavender);background:#f5eeff}
+.ot-btn.active .ot-sub{color:var(--lavender)}
+.fsec{margin-bottom:16px}
+.fsec-title{font-weight:800;font-size:.75rem;text-transform:uppercase;letter-spacing:.6px;color:var(--lavender);margin-bottom:10px;padding-bottom:5px;border-bottom:1.5px dashed #e8d6ff}
+.frow{margin-bottom:11px}
+.frow label{display:block;font-weight:700;font-size:.77rem;margin-bottom:4px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.frow input,.frow select,.frow textarea{width:100%;padding:10px 13px;border:2px solid #e8d6ff;border-radius:12px;font-family:'Nunito',sans-serif;font-size:.92rem;color:var(--text);background:#fdf4ff;outline:none;transition:border-color .15s}
+.frow input:focus,.frow select:focus,.frow textarea:focus{border-color:var(--lavender)}
+.frow textarea{resize:vertical;min-height:68px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.card-fields{background:#f5eeff;border-radius:16px;padding:15px;margin-bottom:4px}
+.card-brand-row{display:flex;gap:8px;margin-bottom:12px}
+.cbrand{padding:5px 12px;border-radius:8px;font-weight:800;font-size:.78rem;border:1.5px solid #e0d0ff;background:#fff}
+.cbrand.visa{color:#1a1f71}.cbrand.amex{color:#007bc1}
+.card-num-wrap{position:relative}
+.card-num-wrap input{letter-spacing:2px}
+.card-chip{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:1.1rem;pointer-events:none}
+.collect-notice{background:linear-gradient(135deg,#e8fff8,#f0e8ff);border:2px solid var(--mint);border-radius:16px;padding:16px;text-align:center;margin-bottom:4px}
+.collect-notice .cn-icon{font-size:1.9rem;display:block;margin-bottom:6px}
+.collect-notice .cn-title{font-weight:800;font-size:.93rem;color:#006650;margin-bottom:6px}
+.collect-notice .cn-text{font-size:.8rem;color:var(--muted);line-height:1.55}
+.collect-notice .cn-addr{margin-top:10px;font-weight:800;font-size:.82rem;background:#fff;border-radius:10px;padding:7px 13px;display:inline-block}
+.ord-summary{background:#fdf4ff;border-radius:16px;padding:14px;margin-bottom:16px}
+.ord-summary h3{font-weight:800;font-size:.88rem;margin-bottom:10px}
+.s-row{display:flex;justify-content:space-between;font-size:.82rem;padding:3px 0;gap:8px}
+.s-row span:first-child{flex:1}
+.s-divider{border:none;border-top:2px dashed #e8d6ff;margin:8px 0}
+.s-total{font-weight:800;font-size:.96rem}
+.s-fee{font-size:.76rem;color:var(--muted)}
+.place-btn{width:100%;padding:14px;margin-top:4px;background:linear-gradient(135deg,var(--mint),#00c9f0);border:none;border-radius:16px;color:#004440;font-family:'Fredoka One',cursive;font-size:1.08rem;cursor:pointer;box-shadow:0 6px 20px #00e5b044;transition:transform .15s}
+.place-btn:hover{transform:translateY(-2px)}
+.place-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.cancel-btn{width:100%;padding:10px;margin-top:7px;background:none;border:2px solid #e8d6ff;border-radius:16px;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer}
+.cancel-btn:hover{border-color:var(--muted)}
+.success-wrap{text-align:center;padding:8px 0}
+.success-wrap .big-emoji{font-size:4.5rem;display:block;margin-bottom:12px;animation:pop .5s cubic-bezier(.36,2,.2,1)}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.success-wrap h2{font-family:'Fredoka One',cursive;font-size:1.8rem;margin-bottom:8px}
+.success-wrap p{color:var(--muted);line-height:1.6;margin-bottom:12px;font-size:.9rem}
+.order-id{background:#f0e6ff;border-radius:12px;padding:9px 20px;display:inline-block;font-family:'Fredoka One',cursive;font-size:1.15rem;color:var(--lavender);margin-bottom:12px;letter-spacing:1px}
+.pay-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#e8fff8,#e8f0ff);border:1.5px solid var(--mint);border-radius:10px;padding:6px 14px;font-size:.79rem;font-weight:800;color:#004440;margin-bottom:12px}
+.email-ok{font-size:.8rem;background:#e8fff8;border:1.5px solid var(--mint);border-radius:10px;padding:9px 13px;color:#006650;margin-bottom:12px;line-height:1.5}
+.email-demo{font-size:.74rem;background:#fff7e6;border:1.5px dashed var(--bubblegum);border-radius:10px;padding:9px 13px;color:#7a003d;margin-bottom:12px;line-height:1.5}
+.receipt-box{background:#f8f8f8;border-radius:14px;padding:13px;text-align:left;font-size:.8rem;margin-bottom:12px}
+.receipt-box .r-title{font-weight:800;font-size:.73rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:8px}
+.r-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted #e0e0e0;gap:8px}
+.r-row span:first-child{flex:1}
+.r-row:last-child{border:none;font-weight:800;font-size:.9rem;padding-top:7px}
+.back-btn{background:linear-gradient(135deg,var(--bubblegum),var(--lavender));border:none;border-radius:16px;padding:12px 28px;color:#fff;font-family:'Fredoka One',cursive;font-size:1.04rem;cursor:pointer;box-shadow:0 4px 16px #ff6eb444;transition:transform .15s}
+.back-btn:hover{transform:translateY(-2px)}
+.hide{display:none!important}
+footer{position:relative;z-index:1;text-align:center;padding:28px 24px;color:var(--muted);font-size:.81rem;font-weight:600;border-top:2px solid #f0e6ff}
+footer a{color:var(--lavender);text-decoration:none}
+.about-overlay{position:fixed;inset:0;z-index:400;background:var(--bg);overflow-y:auto;animation:fadeInPage .3s ease}
+@keyframes fadeInPage{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.about-header{background:rgba(253,244,255,.95);backdrop-filter:blur(20px);border-bottom:3px solid #e8d6ff;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:70px;position:sticky;top:0;z-index:10}
+.about-header .logo-name{font-family:'Fredoka One',cursive;font-size:1.6rem;background:linear-gradient(135deg,var(--bubblegum),var(--lavender),var(--sky));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.back-shop-btn{background:linear-gradient(135deg,var(--lavender),var(--bubblegum));border:none;border-radius:20px;padding:8px 18px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.82rem;color:#fff;cursor:pointer;transition:transform .15s;box-shadow:0 3px 12px #c67eff44}
+.back-shop-btn:hover{transform:translateY(-2px)}
+.about-hero{text-align:center;padding:60px 24px 40px;position:relative;z-index:1}
+.about-year-badge{display:inline-block;background:linear-gradient(135deg,var(--lemon),#ffb347);border-radius:30px;padding:6px 20px;font-weight:900;font-size:.8rem;color:#5a3000;margin-bottom:20px;letter-spacing:.5px}
+.about-hero h1{font-family:'Fredoka One',cursive;font-size:clamp(2rem,5vw,3.4rem);background:linear-gradient(135deg,var(--bubblegum),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px;line-height:1.1}
+.about-hero .tagline{font-size:1.1rem;font-weight:700;color:var(--muted);margin-bottom:6px}
+.founder-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:800px;margin:40px auto;padding:0 24px}
+.founder-card{background:#fff;border-radius:24px;padding:32px 28px;text-align:center;box-shadow:0 6px 30px rgba(100,50,180,.1);border:2px solid #f0e6ff;transition:transform .2s}
+.founder-card:hover{transform:translateY(-6px)}
+.founder-avatar{font-size:4.5rem;display:block;margin-bottom:16px}
+.founder-card h3{font-family:'Fredoka One',cursive;font-size:1.4rem;margin-bottom:6px;color:var(--text)}
+.founder-card .role{display:inline-block;background:linear-gradient(135deg,var(--bubblegum),var(--lavender));color:#fff;border-radius:20px;padding:4px 14px;font-size:.74rem;font-weight:800;margin-bottom:14px;letter-spacing:.3px}
+.founder-card p{color:var(--muted);font-size:.88rem;line-height:1.7}
+.story-section{max-width:760px;margin:0 auto;padding:0 24px 40px}
+.story-card{background:#fff;border-radius:24px;padding:36px;box-shadow:0 6px 30px rgba(100,50,180,.08);border:2px solid #f0e6ff;margin-bottom:24px}
+.story-card .story-num{font-family:'Fredoka One',cursive;font-size:3rem;color:var(--lavender);opacity:.3;line-height:1;margin-bottom:4px}
+.story-card h3{font-family:'Fredoka One',cursive;font-size:1.4rem;margin-bottom:12px;color:var(--text)}
+.story-card p{color:var(--muted);font-size:.92rem;line-height:1.8}
+.story-card p strong{color:var(--text)}
+.milestone-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;padding:0 24px 40px;max-width:760px;margin:0 auto}
+.milestone{background:#fff;border-radius:20px;padding:24px 20px;text-align:center;flex:1;min-width:160px;max-width:220px;box-shadow:0 4px 20px rgba(100,50,180,.08);border:2px solid #f0e6ff}
+.milestone .m-icon{font-size:2.2rem;display:block;margin-bottom:8px}
+.milestone .m-num{font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--lavender)}
+.milestone .m-label{font-size:.78rem;font-weight:700;color:var(--muted);margin-top:2px}
+.about-cta{text-align:center;padding:20px 24px 60px}
+.about-cta p{font-size:1rem;font-weight:700;color:var(--muted);margin-bottom:16px}
+.shop-now-btn{background:linear-gradient(135deg,var(--bubblegum),var(--lavender));border:none;border-radius:30px;padding:16px 40px;font-family:'Fredoka One',cursive;font-size:1.2rem;color:#fff;cursor:pointer;box-shadow:0 6px 24px #ff6eb455;transition:transform .15s}
+.shop-now-btn:hover{transform:translateY(-3px)}
+
+
+/* ICON-ONLY NAV BUTTONS */
+.icon-btn{
+  width:42px;height:42px;
+  border-radius:50%;
+  border:none;
+  background:rgba(255,255,255,0.55);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:0 2px 12px rgba(100,50,180,0.13);
+  cursor:pointer;
+  transition:transform .18s,background .18s,box-shadow .18s;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  padding:0;
+}
+.icon-btn:hover{
+  background:rgba(255,255,255,0.85);
+  transform:translateY(-3px) scale(1.08);
+  box-shadow:0 6px 20px rgba(100,50,180,0.22);
+}
+.icon-btn-emoji{
+  font-size:1.35rem;
+  line-height:1;
+  display:block;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,0.12));
+}
+/* Coloured glow ring on hover per button */
+.gift-btn:hover{box-shadow:0 6px 20px #ffc8e855,0 0 0 2px #ffc8e8;}
+.sub-btn:hover{box-shadow:0 6px 20px #b8f0e055,0 0 0 2px #b8f0e0;}
+.care-btn:hover{box-shadow:0 6px 20px #ffe8a055,0 0 0 2px #ffe8a0;}
+.about-ibtn:hover{box-shadow:0 6px 20px #e0d0ff55,0 0 0 2px #e0d0ff;}
+.asmr-btn:hover{box-shadow:0 6px 20px #a8e8ff55,0 0 0 2px #a8e8ff;}
+/* Tooltip */
+.icon-btn::after{
+  content:attr(title);
+  position:absolute;
+  bottom:-30px;left:50%;
+  transform:translateX(-50%);
+  background:rgba(26,10,46,0.82);
+  color:#fff;
+  font-family:'Quicksand',sans-serif;
+  font-size:.62rem;font-weight:700;
+  padding:3px 8px;border-radius:8px;
+  white-space:nowrap;
+  opacity:0;pointer-events:none;
+  transition:opacity .15s;
+  z-index:999;
+}
+.icon-btn:hover::after{opacity:1;}
+/* Shrink sg-badge text */
+.sg-badge{font-size:.7rem;padding:4px 8px;}
+
+
+/* OVERLAY PAGES (Gift Guide, Subscribe, Slime Care) */
+.page-overlay{position:fixed;inset:0;z-index:400;background:var(--bg);overflow-y:auto;animation:fadeInPage .3s ease}
+.page-header{background:rgba(253,244,255,.95);backdrop-filter:blur(20px);border-bottom:3px solid #e8d6ff;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:70px;position:sticky;top:0;z-index:10}
+.page-header .logo-name{font-family:'Fredoka One',cursive;font-size:1.5rem;background:linear-gradient(135deg,var(--bubblegum),var(--lavender),var(--sky));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.page-body{max-width:900px;margin:0 auto;padding:40px 24px 80px}
+.page-hero{text-align:center;margin-bottom:48px}
+.page-badge{display:inline-block;border-radius:30px;padding:6px 20px;font-weight:900;font-size:.8rem;margin-bottom:16px;letter-spacing:.5px}
+.page-hero h1{font-family:'Fredoka One',cursive;font-size:clamp(2rem,5vw,3.2rem);margin-bottom:10px;line-height:1.1}
+.page-hero p{color:var(--muted);font-size:1rem;font-weight:600}
+
+/* GIFT GUIDE */
+.texture-guide{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;margin-bottom:40px}
+.texture-card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 4px 20px rgba(100,50,180,.08);border:2px solid #f0e6ff;transition:transform .2s}
+.texture-card:hover{transform:translateY(-4px)}
+.texture-card .tc-icon{font-size:2.5rem;display:block;margin-bottom:10px}
+.texture-card h3{font-family:'Fredoka One',cursive;font-size:1.2rem;margin-bottom:6px}
+.texture-card p{color:var(--muted);font-size:.85rem;line-height:1.6}
+.texture-card .tc-best{margin-top:10px;font-size:.78rem;font-weight:800;color:var(--lavender);display:block}
+.gift-section-title{font-family:'Fredoka One',cursive;font-size:1.6rem;margin:36px 0 16px;color:var(--text);text-align:center}
+.gift-person-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:36px}
+.gift-person-card{background:#fff;border-radius:18px;padding:20px;text-align:center;box-shadow:0 4px 18px rgba(100,50,180,.08);border:2px solid #f0e6ff}
+.gift-person-card .gp-icon{font-size:2.2rem;display:block;margin-bottom:8px}
+.gift-person-card h4{font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:6px}
+.gift-person-card p{color:var(--muted);font-size:.78rem;line-height:1.5}
+.gift-cta{text-align:center;margin-top:40px;padding:32px;background:linear-gradient(135deg,#fdf0ff,#f0f8ff);border-radius:24px;border:2px solid #e8d6ff}
+.gift-cta h3{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:8px}
+.gift-cta p{color:var(--muted);margin-bottom:20px}
+
+/* SUBSCRIBE */
+.sub-plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin:32px 0}
+.sub-plan{background:#fff;border-radius:24px;padding:32px;box-shadow:0 6px 28px rgba(100,50,180,.1);border:2.5px solid #e8d6ff;position:relative;transition:transform .2s,box-shadow .2s}
+.sub-plan:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(100,50,180,.16)}
+.sub-plan.featured{border-color:var(--lavender);background:linear-gradient(135deg,#fdf0ff,#fff)}
+.sub-plan .plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--bubblegum),var(--lavender));color:#fff;border-radius:20px;padding:4px 18px;font-size:.75rem;font-weight:900;white-space:nowrap}
+.sub-plan .plan-icon{font-size:3rem;display:block;margin-bottom:12px;text-align:center}
+.sub-plan h3{font-family:'Fredoka One',cursive;font-size:1.6rem;text-align:center;margin-bottom:4px}
+.sub-plan .plan-price{font-family:'Fredoka One',cursive;font-size:2.2rem;color:var(--lavender);text-align:center;margin-bottom:4px}
+.sub-plan .plan-per{font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:20px}
+.sub-plan ul{list-style:none;margin-bottom:24px}
+.sub-plan ul li{padding:6px 0;font-size:.88rem;color:var(--muted);border-bottom:1px dashed #f0e6ff;display:flex;align-items:center;gap:8px}
+.sub-plan ul li::before{content:'&#x2705;';font-size:.8rem}
+.sub-cta-btn{width:100%;padding:14px;border:none;border-radius:16px;font-family:'Fredoka One',cursive;font-size:1.05rem;cursor:pointer;transition:transform .15s}
+.sub-cta-btn.primary{background:linear-gradient(135deg,var(--bubblegum),var(--lavender));color:#fff;box-shadow:0 4px 16px #ff6eb444}
+.sub-cta-btn.secondary{background:linear-gradient(135deg,var(--mint),#00c9f0);color:#004440;box-shadow:0 4px 16px #00e5b044}
+.sub-cta-btn:hover{transform:translateY(-2px)}
+.sub-perks{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:32px 0}
+.sub-perk{background:#fff;border-radius:16px;padding:16px 20px;text-align:center;flex:1;min-width:140px;border:1.5px solid #e8d6ff;box-shadow:0 2px 12px rgba(100,50,180,.07)}
+.sub-perk .sp-icon{font-size:1.8rem;display:block;margin-bottom:6px}
+.sub-perk p{font-size:.78rem;color:var(--muted);font-weight:700}
+.sub-form-wrap{background:#fff;border-radius:24px;padding:32px;box-shadow:0 4px 24px rgba(100,50,180,.09);border:2px solid #e8d6ff;margin-top:32px}
+.sub-form-wrap h3{font-family:'Fredoka One',cursive;font-size:1.4rem;margin-bottom:6px}
+.sub-form-wrap p{color:var(--muted);font-size:.85rem;margin-bottom:20px}
+
+/* SLIME CARE */
+.care-steps{display:flex;flex-direction:column;gap:20px;margin:24px 0}
+.care-step{background:#fff;border-radius:20px;padding:24px;box-shadow:0 4px 18px rgba(100,50,180,.08);border:2px solid #f0e6ff;display:flex;gap:20px;align-items:flex-start}
+.step-num{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--lavender);opacity:.35;min-width:44px;line-height:1}
+.step-content h3{font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:6px}
+.step-content p{color:var(--muted);font-size:.86rem;line-height:1.65}
+.step-content .tip{margin-top:8px;font-size:.78rem;font-weight:800;color:var(--mint);background:#e8fff8;border-radius:8px;padding:4px 10px;display:inline-block}
+.care-products{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin:32px 0}
+.care-product-card{background:#fff;border-radius:20px;padding:24px;text-align:center;box-shadow:0 4px 18px rgba(100,50,180,.08);border:2px solid #f0e6ff}
+.care-product-card .cp-icon{font-size:3rem;display:block;margin-bottom:12px}
+.care-product-card h3{font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:6px}
+.care-product-card p{color:var(--muted);font-size:.82rem;line-height:1.6}
+.care-product-card .cp-price{font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--lavender);margin-top:8px;display:block}
+.new-release-banner{background:linear-gradient(135deg,#ff9dd6,#c67eff);border-radius:20px;padding:28px;text-align:center;margin:32px 0;color:#fff}
+.new-release-banner h3{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:8px}
+.new-release-banner p{opacity:.9;font-size:.92rem;line-height:1.6}
+
+/* Real product photo display */
+.product-img-wrap{
+  position:relative;width:100%;aspect-ratio:1/1;
+  overflow:hidden;background:linear-gradient(135deg,#fdf0ff,#f0f8ff);
+  border-radius:0;
+}
+.product-img-wrap img.real-photo{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  transition:transform .35s cubic-bezier(.2,.8,.4,1),opacity .3s;
+  opacity:0;
+}
+.product-img-wrap img.real-photo.loaded{opacity:1;}
+.product-img-wrap img.real-photo:hover{transform:scale(1.04);}
+.product-img-wrap .svg-fallback{
+  position:absolute;inset:0;width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .3s;
+}
+.product-img-wrap .svg-fallback.hidden{opacity:0;pointer-events:none;}
+.slime-art.has-photo{background:transparent;}
+.product-card:hover .product-img-wrap img.real-photo.loaded{transform:scale(1.05);}
+/* Cart thumbnail real photo */
+.cart-thumb img.real-photo{
+  width:100%;height:100%;object-fit:cover;border-radius:10px;
+  opacity:0;transition:opacity .3s;position:absolute;inset:0;
+}
+.cart-thumb img.real-photo.loaded{opacity:1;}
+.cart-thumb{position:relative;}
+
+/* ASMR PAGE */
+.asmr-hero-badge{background:linear-gradient(135deg,#1a0a2e,#3d1470);color:#e8d0ff;}
+.asmr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin:28px 0;}
+.asmr-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(100,50,180,.1);border:2px solid #f0e6ff;transition:transform .2s,box-shadow .2s;}
+.asmr-card:hover{transform:translateY(-6px);box-shadow:0 14px 40px rgba(100,50,180,.18);}
+.asmr-thumb{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#1a0a2e,#3d1470);overflow:hidden;}
+.asmr-thumb iframe{width:100%;height:100%;border:none;display:block;}
+.asmr-thumb .asmr-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#e8d0ff;text-align:center;padding:20px;}
+.asmr-thumb .asmr-placeholder .ph-icon{font-size:3rem;margin-bottom:10px;opacity:.6;}
+.asmr-thumb .asmr-placeholder p{font-size:.82rem;opacity:.6;font-family:'Quicksand',sans-serif;}
+.asmr-info{padding:16px 18px 18px;}
+.asmr-info h3{font-family:'Fredoka One',cursive;font-size:1.05rem;margin-bottom:4px;color:var(--text);}
+.asmr-info p{font-size:.8rem;color:var(--muted);line-height:1.5;}
+.asmr-info .asmr-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.asmr-tag{padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;background:#f0e6ff;color:var(--lavender);border:1.5px solid #e0d0ff;}
+.asmr-coming-soon{text-align:center;padding:60px 24px;background:linear-gradient(135deg,#fdf0ff,#f0f8ff);border-radius:24px;border:2px dashed #e8d6ff;margin:20px 0;}
+.asmr-coming-soon .cs-icon{font-size:4rem;display:block;margin-bottom:16px;}
+.asmr-coming-soon h3{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:8px;color:var(--text);}
+.asmr-coming-soon p{color:var(--muted);max-width:440px;margin:0 auto;line-height:1.7;}
+.asmr-follow{background:linear-gradient(135deg,#1a0a2e,#3d1470);border-radius:24px;padding:36px;text-align:center;margin-top:32px;color:#fff;}
+.asmr-follow h3{font-family:'Fredoka One',cursive;font-size:1.7rem;margin-bottom:10px;}
+.asmr-follow p{opacity:.85;font-size:.95rem;line-height:1.65;max-width:500px;margin:0 auto 20px;}
+.asmr-follow-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#ff9dd6,#c67eff);border:none;border-radius:30px;padding:12px 28px;font-family:'Fredoka One',cursive;font-size:1rem;color:#fff;cursor:pointer;text-decoration:none;box-shadow:0 4px 16px rgba(198,126,255,.4);transition:transform .15s;}
+.asmr-follow-btn:hover{transform:translateY(-2px);}
+.asmr-filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.asmr-filter{padding:6px 16px;border-radius:30px;border:2px solid #e8d6ff;background:#fff;font-family:'Quicksand',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;color:var(--muted);transition:all .15s;}
+.asmr-filter:hover,.asmr-filter.active{background:linear-gradient(135deg,#1a0a2e,#3d1470);color:#e8d0ff;border-color:transparent;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-name">Slimydotcom &#x1FAE7;</span>
+    <span class="logo-tagline">Singapore's First Borax Free Slime Shop</span>
+  </div>
+  <div class="header-right">
+    <div class="sg-badge">&#x1F1F8;&#x1F1EC;</div>
+    <button class="icon-btn gift-btn" onclick="showPage('giftGuide')" title="Gift Guide">
+      <span class="icon-btn-emoji">&#x1F381;</span>
+    </button>
+    <button class="icon-btn sub-btn" onclick="showPage('subscribe')" title="Monthly Subscription">
+      <span class="icon-btn-emoji">&#x1FAE7;</span>
+    </button>
+    <button class="icon-btn care-btn" onclick="showPage('slimeCare')" title="Slime Care">
+      <span class="icon-btn-emoji">&#x1F9EA;</span>
+    </button>
+    <button class="icon-btn asmr-btn" onclick="showPage('asmrPage')" title="ASMR Videos">
+      <span class="icon-btn-emoji">&#x1F3A7;</span>
+    </button>
+    <button class="icon-btn about-ibtn" onclick="showAbout()" title="About Us">
+      <span class="icon-btn-emoji">&#x1F469;&#x200D;&#x1F4BC;</span>
+    </button>
+    <button class="cart-btn" onclick="openCart()">&#x1F6D2; <span class="cart-count" id="cartCount">0</span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-eye">&#x1F1F8;&#x1F1EC; Proudly Made in Singapore</div>
+  <h1>Slimydotcom &mdash;<br>Singapore's First Borax<br>Free Slime Shop &#x1FAE7;</h1>
+  <p>Every slime handmade with love, completely borax free &amp; safe for kids</p>
+  <div class="borax-badge">&#x2705; 100% Borax Free &middot; Safe for Kids &middot; Made in SG</div>
+  <div class="drip-row">
+    <span class="drip">&#x1F69A; Free delivery above S$40</span>
+    <span class="drip">&#x2728; Handmade locally</span>
+    <span class="drip">&#x1F381; Gift wrapping</span>
+    <span class="drip">&#x1F4B3; Visa / Amex</span>
+    <span class="drip">&#x1F4B5; Cash collection</span>
+  </div>
+</section>
+
+
+<div class="filter-bar">
+  <button class="filter-btn  active" onclick="filterProducts('all',this)">&#x2728; All</button>
+  <button class="filter-btn" onclick="filterProducts('glossy',this)">&#x1F48E; Glossy</button>
+  <button class="filter-btn" onclick="filterProducts('butter',this)">&#x1F9C8; Butter</button>
+  <button class="filter-btn" onclick="filterProducts('fluffy',this)">&#x2601;&#xFE0F; Fluffy</button>
+  <button class="filter-btn" onclick="filterProducts('ice',this)">&#x1F9CA; Ice</button>
+  <button class="filter-btn" onclick="filterProducts('crunch',this)">&#x1F37F; Crunchy</button>
+  <button class="filter-btn" onclick="filterProducts('extras',this)">&#x1F380; Extras</button>
+</div>
+
+<section class="products-section">
+  <h2 class="section-title" id="sectionTitle">All Products</h2>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header"><h2>&#x1F6D2; Your Cart</h2><button class="close-btn" onclick="closeCart()">&#x2715;</button></div>
+  <div class="cart-items" id="cartItems"><div class="empty-cart"><span class="emoji">&#x1FAE7;</span><p>Your cart is empty!<br>Add some slimes to get started.</p></div></div>
+  <div class="cart-footer">
+    <div class="cart-subtotal"><span>Subtotal</span><strong id="cartTotal">S$0.00</strong></div>
+    <p class="delivery-note">&#x1F69A; Free delivery above S$40 &middot; Standard S$4.50 &middot; Express S$9.00</p>
+    <button class="checkout-btn" id="checkoutBtn" onclick="openCheckout()" disabled>Checkout &rarr;</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal" id="modalContent">
+    <h2>&#x1F6CD;&#xFE0F; Checkout</h2>
+    <p class="subtitle">How would you like to receive your slimes?</p>
+    <div class="order-type-toggle">
+      <button class="ot-btn active" id="btn-delivery" onclick="setOrderType('delivery')"><span class="ot-icon">&#x1F69A;</span><span class="ot-title">Home Delivery</span><span class="ot-sub">Pay by Visa / Amex</span></button>
+      <button class="ot-btn" id="btn-collection" onclick="setOrderType('collection')"><span class="ot-icon">&#x1F3EA;</span><span class="ot-title">Self-Collection</span><span class="ot-sub">Pay by Cash</span></button>
+    </div>
+    <div class="fsec">
+      <div class="fsec-title">&#x1F4CB; Your Details</div>
+      <div class="fgrid">
+        <div class="frow"><label>First Name</label><input id="firstName" placeholder="Mei Ling"/></div>
+        <div class="frow"><label>Last Name</label><input id="lastName" placeholder="Tan"/></div>
+      </div>
+      <div class="frow"><label>WhatsApp / Phone</label><input type="tel" id="phone" placeholder="+65 9XXX XXXX"/></div>
+      <div class="frow"><label>Email &mdash; receipt will be sent here</label><input type="email" id="email" placeholder="you@example.com"/></div>
+    </div>
+    <div class="fsec" id="deliverySection">
+      <div class="fsec-title">&#x1F4CD; Delivery Address</div>
+      <div class="frow"><label>Street / Block</label><textarea id="address" placeholder="Block 123, Ang Mo Kio Ave 1, #04-56"></textarea></div>
+      <div class="frow"><label>Postal Code</label><input id="postal" placeholder="e.g. 560123" maxlength="6"/></div>
+      <div class="frow"><label>Delivery Speed</label>
+        <select id="deliverySpeed" onchange="updateSummary()">
+          <option value="standard">Standard (3-5 days) &mdash; S$4.50</option>
+          <option value="express">Express (Next day) &mdash; S$9.00</option>
+          <option value="free" id="freeOption" disabled>&#x1F389; Free Delivery (orders &ge; S$40)</option>
+        </select>
+      </div>
+    </div>
+    <div class="fsec hide" id="collectionSection">
+      <div class="fsec-title">&#x1F3EA; Collection Details</div>
+      <div class="collect-notice">
+        <span class="cn-icon">&#x1F4E6;</span>
+        <div class="cn-title">Collect directly from our owner</div>
+        <div class="cn-text">We will WhatsApp you to arrange a collection time. Payment is <strong>cash</strong> upon collection &mdash; no card needed!</div>
+        <div class="cn-addr">&#x1F4CD; Sengkang, Singapore<br><small style="font-weight:600;color:var(--muted)">Exact address shared via WhatsApp</small></div>
+      </div>
+    </div>
+    <div class="fsec" id="cardSection">
+      <div class="fsec-title">&#x1F4B3; Card Payment</div>
+      <div class="card-fields">
+        <div class="card-brand-row"><span class="cbrand visa">VISA</span><span class="cbrand amex">AMEX</span></div>
+        <div class="frow"><label>Name on Card</label><input id="cardName" placeholder="MEI LING TAN" style="text-transform:uppercase"/></div>
+        <div class="frow"><label>Card Number</label><div class="card-num-wrap"><input id="cardNumber" placeholder="1234  5678  9012  3456" maxlength="19" oninput="formatCard(this)"/><span class="card-chip">&#x1F4B3;</span></div></div>
+        <div class="fgrid">
+          <div class="frow"><label>Expiry (MM/YY)</label><input id="cardExpiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)"/></div>
+          <div class="frow"><label>CVV</label><input id="cardCvv" placeholder="123" maxlength="4" type="password"/></div>
+        </div>
+      </div>
+    </div>
+    <div class="ord-summary">
+      <h3>&#x1F9FE; Order Summary</h3>
+      <div id="summaryItems"></div>
+      <hr class="s-divider">
+      <div class="s-row s-fee"><span id="feeLbl">Delivery fee</span><span id="feeAmt">S$4.50</span></div>
+      <div class="s-row s-total"><span>Total</span><span id="grandTotal">S$0.00</span></div>
+    </div>
+    <button class="place-btn" id="placeOrderBtn" onclick="placeOrder()">&#x1FAE7; Place Order &amp; Send Receipt</button>
+    <button class="cancel-btn" onclick="closeCheckout()">Cancel</button>
+  </div>
+</div>
+
+<div id="aboutPage" class="about-overlay hide">
+  <div class="about-header">
+    <span class="logo-name">Slimydotcom &#x1FAE7;</span>
+    <button class="back-shop-btn" onclick="hideAbout()">&larr; Back to Shop</button>
+  </div>
+
+  <section class="about-hero">
+    <div class="about-year-badge">&#x2728; Est. 2024 &middot; Made in Singapore</div>
+    <h1>Meet the Team Behind the Slime</h1>
+    <p class="tagline">Three passionate young leaders. One big dream. Infinite slime. &#x1FAE7;</p>
+  </section>
+
+  <div class="founder-cards" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));max-width:920px">
+
+    <div class="founder-card" style="border-top:4px solid #ff9dd6;">
+      <span class="founder-avatar">&#x1FA70;</span>
+      <h3>W</h3>
+      <span class="role" style="background:linear-gradient(135deg,#ff9dd6,#c67eff)">Owner &amp; CEO</span>
+      <p style="margin-bottom:10px">The founder and CEO who started it all at just 10 years old. W turned her love for slime into Singapore&rsquo;s very first borax-free slime shop &mdash; proof that the biggest ideas can come from the smallest hands.</p>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.7">A dedicated <strong>ballet dancer</strong> with grace, discipline, and creativity to match. Off the stage, W channels that same passion into <strong>entrepreneurship</strong> &mdash; always dreaming up the next great slime.</p>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px">
+        <span style="background:#fff0f8;border:1.5px solid #ffc8e8;border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#8b1a6b">&#x1F9C1; Ballet Dancer</span>
+        <span style="background:#f0e8ff;border:1.5px solid #d0b8ff;border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6030a8">&#x1F4BC; Entrepreneur</span>
+        <span style="background:#fff5eb;border:1.5px solid #ffd0a0;border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#8b5000">&#x1F451; Founder &amp; CEO</span>
+      </div>
+    </div>
+
+    <div class="founder-card" style="border-top:4px solid #00e5b0;">
+      <span class="founder-avatar">&#x1FAE7;</span>
+      <h3>O</h3>
+      <span class="role" style="background:linear-gradient(135deg,#00e5b0,#00c9f0);color:#003a30">Owner, Founder &amp; Co-Founder</span>
+      <p style="margin-bottom:10px">W&rsquo;s favourite cousin and the creative soul behind Slimydotcom&rsquo;s most beloved recipes. O has a <strong>deep, genuine passion for slime</strong> &mdash; always experimenting, always perfecting.</p>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.7">If a slime feels absolutely perfect &mdash; silky smooth, the right stretch, the best scent &mdash; O had a hand in making it that way. Every batch is a labour of love.</p>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px">
+        <span style="background:#e8fff8;border:1.5px solid #90d8c8;border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#006650">&#x1FAE7; Slime Obsessed</span>
+        <span style="background:#fff0f8;border:1.5px solid #ffc8e8;border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#8b1a6b">&#x1F9EA; Head of R&amp;D</span>
+        <span style="background:#fffbe6;border:1.5px solid #ffd066;border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#906000">&#x1F91D; Founder &amp; Co-Founder</span>
+      </div>
+    </div>
+
+    <div class="founder-card" style="border-top:4px solid #c67eff;">
+      <span class="founder-avatar">&#x1F3C5;</span>
+      <h3>YJ</h3>
+      <span class="role" style="background:linear-gradient(135deg,#c67eff,#ff9dd6)">Co-CEO</span>
+      <p style="margin-bottom:10px">W&rsquo;s close friend and a key leader at Slimydotcom. YJ brings energy, precision, and a competitive spirit that keeps the team always moving forward.</p>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.7">A dedicated <strong>rhythmic gymnastics</strong> athlete &mdash; disciplined, expressive, and always reaching for excellence. YJ brings that same drive and flair to every aspect of the business.</p>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px">
+        <span style="background:#f5f0ff;border:1.5px solid #c8a8ff;border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#4400b0">&#x1F3C5; Rhythmic Gymnastics</span>
+        <span style="background:#fff0f8;border:1.5px solid #ffc8e8;border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#8b1a6b">&#x1F91D; Co-CEO</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="story-section">
+    <div class="story-card">
+      <div class="story-num">01</div>
+      <h3>The Spark &#x1F4A1;</h3>
+      <p>In 2024, <strong>W</strong> &mdash; a 10-year-old ballet dancer with an entrepreneurial spirit &mdash; decided to turn her love of slime into something real. Alongside her favourite cousin <strong>O</strong>, whose passion for slime runs deeper than anyone&rsquo;s, she started mixing, experimenting, and perfecting recipes in their kitchen until they found the formula that felt just right.</p>
+    </div>
+    <div class="story-card">
+      <div class="story-num">02</div>
+      <h3>Safety is Everything &#x1F33F;</h3>
+      <p>From day one, W had one rule that would never change: <strong>absolutely no borax.</strong> She wanted every slime to be completely safe for every child. After countless batches, many messy kitchens, and O&rsquo;s endless testing, they cracked a perfect borax-free formula &mdash; and Slimydotcom became <strong>Singapore&rsquo;s first borax-free slime shop</strong>.</p>
+    </div>
+    <div class="story-card">
+      <div class="story-num">03</div>
+      <h3>Stronger Together &#x1F31F;</h3>
+      <p>When W&rsquo;s close friend <strong>YJ</strong> joined as Co-CEO, Slimydotcom grew even stronger. Three young people &mdash; a ballet dancer, a slime enthusiast, and a rhythmic gymnastics athlete &mdash; all united by one shared dream: to bring beautiful, safe, handmade slime to Singapore and beyond. New releases drop every month. The best is always yet to come.</p>
+    </div>
+  </div>
+
+  <div class="milestone-row">
+    <div class="milestone"><span class="m-icon">&#x1FAE7;</span><div class="m-num">32+</div><div class="m-label">Unique Slimes</div></div>
+    <div class="milestone"><span class="m-icon">&#x1F1F8;&#x1F1EC;</span><div class="m-num">#1</div><div class="m-label">Borax Free in SG</div></div>
+    <div class="milestone"><span class="m-icon">&#x1F469;&#x200D;&#x1F467;</span><div class="m-num">3</div><div class="m-label">Young Leaders</div></div>
+    <div class="milestone"><span class="m-icon">&#x1F49C;</span><div class="m-num">2024</div><div class="m-label">Est. in Singapore</div></div>
+  </div>
+
+  <div class="about-cta">
+    <p>Ready to find your new favourite slime? &#x1FAE7;</p>
+    <button class="shop-now-btn" onclick="hideAbout()">Shop Slimes Now &rarr;</button>
+  </div>
+
+</div>
+
+<div id="giftGuide" class="page-overlay hide">
+  <div class="page-header">
+    <span class="logo-name">Slimydotcom &#x1FAE7;</span>
+    <button class="back-shop-btn" onclick="hidePage('giftGuide')">&larr; Back to Shop</button>
+  </div>
+  <div class="page-body">
+    <div class="page-hero">
+      <div class="page-badge" style="background:linear-gradient(135deg,#ff9dd6,#c67eff);color:#fff">&#x1F381; Gift Guide 2024</div>
+      <h1 style="background:linear-gradient(135deg,var(--bubblegum),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:'Fredoka One',cursive">The Ultimate Slime Gift Guide</h1>
+      <p>Not sure which slime to pick? We've got you covered! Find the perfect slime for every personality &#x1FAE7;</p>
+    </div>
+
+    <h2 class="gift-section-title">&#x1F48E; Know Your Textures</h2>
+    <div class="texture-guide">
+      <div class="texture-card">
+        <span class="tc-icon">&#x1F48E;</span>
+        <h3>Glossy &amp; Thick</h3>
+        <p>Super shiny, stretchy, and satisfying. Makes the best ASMR sounds. Great for beginners who love that classic slime look and feel.</p>
+        <span class="tc-best">Best for: Beginners &middot; ASMR lovers &middot; Ages 6+</span>
+      </div>
+      <div class="texture-card">
+        <span class="tc-icon">&#x1F9C8;</span>
+        <h3>Butter Slime</h3>
+        <p>Soft, spreadable, and oh-so-smooth. Feels like spreading butter on toast. Less sticky than glossy — great for extended play.</p>
+        <span class="tc-best">Best for: Stress relief &middot; Long play sessions &middot; Ages 5+</span>
+      </div>
+      <div class="texture-card">
+        <span class="tc-icon">&#x1FAE0;</span>
+        <h3>Melted Butter</h3>
+        <p>Extra drapey and flowing. When you hold it up, it melts beautifully like syrup. Mesmerising to watch and incredibly relaxing.</p>
+        <span class="tc-best">Best for: Satisfying videos &middot; Relaxation &middot; Ages 7+</span>
+      </div>
+      <div class="texture-card">
+        <span class="tc-icon">&#x2601;&#xFE0F;</span>
+        <h3>Fluff &amp; Cloud Dough</h3>
+        <p>Light, airy, and pillowy soft. Packed with foam beads for a unique squishy texture. The fluffiest slime experience you can get!</p>
+        <span class="tc-best">Best for: Sensory play &middot; Younger kids &middot; Ages 4+</span>
+      </div>
+      <div class="texture-card">
+        <span class="tc-icon">&#x1F37F;</span>
+        <h3>Crunch Slime</h3>
+        <p>Satisfying crunch with every squeeze! Foam balls or sprinkles give it texture. If you love ASMR sounds, this is your match.</p>
+        <span class="tc-best">Best for: ASMR &middot; Fidget lovers &middot; Ages 6+</span>
+      </div>
+      <div class="texture-card">
+        <span class="tc-icon">&#x1F9CA;</span>
+        <h3>Ice Texture</h3>
+        <p>Jelly-like, cool to the touch, and crystal clear. A completely unique texture — almost like squeezing ice-cold jello!</p>
+        <span class="tc-best">Best for: Unique gifts &middot; Tactile exploration &middot; Ages 6+</span>
+      </div>
+    </div>
+
+    <h2 class="gift-section-title">&#x1F469;&#x200D;&#x1F467; Who Are You Gifting?</h2>
+    <div class="gift-person-grid">
+      <div class="gift-person-card">
+        <span class="gp-icon">&#x1F476;</span>
+        <h4>The Little One (4&ndash;6)</h4>
+        <p>Go soft &amp; safe. Fluff or Cloud Dough is perfect for tiny hands. Bright colours, fun charms!</p>
+      </div>
+      <div class="gift-person-card">
+        <span class="gp-icon">&#x1F9D2;</span>
+        <h4>The Kid (7&ndash;12)</h4>
+        <p>They want it ALL. Crunch, glitter, butter — go wild! Rainbow Magic or Pink Fluffy Unicorn are crowd favourites.</p>
+      </div>
+      <div class="gift-person-card">
+        <span class="gp-icon">&#x1F9D1;</span>
+        <h4>The Teen</h4>
+        <p>Aesthetic is everything. Glossy slimes like Lily, Emerald, or Blackpink hit different. They'll love the ASMR vibes.</p>
+      </div>
+      <div class="gift-person-card">
+        <span class="gp-icon">&#x1F9D1;&#x200D;&#x1F4BC;</span>
+        <h4>The Stressed Adult</h4>
+        <p>Butter or Melted Butter for ultimate stress relief. Sweet Dreams or Just Butter are absolute favourites.</p>
+      </div>
+      <div class="gift-person-card">
+        <span class="gp-icon">&#x1F91D;</span>
+        <h4>Best Friends</h4>
+        <p>Get matching slimes! Blackpink for the duo. Or grab the Subscription box so you both get surprises every month!</p>
+      </div>
+      <div class="gift-person-card">
+        <span class="gp-icon">&#x1F4DA;</span>
+        <h4>The First-Timer</h4>
+        <p>Start with Glossy &amp; Thick. It's the classic, forgiving slime that everyone loves. Peachy Paradise is a great intro!</p>
+      </div>
+    </div>
+
+    <div class="gift-cta">
+      <h3>&#x1F381; Not Sure? Subscribe!</h3>
+      <p>Let us pick the best slimes for your loved one every month. Our Monthly Slime Box is the perfect gift that keeps on giving!</p>
+      <button class="sub-cta-btn primary" style="max-width:280px;margin:0 auto;display:block" onclick="hidePage('giftGuide');showPage('subscribe')">See Subscription Plans &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<div id="subscribe" class="page-overlay hide">
+  <div class="page-header">
+    <span class="logo-name">Slimydotcom &#x1FAE7;</span>
+    <button class="back-shop-btn" onclick="hidePage('subscribe')">&larr; Back to Shop</button>
+  </div>
+  <div class="page-body">
+    <div class="page-hero">
+      <div class="page-badge" style="background:linear-gradient(135deg,var(--mint),#00c9f0);color:#004440">&#x1FAE7; Monthly Slime Box</div>
+      <h1 style="background:linear-gradient(135deg,var(--mint),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:'Fredoka One',cursive">A New Slime Every Month!</h1>
+      <p>We curate our best-selling slimes so you don't have to worry. Just open, squish, and enjoy &#x1FAE7;</p>
+    </div>
+
+    <div class="sub-perks">
+      <div class="sub-perk"><span class="sp-icon">&#x1F381;</span><p>Handpicked by us every month</p></div>
+      <div class="sub-perk"><span class="sp-icon">&#x1FAE7;</span><p>200ml medium-sized slimes</p></div>
+      <div class="sub-perk"><span class="sp-icon">&#x2B50;</span><p>New releases &amp; bestsellers</p></div>
+      <div class="sub-perk"><span class="sp-icon">&#x1F69A;</span><p>Free local delivery</p></div>
+      <div class="sub-perk"><span class="sp-icon">&#x1F4B0;</span><p>Save vs buying individually</p></div>
+    </div>
+
+    <div class="sub-plans">
+      <div class="sub-plan">
+        <span class="plan-icon">&#x1FAE7;</span>
+        <h3>Starter Plan</h3>
+        <div class="plan-price">S$40<span style="font-size:.9rem">/mo</span></div>
+        <div class="plan-per">3-month minimum &middot; S$120 total</div>
+        <ul>
+          <li>1 handpicked 200ml slime per month</li>
+          <li>Mix of textures &amp; scents</li>
+          <li>Includes new releases</li>
+          <li>Free delivery to your door</li>
+          <li>Cancel after 3 months</li>
+        </ul>
+        <button class="sub-cta-btn secondary" onclick="showSubscribeForm('starter')">Choose Starter &rarr;</button>
+      </div>
+      <div class="sub-plan featured">
+        <div class="plan-badge">&#x2B50; BEST VALUE</div>
+        <span class="plan-icon">&#x1F381;</span>
+        <h3>Annual Box</h3>
+        <div class="plan-price">S$115</div>
+        <div class="plan-per">12 slimes &middot; Pay once, save S$65!</div>
+        <ul>
+          <li>12 handpicked 200ml slimes</li>
+          <li>One delivered per month</li>
+          <li>Exclusive &amp; limited releases</li>
+          <li>Free delivery every month</li>
+          <li>Priority access to new drops</li>
+          <li>Surprise charm included monthly</li>
+        </ul>
+        <button class="sub-cta-btn primary" onclick="showSubscribeForm('annual')">Choose Annual &rarr;</button>
+      </div>
+    </div>
+
+    <div class="sub-form-wrap" id="subFormWrap" style="display:none">
+      <h3>&#x1FAE7; Almost There!</h3>
+      <p id="subFormDesc">Fill in your details and we'll get your slime subscription started!</p>
+      <div class="fgrid" style="margin-bottom:12px">
+        <div class="frow"><label>First Name</label><input id="subFirst" placeholder="Mei Ling"/></div>
+        <div class="frow"><label>Last Name</label><input id="subLast" placeholder="Tan"/></div>
+      </div>
+      <div class="frow"><label>WhatsApp / Phone</label><input type="tel" id="subPhone" placeholder="+65 9XXX XXXX"/></div>
+      <div class="frow"><label>Email</label><input type="email" id="subEmail" placeholder="you@example.com"/></div>
+      <div class="frow"><label>Delivery Address</label><textarea id="subAddress" placeholder="Block 123, Ang Mo Kio Ave 1, #04-56, Singapore 560123"></textarea></div>
+      <div style="margin-top:16px">
+        <button class="sub-cta-btn primary" onclick="submitSubscription()">&#x1FAE7; Confirm Subscription</button>
+        <button class="cancel-btn" style="margin-top:8px" onclick="document.getElementById('subFormWrap').style.display='none'">Cancel</button>
+      </div>
+      <div id="subSuccess" style="display:none;margin-top:16px;background:#e8fff8;border:1.5px solid var(--mint);border-radius:12px;padding:16px;text-align:center">
+        <div style="font-size:2.5rem">&#x1F389;</div>
+        <strong style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--text);display:block;margin:8px 0">You're Subscribed!</strong>
+        <p style="color:var(--muted);font-size:.88rem">We'll WhatsApp you to confirm and arrange payment. Your first slime ships soon!</p>
+      </div>
+    </div>
+
+    <div class="new-release-banner">
+      <h3>&#x2728; New Release Every Month!</h3>
+      <p>We drop brand new slimes regularly. As a subscriber, you'll get our freshest creations before anyone else &mdash; handpicked just for you. No repeats, no fuss, just pure slime joy!</p>
+    </div>
+  </div>
+</div>
+
+<div id="slimeCare" class="page-overlay hide">
+  <div class="page-header">
+    <span class="logo-name">Slimydotcom &#x1FAE7;</span>
+    <button class="back-shop-btn" onclick="hidePage('slimeCare')">&larr; Back to Shop</button>
+  </div>
+  <div class="page-body">
+    <div class="page-hero">
+      <div class="page-badge" style="background:linear-gradient(135deg,#ffe84d,#ff9966);color:#5a3000">&#x1F9EA; Slime School</div>
+      <h1 style="background:linear-gradient(135deg,#ff9966,var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:'Fredoka One',cursive">How to Care for Your Slime</h1>
+      <p>Keep your slime in perfect condition with these easy tips from our founder &#x1FAE7;</p>
+    </div>
+
+    <h2 class="gift-section-title">&#x1F4DA; Slime Care Steps</h2>
+    <div class="care-steps">
+      <div class="care-step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Store It Properly</h3>
+          <p>Always seal your slime in its container after playing. Store in a cool, dry place away from direct sunlight. Heat makes slime stickier; cold makes it stiffer. Room temperature is perfect!</p>
+          <span class="tip">&#x1F4A1; Tip: Never leave your slime open &mdash; it dries out fast!</span>
+        </div>
+      </div>
+      <div class="care-step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Wash Your Hands First</h3>
+          <p>Clean hands = longer-lasting slime. Dirt and oils from your hands break down the slime over time. A quick 30-second wash before playing makes a huge difference!</p>
+          <span class="tip">&#x1F4A1; Tip: Avoid playing right after eating or applying lotion</span>
+        </div>
+      </div>
+      <div class="care-step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>If Your Slime Gets Too Sticky</h3>
+          <p>Add a tiny drop of our <strong>Activator</strong> to your slime and knead slowly. A little goes a long way! Add drop by drop &mdash; too much activator will make your slime stiff and rubbery.</p>
+          <span class="tip">&#x2705; Fix: 1&ndash;2 drops of Activator, knead for 30 seconds</span>
+        </div>
+      </div>
+      <div class="care-step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3>If Your Slime Gets Too Stiff or Rubbery</h3>
+          <p>Add a small amount of our <strong>Deactivator</strong> to loosen it up. Work it in slowly with your fingers until the slime softens to your ideal texture. This restores stretch and squishiness!</p>
+          <span class="tip">&#x2705; Fix: A few drops of Deactivator, knead gently</span>
+        </div>
+      </div>
+      <div class="care-step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <h3>If Your Slime Smells Different</h3>
+          <p>Slimes can absorb odours over time. Store your slime away from strong smells. If the scent fades, that's normal! The texture matters most &mdash; if it still plays well, enjoy it.</p>
+          <span class="tip">&#x1F4A1; Tip: Don't mix different slimes — scents and textures may change</span>
+        </div>
+      </div>
+      <div class="care-step">
+        <div class="step-num">06</div>
+        <div class="step-content">
+          <h3>How Long Does Slime Last?</h3>
+          <p>With good care, your slime can last <strong>3&ndash;6 months</strong> or even longer. The key is sealing it properly, washing hands, and using the activator/deactivator when needed. Our borax-free formula is made to last!</p>
+          <span class="tip">&#x1F9EA; New release every month &mdash; subscribe to always have fresh slime!</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="gift-section-title">&#x1F9EA; Our Care Products</h2>
+    <div class="care-products">
+      <div class="care-product-card">
+        <span class="cp-icon">&#x1F9EA;</span>
+        <h3>Activator</h3>
+        <p>Makes sticky slime less sticky. Add drop by drop and knead slowly. A little goes a long way — don't overdo it!</p>
+        <span class="cp-price">Set of 2 &mdash; S$6</span>
+        <button class="sub-cta-btn secondary" style="margin-top:12px" onclick="hidePage('slimeCare');addToCart('CTV-AND')">Add to Cart &#x2192;</button>
+      </div>
+      <div class="care-product-card">
+        <span class="cp-icon">&#x1F4A7;</span>
+        <h3>Deactivator</h3>
+        <p>Softens stiff or over-activated slime. Restores the perfect stretchy, squishy texture you love.</p>
+        <span class="cp-price">Included in Set &mdash; S$6</span>
+        <button class="sub-cta-btn secondary" style="margin-top:12px" onclick="hidePage('slimeCare');addToCart('CTV-AND')">Add to Cart &#x2192;</button>
+      </div>
+    </div>
+
+    <div class="new-release-banner">
+      <h3>&#x1FAE7; New Release Every Month!</h3>
+      <p>We're always creating new slimes with fresh textures, scents, and charms. Follow us on Instagram <strong>@slimydotcom</strong> or subscribe to our Monthly Box to never miss a drop!</p>
+    </div>
+  </div>
+</div>
+
+
+<script>
+var EJ_KEY="Aef6n9jYfrYj0ibn7",EJ_SERVICE="service_b1v0605",EJ_TEMPLATE="template_ngq2zf6";
+emailjs.init(EJ_KEY);
+/* ═══ CHARM HELPERS ═══ */
+function mStar(x,y,r,col){var p="",i,a,pi=Math.PI;for(i=0;i<5;i++){a=i*2*pi/5-pi/2;p+=(i?"L":"M")+(x+r*Math.cos(a)).toFixed(1)+","+(y+r*Math.sin(a)).toFixed(1);a+=pi/5;p+="L"+(x+r*.42*Math.cos(a)).toFixed(1)+","+(y+r*.42*Math.sin(a)).toFixed(1);}return'<path d="'+p+'Z" fill="'+col+'" opacity=".95"/>';}
+function mHeart(x,y,s,col){var h=s*.85;return'<path d="M'+x+","+(y+h*.3)+' C'+x+","+(y-h*.4)+" "+(x-h*.75)+","+(y-h*.85)+" "+(x-h*.75)+","+(y-h*.2)+" C"+(x-h*.75)+","+(y+h*.35)+" "+x+","+(y+h*.95)+" "+x+","+(y+h)+" C"+x+","+(y+h*.95)+" "+(x+h*.75)+","+(y+h*.35)+" "+(x+h*.75)+","+(y-h*.2)+" C"+(x+h*.75)+","+(y-h*.85)+" "+x+","+(y-h*.4)+" "+x+","+(y+h*.3)+'Z" fill="'+col+'" opacity=".92"/>';}
+function mDiamond(x,y,s,col){return'<polygon points="'+x+","+(y-s)+" "+(x+s)+","+y+" "+x+","+(y+s)+" "+(x-s)+","+y+'" fill="'+col+'" opacity=".95"/>';}
+function mkSprinkles(c1,c2,uid){var s="",i,sx,sy,ang,lcg=0,cols=[c1,c2,"#fff","#ffe84d","#ff6eb4","#5cdfff"],cs=uid.split("");for(i=0;i<cs.length;i++)lcg+=cs[i].charCodeAt(0);lcg=lcg*7+3;for(i=0;i<13;i++){lcg=((lcg*1664525)+1013904223)&0x7fffffff;sx=78+(lcg%144);lcg=((lcg*1664525)+1013904223)&0x7fffffff;sy=52+(lcg%24);lcg=((lcg*1664525)+1013904223)&0x7fffffff;ang=(lcg%160)-80;s+='<rect x="'+(sx-5)+'" y="'+(sy-2)+'" width="10" height="3.5" rx="1.8" fill="'+cols[i%cols.length]+'" transform="rotate('+ang+" "+sx+" "+sy+')" opacity=".95"/>';}return s;}
+function mkFoam(c1,c2,hi,uid){var s="",i,bx,by,br,lcg=0,cols=[c1,c2,hi,"#fff"],cs=uid.split("");for(i=0;i<cs.length;i++)lcg+=cs[i].charCodeAt(0);lcg=lcg*11+5;for(i=0;i<20;i++){lcg=((lcg*1664525)+1013904223)&0x7fffffff;bx=70+(lcg%160);lcg=((lcg*1664525)+1013904223)&0x7fffffff;by=44+(lcg%32);lcg=((lcg*1664525)+1013904223)&0x7fffffff;br=5+(lcg%9);s+='<circle cx="'+bx+'" cy="'+by+'" r="'+br+'" fill="'+cols[i%cols.length]+'" opacity=".92"/>'+'<circle cx="'+(bx-Math.round(br*.28))+'" cy="'+(by-Math.round(br*.28))+'" r="'+Math.round(br*.36)+'" fill="white" opacity=".55"/>';}return s;}
+function mkGlitter(c1,uid){var s="",i,gx,gy,gr,lcg=0,cols=[c1,"#fff","#ffe84d","#c0c0c0","#e8d0ff"],cs=uid.split("");for(i=0;i<cs.length;i++)lcg+=cs[i].charCodeAt(0);lcg=lcg*13+7;for(i=0;i<16;i++){lcg=((lcg*1664525)+1013904223)&0x7fffffff;gx=72+(lcg%156);lcg=((lcg*1664525)+1013904223)&0x7fffffff;gy=46+(lcg%28);lcg=((lcg*1664525)+1013904223)&0x7fffffff;gr=2+(lcg%5);s+='<circle cx="'+gx+'" cy="'+gy+'" r="'+gr+'" fill="'+cols[i%cols.length]+'" opacity=".9"/>'+'<line x1="'+(gx-gr-3)+'" y1="'+gy+'" x2="'+(gx+gr+3)+'" y2="'+gy+'" stroke="'+cols[i%cols.length]+'" stroke-width="1" opacity=".5"/>'+'<line x1="'+gx+'" y1="'+(gy-gr-3)+'" x2="'+gx+'" y2="'+(gy+gr+3)+'" stroke="'+cols[i%cols.length]+'" stroke-width="1" opacity=".5"/>';}return s;}
+function mkStraw(x,y){return'<path d="M'+x+","+y+" C"+(x-5)+","+(y-6)+" "+(x-12)+","+(y-2)+" "+(x-12)+","+(y+8)+" C"+(x-12)+","+(y+19)+" "+(x-5)+","+(y+24)+" "+x+","+(y+24)+" C"+(x+5)+","+(y+24)+" "+(x+12)+","+(y+19)+" "+(x+12)+","+(y+8)+" C"+(x+12)+","+(y-2)+" "+(x+5)+","+(y-6)+" "+x+","+y+'Z" fill="#cc1a2a"/>'+'<path d="M'+x+","+y+" C"+(x-3)+","+(y-4)+" "+(x-9)+","+y+" "+(x-9)+","+(y+8)+" C"+(x-9)+","+(y+16)+" "+(x-3)+","+(y+20)+" "+x+","+(y+20)+" C"+(x+3)+","+(y+20)+" "+(x+9)+","+(y+16)+" "+(x+9)+","+(y+8)+" C"+(x+9)+","+y+" "+(x+3)+","+(y-4)+" "+x+","+y+'Z" fill="#e8304a"/>'+'<circle cx="'+(x-3)+'" cy="'+(y+6)+'" r="1.8" fill="#FFE0E0" opacity=".55"/>'+'<circle cx="'+(x+4)+'" cy="'+(y+12)+'" r="1.5" fill="#FFE0E0" opacity=".5"/>'+'<ellipse cx="'+(x-5)+'" cy="'+(y+8)+'" rx="1" ry="1.8" fill="#c8a020" transform="rotate(-15 '+(x-5)+" "+(y+8)+')" opacity=".7"/>'+'<ellipse cx="'+(x+4)+'" cy="'+(y+6)+'" rx="1" ry="1.8" fill="#c8a020" transform="rotate(10 '+(x+4)+" "+(y+6)+')" opacity=".7"/>'+'<path d="M'+(x-6)+","+(y-4)+" Q"+x+","+(y-16)+" "+(x+6)+","+(y-4)+" Q"+x+","+(y-2)+" "+(x-6)+","+(y-4)+'Z" fill="#1a8030"/>';}
+function mkUnicorn(){return'<defs><linearGradient id="hornG2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fff4a0"/><stop offset="50%" stop-color="#FFD700"/><stop offset="100%" stop-color="#e8a800"/></linearGradient></defs>'+'<polygon points="150,28 145,52 155,52" fill="url(#hornG2)"/>'+'<line x1="147" y1="34" x2="153" y2="36" stroke="#c89000" stroke-width="1" opacity=".5"/>'+'<ellipse cx="150" cy="66" rx="32" ry="26" fill="#ffe8f0"/>'+'<ellipse cx="150" cy="76" rx="16" ry="12" fill="#ffd4e8"/>'+'<ellipse cx="136" cy="62" rx="5" ry="6" fill="#1a0a2e"/>'+'<ellipse cx="164" cy="62" rx="5" ry="6" fill="#1a0a2e"/>'+'<circle cx="137.5" cy="60.5" r="2.2" fill="white"/>'+'<circle cx="165.5" cy="60.5" r="2.2" fill="white"/>'+'<ellipse cx="145" cy="77" rx="2.5" ry="1.8" fill="#e888b0" opacity=".6"/>'+'<ellipse cx="155" cy="77" rx="2.5" ry="1.8" fill="#e888b0" opacity=".6"/>'+'<ellipse cx="128" cy="70" rx="8" ry="5" fill="#ff9eb5" opacity=".35"/>'+'<ellipse cx="172" cy="70" rx="8" ry="5" fill="#ff9eb5" opacity=".35"/>'+'<path d="M 118,50 Q 108,58 112,68 Q 116,78 110,84" fill="none" stroke="#ff6eb4" stroke-width="5" stroke-linecap="round" opacity=".8"/>'+'<path d="M 118,50 Q 106,60 110,72 Q 114,80 108,88" fill="none" stroke="#c67eff" stroke-width="4" stroke-linecap="round" opacity=".7"/>'+mStar(108,42,6,"#FFD700")+mStar(192,40,5,"#FF6EB4")+mStar(175,30,4,"#C67EFF");}
+function mkElf(){var x=150,y=50;return'<polygon points="'+x+","+(y-22)+" "+(x-12)+","+(y-4)+" "+(x+12)+","+(y-4)+'" fill="#228b22"/>'+'<circle cx="'+x+'" cy="'+(y-22)+'" r="3" fill="#ff2222"/>'+'<rect x="'+(x-14)+'" y="'+(y-7)+'" width="28" height="5" rx="2" fill="#1a7a1a"/>'+'<circle cx="'+x+'" cy="'+(y+4)+'" r="10" fill="#ffd0a0"/>'+'<circle cx="'+(x-3)+'" cy="'+(y+2)+'" r="1.5" fill="#333"/>'+'<circle cx="'+(x+3)+'" cy="'+(y+2)+'" r="1.5" fill="#333"/>'+'<ellipse cx="'+(x-10)+'" cy="'+(y+4)+'" rx="3" ry="4" fill="#ffd0a0"/>'+'<ellipse cx="'+(x+10)+'" cy="'+(y+4)+'" rx="3" ry="4" fill="#ffd0a0"/>'+'<rect x="'+(x-10)+'" y="'+(y+14)+'" width="20" height="18" rx="4" fill="#228b22"/>'+'<rect x="'+(x-12)+'" y="'+(y+22)+'" width="24" height="5" rx="1" fill="#8B4513"/>'+'<rect x="'+(x-2)+'" y="'+(y+22)+'" width="5" height="5" rx="1" fill="#FFD700"/>'+'<line x1="'+(x-10)+'" y1="'+(y+18)+'" x2="'+(x-24)+'" y2="'+(y+8)+'" stroke="#228b22" stroke-width="5" stroke-linecap="round"/>'+'<line x1="'+(x+10)+'" y1="'+(y+18)+'" x2="'+(x+24)+'" y2="'+(y+8)+'" stroke="#228b22" stroke-width="5" stroke-linecap="round"/>'+'<circle cx="'+(x-24)+'" cy="'+(y+8)+'" r="4" fill="#ffd0a0"/>'+'<circle cx="'+(x+24)+'" cy="'+(y+8)+'" r="4" fill="#ffd0a0"/>'+'<line x1="'+(x-5)+'" y1="'+(y+32)+'" x2="'+(x-14)+'" y2="'+(y+50)+'" stroke="#8B0000" stroke-width="5" stroke-linecap="round"/>'+'<line x1="'+(x+5)+'" y1="'+(y+32)+'" x2="'+(x+14)+'" y2="'+(y+46)+'" stroke="#8B0000" stroke-width="5" stroke-linecap="round"/>'+mStar(100,46,5,"#FFD700")+mStar(200,44,5,"#FFD700");}
+function mkRainbow7(){
+  var rc=["#FF0000","#FF7700","#FFEE00","#00CC00","#0066FF","#8800CC","#CC00FF"],s="";
+  rc.forEach(function(col,i){
+    var rx=85-i*7, ry=38-i*5, cx=150, cy=64;
+    s+='<path d="M '+(cx-rx)+","+cy+" A "+rx+","+ry+" 0 0 1 "+(cx+rx)+","+cy+'" fill="none" stroke="'+col+'" stroke-width="8" stroke-linecap="round" opacity=".95"/>';
+  });
+  return s;
+}
+function mkRose(x,y,col,s2){s2=s2||1;return'<ellipse cx="'+x+'" cy="'+(y-12*s2)+'" rx="'+(7*s2)+'" ry="'+(10*s2)+'" fill="'+col+'" opacity=".75" transform="rotate(-15 '+x+" "+y+')" />'+'<ellipse cx="'+(x+11*s2)+'" cy="'+(y-7*s2)+'" rx="'+(7*s2)+'" ry="'+(10*s2)+'" fill="'+col+'" opacity=".75" transform="rotate(30 '+x+" "+y+')" />'+'<ellipse cx="'+(x+11*s2)+'" cy="'+(y+7*s2)+'" rx="'+(7*s2)+'" ry="'+(10*s2)+'" fill="'+col+'" opacity=".75" transform="rotate(80 '+x+" "+y+')" />'+'<ellipse cx="'+x+'" cy="'+(y+12*s2)+'" rx="'+(7*s2)+'" ry="'+(10*s2)+'" fill="'+col+'" opacity=".75" transform="rotate(135 '+x+" "+y+')" />'+'<ellipse cx="'+(x-11*s2)+'" cy="'+(y+7*s2)+'" rx="'+(7*s2)+'" ry="'+(10*s2)+'" fill="'+col+'" opacity=".75" transform="rotate(190 '+x+" "+y+')" />'+'<ellipse cx="'+(x-11*s2)+'" cy="'+(y-7*s2)+'" rx="'+(7*s2)+'" ry="'+(10*s2)+'" fill="'+col+'" opacity=".75" transform="rotate(245 '+x+" "+y+')" />'+'<ellipse cx="'+x+'" cy="'+(y-7*s2)+'" rx="'+(5*s2)+'" ry="'+(7*s2)+'" fill="'+col+'" opacity=".9" transform="rotate(-15 '+x+" "+y+')" />'+'<circle cx="'+x+'" cy="'+y+'" r="'+(5*s2)+'" fill="'+col+'"/><circle cx="'+x+'" cy="'+y+'" r="'+(3*s2)+'" fill="#cc0030" opacity=".6"/>';}
+function mkFruitCircle(x,y,col){return'<circle cx="'+x+'" cy="'+y+'" r="13" fill="'+col+'" opacity=".92"/>'+'<circle cx="'+x+'" cy="'+y+'" r="9.5" fill="'+col+'" opacity=".6"/>'+'<circle cx="'+x+'" cy="'+y+'" r="3" fill="white" opacity=".4"/>'+'<circle cx="'+(x-2)+'" cy="'+(y-2)+'" r="1.5" fill="white" opacity=".6"/>'+'<line x1="'+x+'" y1="'+(y-9)+'" x2="'+x+'" y2="'+(y+9)+'" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>'+'<line x1="'+(x-9)+'" y1="'+y+'" x2="'+(x+9)+'" y2="'+y+'" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>';}
+
+function getCharms(p){
+  var c1=p.colors[0],c2=p.colors[1],hi=p.colors[2]||"#fff",uid=p.id.replace(/[^a-zA-Z0-9]/g,"")||"x",ct=p.charmType;
+  if(ct==="sprinkles")    return mkSprinkles(c1,c2,uid);
+  if(ct==="foam")         return mkFoam(c1,c2,hi,uid);
+  if(ct==="glitter")      return mkGlitter(c1,uid);
+  if(ct==="strawberry")   return mkStraw(98,30)+mkStraw(148,22)+mkStraw(198,30);
+  if(ct==="unicorn")      return mkUnicorn();
+  if(ct==="rainbow7")     return mkRainbow7();
+  if(ct==="elf")          return mkElf();
+  if(ct==="rose")         return mkRose(98,56,"#E8304A")+mkRose(150,44,"#ff7b9c")+mkRose(202,54,"#ffb8cc");
+  if(ct==="glitterstars") return mkGlitter(c1,uid)+mStar(98,48,9,"#C0C0C0")+mStar(204,46,8,"#E8D0FF")+mStar(150,38,11,"#FFD700");
+  if(ct==="fruit_circles")return mkFruitCircle(96,50,"#FF8C00")+mkFruitCircle(150,42,"#FF4500")+mkFruitCircle(204,50,"#FFD700")+mkSprinkles(c1,c2,uid);
+  if(ct==="pink_fruit")   return mkFruitCircle(102,50,"#FF8C00")+mkFruitCircle(158,44,"#FFD700")+mkFruitCircle(210,54,"#FF4500")+mkGlitter(c1,uid);
+  if(ct==="foamstars")    return mkFoam(c1,c2,hi,uid)+mStar(150,36,9,"#FFD700");
+  if(ct==="foamblue")     return mkFoam(c1,c2,hi,uid)+mStar(150,38,10,"#5cdfff");
+  if(ct==="blackpink")    return mDiamond(96,46,11,"#ff5b96")+mDiamond(204,44,11,"#ffffff")+mStar(150,36,10,"#ff5b96")+mStar(120,56,7,"white")+mStar(180,54,7,"#1a1a1a");
+  if(ct==="lily_split")   return mStar(100,48,8,"#7d3c98")+mStar(198,48,8,"#f0f0f8")+mStar(150,40,10,"#9b59b6");
+  if(ct==="duck")         return'<ellipse cx="118" cy="60" rx="16" ry="11" fill="#FFD700"/><circle cx="130" cy="50" r="9" fill="#FFD700"/><path d="M135,50 L146,51 L135,54Z" fill="#FF8C00"/><circle cx="133" cy="47" r="1.8" fill="#1a1a1a"/><ellipse cx="116" cy="70" rx="8" ry="4" fill="#FFB300"/>'+mkGlitter("#5cdfff",uid)+mStar(185,48,7,"#5cdfff");
+  if(ct==="honeybee")     return'<ellipse cx="108" cy="54" rx="15" ry="10" fill="#FFD700"/><line x1="102" y1="44" x2="102" y2="64" stroke="#333" stroke-width="1.8" opacity=".5"/><line x1="108" y1="44" x2="108" y2="64" stroke="#333" stroke-width="1.8" opacity=".5"/><line x1="114" y1="44" x2="114" y2="64" stroke="#333" stroke-width="1.8" opacity=".5"/><ellipse cx="103" cy="41" rx="8" ry="5" fill="white" opacity=".72"/><ellipse cx="113" cy="41" rx="8" ry="5" fill="white" opacity=".72"/><circle cx="120" cy="52" r="2" fill="#333"/><rect x="180" y="40" width="22" height="26" rx="5" fill="#E8A020"/><rect x="177" y="34" width="28" height="11" rx="4" fill="#C87800"/><rect x="184" y="29" width="14" height="7" rx="3" fill="#A06000"/><text x="191" y="62" text-anchor="middle" font-family="Arial" font-size="6" fill="white" font-weight="bold">HUNNY</text>'+mStar(150,42,8,"#FFD700");
+  if(ct==="fireworks")    return mkGlitter("#ffffff",uid)+mkGlitter("#ffe840","fw2")+mStar(96,52,10,"#ff3370")+mStar(150,40,12,"#ffe840")+mStar(204,50,10,"#00e8c0")+mStar(120,58,8,"#c060ff")+mStar(178,56,8,"#ff8800");
+  if(ct==="santa"){var sf=function(x,y,r){var sv="",i,a,rad,mx,my,b1,b2;for(i=0;i<6;i++){a=i*60;rad=a*Math.PI/180;sv+='<line x1="'+x+'" y1="'+y+'" x2="'+(x+r*Math.cos(rad)).toFixed(1)+'" y2="'+(y+r*Math.sin(rad)).toFixed(1)+'" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity=".9"/>';mx=x+r*.55*Math.cos(rad);my=y+r*.55*Math.sin(rad);b1=(a+55)*Math.PI/180;b2=(a-55)*Math.PI/180;sv+='<line x1="'+mx.toFixed(1)+'" y1="'+my.toFixed(1)+'" x2="'+(mx+r*.3*Math.cos(b1)).toFixed(1)+'" y2="'+(my+r*.3*Math.sin(b1)).toFixed(1)+'" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".8"/>'+' <line x1="'+mx.toFixed(1)+'" y1="'+my.toFixed(1)+'" x2="'+(mx+r*.3*Math.cos(b2)).toFixed(1)+'" y2="'+(my+r*.3*Math.sin(b2)).toFixed(1)+'" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".8"/>';}return sv;};return sf(98,48,16)+sf(202,46,16)+mStar(150,38,9,"#FFD700");}
+  return mkSprinkles(c1,c2,uid);
+}
+
+function slimeFill(uid,c1,c2,hi,type){
+  if(type==="split_lr")   return'<rect x="58" y="62" width="92" height="203" fill="#ff5b96"/><rect x="150" y="62" width="92" height="203" fill="#1a1a1a"/><line x1="150" y1="62" x2="150" y2="265" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>';
+  if(type==="split_lr_wh")return'<rect x="58" y="62" width="92" height="203" fill="#f8f6ff"/><rect x="150" y="62" width="92" height="203" fill="#7d3c98"/><line x1="150" y1="62" x2="150" y2="265" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>';
+  if(type==="gradient_h") return'<defs><linearGradient id="hg'+uid+'" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ff9dd6"/><stop offset="50%" stop-color="#e060b8"/><stop offset="100%" stop-color="#8030b0"/></linearGradient></defs><rect x="58" y="62" width="184" height="203" fill="url(#hg'+uid+')" />';
+  if(type==="rainbow7")   {var cols=["#FF0000","#FF7F00","#FFFF00","#00CC00","#0000FF","#4B0082","#9400D3"],sv="",bh=29;cols.forEach(function(col,i){sv+='<rect x="58" y="'+(62+i*bh)+'" width="184" height="'+bh+'" fill="'+col+'" opacity=".92"/>';});return sv;}
+  if(type==="fireworks")  return'<rect x="58" y="62" width="184" height="203" fill="#1a0a2e"/><ellipse cx="120" cy="140" rx="55" ry="70" fill="#ff3370" opacity=".35"/><ellipse cx="180" cy="150" rx="50" ry="65" fill="#ffe840" opacity=".35"/><ellipse cx="150" cy="120" rx="60" ry="50" fill="#00e8c0" opacity=".3"/><ellipse cx="130" cy="180" rx="45" ry="55" fill="#c060ff" opacity=".3"/>';
+  if(type==="white")      return'<rect x="58" y="62" width="184" height="203" fill="#f8f8f8"/><rect x="58" y="62" width="184" height="203" fill="white" opacity=".6"/>';
+  return'<rect x="58" y="62" width="184" height="203" fill="'+c2+'"/><rect x="58" y="62" width="184" height="203" fill="url(#vg'+uid+')" opacity=".72"/><ellipse cx="150" cy="110" rx="70" ry="42" fill="'+hi+'" opacity=".16"/>';
+}
+
+function makeCharmDisplay(p){var c1=p.colors[0],c2=p.colors[1],hi=p.colors[2]||"#fff";return'<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="300" fill="'+hi+'" opacity=".12"/><rect x="20" y="20" width="260" height="260" rx="20" fill="white" opacity=".9"/><rect x="20" y="20" width="260" height="260" rx="20" fill="none" stroke="'+c1+'" stroke-width="2.5" stroke-dasharray="8,5"/>'+p.charmDisplay+'<rect x="30" y="200" width="240" height="70" rx="12" fill="white"/><rect x="30" y="200" width="240" height="22" rx="12" fill="'+c1+'" opacity=".88"/><rect x="30" y="211" width="240" height="11" fill="'+c1+'" opacity=".88"/><text x="150" y="216" text-anchor="middle" font-family="Arial" font-size="8" font-weight="700" fill="white" letter-spacing=".8">&#x2756; SLIMYDOTCOM &#x2756;</text><text x="150" y="235" text-anchor="middle" font-family="Arial" font-size="11" font-weight="900" fill="'+c2+'">'+p.name+'</text><text x="108" y="255" text-anchor="middle" font-family="Arial" font-size="7.5" fill="#7e6a96"></text><text x="236" y="255" text-anchor="end" font-family="Arial" font-size="6" fill="#CC1100" font-weight="700">&#x26A0; Do Not Eat</text><rect x="30" y="200" width="240" height="70" rx="12" fill="none" stroke="'+c1+'" stroke-width="2"/></svg>';}
+function makeActivator(){return'<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="vialW" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f0f0f0"/><stop offset="40%" stop-color="#ffffff"/><stop offset="100%" stop-color="#d8d8d8"/></linearGradient><linearGradient id="vialC" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#d8f0ff" stop-opacity=".5"/><stop offset="40%" stop-color="#f0faff" stop-opacity=".3"/><stop offset="100%" stop-color="#c0e8ff" stop-opacity=".4"/></linearGradient><filter id="sfA"><feGaussianBlur stdDeviation="4"/></filter></defs><rect width="300" height="300" fill="#f8f4ff" opacity=".1"/><ellipse cx="98" cy="280" rx="38" ry="8" fill="#888" opacity=".12" filter="url(#sfA)"/><ellipse cx="202" cy="280" rx="38" ry="8" fill="#888" opacity=".12" filter="url(#sfA)"/><rect x="66" y="50" width="64" height="210" rx="12" fill="url(#vialW)"/><rect x="68" y="90" width="60" height="162" rx="10" fill="white" opacity=".8"/><ellipse cx="98" cy="91" rx="30" ry="8" fill="white"/><rect x="66" y="50" width="64" height="210" rx="12" fill="none" stroke="rgba(180,160,220,0.7)" stroke-width="2.5"/><rect x="71" y="58" width="8" height="192" rx="4" fill="white" opacity=".3"/><rect x="72" y="38" width="52" height="22" rx="8" fill="#8060c0"/><rect x="70" y="148" width="56" height="68" rx="7" fill="white"/><rect x="70" y="148" width="56" height="20" rx="7" fill="#8060c0" opacity=".9"/><rect x="70" y="158" width="56" height="10" fill="#8060c0" opacity=".9"/><text x="98" y="163" text-anchor="middle" font-family="Arial" font-size="6.5" fill="white" font-weight="700">SLIMYDOTCOM</text><text x="98" y="180" text-anchor="middle" font-family="Arial" font-size="10" font-weight="900" fill="#4a2080">Activator</text><text x="98" y="193" text-anchor="middle" font-family="Arial" font-size="7" fill="#7e6a96">100ml</text><text x="98" y="207" text-anchor="middle" font-family="Arial" font-size="5.5" fill="#CC1100" font-weight="700">&#x26A0; Do Not Eat</text><rect x="70" y="148" width="56" height="68" rx="7" fill="none" stroke="#8060c0" stroke-width="1.8"/><rect x="170" y="50" width="64" height="210" rx="12" fill="url(#vialC)"/><rect x="172" y="100" width="60" height="152" rx="10" fill="#e0f4ff" opacity=".35"/><ellipse cx="202" cy="101" rx="30" ry="8" fill="#d8f0ff" opacity=".6"/><rect x="170" y="50" width="64" height="210" rx="12" fill="none" stroke="rgba(180,160,220,0.7)" stroke-width="2.5"/><rect x="175" y="58" width="8" height="192" rx="4" fill="white" opacity=".25"/><rect x="176" y="38" width="52" height="22" rx="8" fill="#20a060"/><rect x="174" y="148" width="56" height="68" rx="7" fill="white"/><rect x="174" y="148" width="56" height="20" rx="7" fill="#20a060" opacity=".9"/><rect x="174" y="158" width="56" height="10" fill="#20a060" opacity=".9"/><text x="202" y="163" text-anchor="middle" font-family="Arial" font-size="6.5" fill="white" font-weight="700">SLIMYDOTCOM</text><text x="202" y="180" text-anchor="middle" font-family="Arial" font-size="9" font-weight="900" fill="#0a5030">Deactivator</text><text x="202" y="193" text-anchor="middle" font-family="Arial" font-size="7" fill="#7e6a96">100ml</text><text x="202" y="207" text-anchor="middle" font-family="Arial" font-size="5.5" fill="#CC1100" font-weight="700">&#x26A0; Do Not Eat</text><rect x="174" y="148" width="56" height="68" rx="7" fill="none" stroke="#20a060" stroke-width="1.8"/></svg>';}
+function makeStickerDisplay(p){var c1=p.colors[0],c2=p.colors[1],hi=p.colors[2]||"#fff";return'<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="300" fill="'+hi+'" opacity=".1"/><rect x="55" y="30" width="190" height="160" rx="14" fill="white" stroke="'+c1+'" stroke-width="2.5"/><rect x="55" y="30" width="190" height="36" rx="14" fill="'+c1+'" opacity=".9"/><rect x="55" y="54" width="190" height="12" fill="'+c1+'" opacity=".9"/><text x="150" y="50" text-anchor="middle" font-family="Arial" font-size="9" fill="white" font-weight="700">&#x2756; SLIMYDOTCOM &#x2756;</text>'+mStar(105,110,20,"#ff6eb4")+mStar(150,95,18,"#ffe84d")+mStar(195,110,20,"#c67eff")+mHeart(95,155,16,"#ff6eb4")+mHeart(205,155,14,"#ff4444")+'<text x="150" y="130" text-anchor="middle" font-family="Arial" font-size="11" font-weight="800" fill="#9b59b6">5 Stickers</text><text x="150" y="145" text-anchor="middle" font-family="Arial" font-size="8" fill="#7e6a96">from Japan &#x1F1EF;&#x1F1F5;</text><rect x="40" y="198" width="220" height="72" rx="12" fill="white"/><rect x="40" y="198" width="220" height="22" rx="12" fill="'+c1+'" opacity=".88"/><rect x="40" y="209" width="220" height="11" fill="'+c1+'" opacity=".88"/><text x="150" y="214" text-anchor="middle" font-family="Arial" font-size="8" fill="white" font-weight="700" letter-spacing=".8">&#x2756; SLIMYDOTCOM &#x2756;</text><text x="150" y="234" text-anchor="middle" font-family="Arial" font-size="11" font-weight="900" fill="'+c2+'">Sticker Packs</text><text x="110" y="252" text-anchor="middle" font-family="Arial" font-size="7.5" fill="#7e6a96">From Japan &#x1F1EF;&#x1F1F5;</text><text x="248" y="252" text-anchor="end" font-family="Arial" font-size="6" fill="#CC1100" font-weight="700">&#x26A0; Do Not Eat</text><rect x="40" y="198" width="220" height="72" rx="12" fill="none" stroke="'+c1+'" stroke-width="2"/></svg>';}
+
+function labelName(name,x,ya,c2){
+  if(name.length<=14) return'<text x="'+x+'" y="'+ya+'" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="900" fill="'+c2+'" letter-spacing=".3">'+name+'</text>';
+  var sp=name.lastIndexOf(" ",Math.floor(name.length/2));if(sp<3)sp=name.indexOf(" ");
+  var l1=sp>0?name.substring(0,sp):name.substring(0,13),l2=sp>0?name.substring(sp+1):name.substring(13);
+  return'<text x="'+x+'" y="'+(ya-7)+'" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="900" fill="'+c2+'">'+l1+'</text>'+'<text x="'+x+'" y="'+(ya+7)+'" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="900" fill="'+c2+'">'+l2+'</text>';
+}
+
+function makeJar(p){
+  var uid=p.id.replace(/[^a-zA-Z0-9]/g,"")||"x",c1=p.colors[0],c2=p.colors[1],hi=p.colors[2]||"#fff",ft=p.fillType||"standard";
+  var LY=172,LH=80,LX=60,LW=180,LBH=22;
+  var nameY=LY+LBH+26,infoY=LY+LBH+52,dotY=LY+LBH/2+3;
+  var defs='<defs><linearGradient id="vg'+uid+'" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="'+c1+'" stop-opacity=".9"/><stop offset="100%" stop-color="'+c2+'"/></linearGradient><radialGradient id="dg'+uid+'" cx="45%" cy="35%" r="65%"><stop offset="0%" stop-color="'+hi+'" stop-opacity=".75"/><stop offset="100%" stop-color="'+c1+'" stop-opacity="0"/></radialGradient><radialGradient id="ig'+uid+'" cx="38%" cy="30%" r="55%"><stop offset="0%" stop-color="'+hi+'" stop-opacity=".3"/><stop offset="100%" stop-color="'+c2+'" stop-opacity="0"/></radialGradient><clipPath id="jcp'+uid+'"><rect x="58" y="62" width="184" height="203" rx="13"/></clipPath><clipPath id="lcp'+uid+'"><rect x="'+LX+'" y="'+LY+'" width="'+LW+'" height="'+LH+'" rx="12"/></clipPath><filter id="sf'+uid+'"><feGaussianBlur stdDeviation="5"/></filter></defs>';
+  var shadow='<ellipse cx="150" cy="278" rx="85" ry="9" fill="'+c2+'" opacity=".18" filter="url(#sf'+uid+')"/>';
+  var jf='<g clip-path="url(#jcp'+uid+')">'+ slimeFill(uid,c1,c2,hi,ft) +'<ellipse cx="150" cy="100" rx="75" ry="45" fill="url(#ig'+uid+')" opacity=".45"/><rect x="58" y="62" width="20" height="203" fill="'+c2+'" opacity=".18"/><rect x="222" y="62" width="20" height="203" fill="'+c2+'" opacity=".22"/></g>';
+  var jo='<rect x="58" y="62" width="184" height="203" rx="13" fill="none" stroke="rgba(210,190,255,0.65)" stroke-width="3"/><rect x="64" y="70" width="10" height="186" rx="5" fill="white" opacity=".2"/><rect x="226" y="70" width="5" height="186" rx="2" fill="white" opacity=".07"/><ellipse cx="150" cy="62" rx="92" ry="6.5" fill="rgba(255,255,255,0.2)" stroke="rgba(210,190,255,0.5)" stroke-width="1.5"/>';
+  var db='<ellipse cx="150" cy="57" rx="91" ry="20" fill="'+c1+'"/><ellipse cx="150" cy="55" rx="64" ry="12" fill="url(#dg'+uid+')" opacity=".85"/>';
+  var charms=getCharms(p);
+  var dov='<ellipse cx="150" cy="64" rx="91" ry="10" fill="'+c1+'" opacity=".6"/><ellipse cx="150" cy="66" rx="91" ry="7" fill="'+c2+'" opacity=".22"/><ellipse cx="120" cy="50" rx="30" ry="7" fill="white" opacity=".2"/><ellipse cx="106" cy="47" rx="12" ry="4" fill="white" opacity=".32"/>';
+  // LABEL — redesigned, all text within LY to LY+LH = 172 to 252
+  var lb='<g clip-path="url(#lcp'+uid+')">'+'<rect x="'+LX+'" y="'+LY+'" width="'+LW+'" height="'+LH+'" fill="white"/>'+'<rect x="'+LX+'" y="'+LY+'" width="'+LW+'" height="'+LBH+'" fill="'+c1+'" opacity=".92"/>'+'<rect x="'+(LX+6)+'" y="'+(LY+5)+'" width="44" height="9" rx="4" fill="white" opacity=".18"/>'+'</g>';
+  var lbo='<rect x="'+LX+'" y="'+LY+'" width="'+LW+'" height="'+LH+'" rx="12" fill="none" stroke="'+c1+'" stroke-width="2.5"/>';
+  var lbrand='<text x="150" y="'+(LY+LBH-6)+'" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="800" fill="white" letter-spacing="1" opacity=".95">&#x2756; SLIMYDOTCOM &#x2756;</text>';
+  var ln=labelName(p.name,150,nameY,c2);
+  var div='<line x1="'+(LX+10)+'" y1="'+(infoY-10)+'" x2="'+(LX+LW-10)+'" y2="'+(infoY-10)+'" stroke="'+c1+'" stroke-width="1" opacity=".2"/>';
+  var li='<text x="'+(LX+LW*0.37)+'" y="'+infoY+'" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5" fill="#7e6a96" font-weight="600">200ml &#x2022; Borax Free &#x2713;</text>'+'<text x="'+(LX+LW-6)+'" y="'+infoY+'" text-anchor="end" font-family="Arial,sans-serif" font-size="6.5" fill="#CC1100" font-weight="800">&#x26A0; Do Not Eat</text>';
+  var ld='<circle cx="'+(LX+10)+'" cy="'+dotY+'" r="2.5" fill="white" opacity=".45"/><circle cx="'+(LX+LW-10)+'" cy="'+dotY+'" r="2.5" fill="white" opacity=".45"/>';
+  return'<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">'+defs+'<rect width="300" height="300" fill="'+hi+'" opacity=".06"/>'+shadow+jf+jo+db+charms+dov+lb+lbo+lbrand+ln+div+li+ld+'</svg>';
+}
+
+var PRODUCT_IMAGES = {
+  "00001": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/1D99F169-08D8-49C9-9929-5E7F8D099EEC.jpeg",
+  "00002": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/140AA7C5-980B-4B6F-B590-5F7B7F64315D.jpeg",
+  "00003": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/F95033DE-FC99-491E-B47B-9046424F64A0.jpeg",
+  "STR-PRD": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/FE8CBDAA-6861-4AC2-A70E-FF783F58B518.jpeg",
+  "BBB": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/77122669-3374-41AC-90C3-90A02F84CE9E.jpeg",
+  "XTR-CRN-PNK": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/IMG_0025.jpeg",
+  "PNK-FLF-NCR": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/EE5406E2-05EF-412D-AE8D-A140DBBAC6E5.jpeg",
+  "RNB-MGC": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/117A6B57-C73B-4268-828E-4EF7A7AD138A.jpeg",
+  "MRS-FLF": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/45E0B434-7C60-44FF-BC88-B9EFF7E73EBB.jpeg",
+  "DNC-LVS": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/A0D6CDE6-FD14-44F3-8A93-3116B3460B8E.jpeg",
+  "WLD-CRR": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/IMG_0217.jpeg",
+  "SWT-DRM": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/C2E5D176-F01C-4070-AF18-FCA31280804F.jpeg",
+  "SCH-IN-PND": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/A00AB56D-02D7-43E3-B832-297515E9E7A4.jpeg",
+  "CLD-FLF": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/E877D435-83CB-49A9-A031-79B0FEA2B4C7.jpeg",
+  "FRW": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/D9B24E11-ACEC-437A-9756-F50C8842E00D.jpeg",
+  "NCR-CHR-5PC": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/blob-8ee615c.png",
+  "CHR-CHR-10P": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/82710901-A843-40DC-B9A0-2FAAABA7598B.jpeg",
+  "RS1": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/3808347F-D769-49B1-921C-CDBD5569B641.jpeg",
+  "STC-PCK": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/6A939C32-3D0E-44C4-A6FD-689A63B564D3.jpeg",
+  "JST-BTT": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/1A406C53-1977-44B1-8C92-DF2A919BBA40.jpeg",
+  "MRL": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/6F672B25-ED56-4617-BEF3-1B3D7385CDFE.jpeg",
+  "MDN-HWC": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/1CD6D161-AD54-46C4-9BF6-8EBE66AAE1E9.jpeg",
+  "SNT-CLS": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/82D17ECD-B57F-458C-9892-F7576564345C.jpeg",
+  "LLY": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/A6F5CAAF-6DDD-46CC-B115-FF40180D56EB.jpeg",
+  "XTR-CRN": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/IMG_0024.jpeg",
+  "BLC": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/E145C0F4-607A-416A-96BA-FFB76C69142F.jpeg",
+  "PND-FLF": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/IMG_0216.jpeg",
+  "STR-PST": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/IMG_0734.jpeg",
+  "CLD-DGH": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/IMG_0290.jpeg",
+  "BRR-GRP": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/6228F300-1AEF-4AFB-836A-3784EEC9816C.jpeg",
+  "POOH": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/IMG_1519.jpeg",
+  "CTV-AND": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/ols/b6bf7a88-185c-4b1e-a781-c2a873e09316.jpeg",
+  "BB-BLST": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/IMG_0772.jpeg",
+  "PNT-BTTR-N-JLLY-TST-TP-P": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/IMG_2004.jpeg",
+  "MNG-SG-DLGHT": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/8d4fe5e8-b389-46ed-a2ae-0f02aa06c152.jpeg",
+  "CN-SHMMRS": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/IMG_2470.jpeg",
+  "HNY-YZ": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/FullSizeRender.jpeg",
+  "WHN-LF-THRWS-Y-LMNS": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/AFB33CCE-ADD7-45F5-AA77-CAD2412AB245.jpeg",
+  "WTRMLN-SGR-HGH": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/71E843CD-ECD0-4993-8213-A038C4146708.jpeg",
+  "FSTV-CNY": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/IMG_1027.jpeg",
+  "CLLS-FLFF-MRNG": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/8D56378D-4484-4959-A653-EAB20FC77D1B.jpeg",
+  "PRPL-MTHYST": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/blob-834a071.png",
+  "DCK-N-SWMP": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/F43B6087-B40C-4A4F-A55C-CC2BBC393650.jpeg",
+  "PCHY-PRDS-FLFF": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/DCD58466-6CC4-4346-A682-CE94D68D77B6.jpeg",
+  "HT-SND": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/00AEC238-4783-49B4-A91C-C8F87F621CF1.jpeg",
+  "KNTC-SND-SLM": "https://img1.wsimg.com/isteam/ip/ead51887-7e30-4622-b23d-5e3916d8a71b/73f2ab28-08c4-4a08-8148-38c8539e28a5.jpeg",
+};
+
+/* ── REAL PHOTO + SVG FALLBACK CARD ART ── */
+function onPhotoLoad(img){
+  img.classList.add("loaded");
+  var f=img.parentNode.querySelector(".svg-fallback");
+  if(f) f.classList.add("hidden");
+}
+function onPhotoError(img){
+  img.style.display="none";
+}
+function getSlimeArt(p){
+  var svgFallback;
+  if(p.id==="CTV-AND")      svgFallback=makeActivator();
+  else if(p.id==="STC-PCK") svgFallback=makeStickerDisplay(p);
+  else if(p.id==="NCR-CHR-5PC"||p.id==="CHR-CHR-10P") svgFallback=makeCharmDisplay(p);
+  else                      svgFallback=makeJar(p);
+
+  var imgUrl=PRODUCT_IMAGES[p.id];
+  if(!imgUrl){
+    return "<div class='product-img-wrap'><div class='svg-fallback'>"+svgFallback+"</div></div>";
+  }
+  var uid="img_"+p.id.replace(/[^a-zA-Z0-9]/g,"");
+  var safeName=p.name.replace(/'/g,"&#39;");
+  return "<div class='product-img-wrap'>"
+    +"<img class='real-photo' id='"+uid+"' src='"+imgUrl+"' alt='"+safeName+"' "
+    +"onload='onPhotoLoad(this)' onerror='onPhotoError(this)' loading='lazy'/>"
+    +"<div class='svg-fallback'>"+svgFallback+"</div>"
+    +"</div>";
+}
+
+function setSize(pid,idx){
+  selectedSizes[pid]=idx;
+  var uid=pid.replace(/[^a-zA-Z0-9]/g,"");
+  var row=document.getElementById("szrow"+uid);
+  if(row){row.querySelectorAll(".sz-btn").forEach(function(b,i){b.classList.toggle("active",i===idx);});}
+  var p=products.find(function(x){return x.id===pid;});
+  var el=document.getElementById("pr"+uid);
+  if(el&&p&&p.sizes) el.textContent="S$"+p.sizes[idx].price.toFixed(2);
+}
+function makeCartKey(pid){var p=products.find(function(x){return x.id===pid;});if(!p||!p.sizes)return pid;return pid+"::"+(selectedSizes[pid]||0);}
+function keyToPid(ck){return ck.split("::")[0];}
+function keyToIdx(ck){var s=ck.indexOf("::");return s>0?parseInt(ck.substring(s+2)):null;}
+function keyPrice(ck){var p=products.find(function(x){return x.id===keyToPid(ck);});if(!p)return 0;var i=keyToIdx(ck);return(p.sizes&&i!==null&&p.sizes[i])?p.sizes[i].price:p.price;}
+function keyLabel(ck){var p=products.find(function(x){return x.id===keyToPid(ck);});if(!p||!p.sizes)return"";var i=keyToIdx(ck);return(i!==null&&p.sizes[i])?p.sizes[i].label:"";}
+
+var cart={},orderType="delivery",activeFilter="all",selectedSizes={};
+function filterProducts(cat,btn){activeFilter=cat;document.querySelectorAll(".filter-btn").forEach(function(b){b.classList.remove("active");});btn.classList.add("active");var t={all:"All Products",glossy:"Glossy & Thick Slimes",butter:"Butter & Melted Butter Slimes",fluffy:"Fluffy & Cloud Dough",ice:"Ice Slimes",crunch:"Crunchy Slimes",extras:"Extras & Accessories"};document.getElementById("sectionTitle").textContent=t[cat]||"Products";renderProducts();}
+
+function renderProducts(){
+  var list=activeFilter==="all"?products:products.filter(function(p){return p.category===activeFilter;});
+  var grid=document.getElementById("productsGrid");grid.innerHTML="";
+  list.forEach(function(p){
+    var div=document.createElement("div");div.className="product-card";
+    var sc=(p.scent&&p.scent!=="None"&&p.scent!=="")?"<span class='cbadge cbadge-sc'>&#x1F338; "+p.scent+"</span>":"";
+    if(p.sizes&&selectedSizes[p.id]===undefined) selectedSizes[p.id]=0;
+    var dp=p.sizes?p.sizes[selectedSizes[p.id]||0].price:p.price;
+    var uid=p.id.replace(/[^a-zA-Z0-9]/g,"");
+    var szHtml="";
+    if(p.sizes){
+      szHtml="<div class='size-row' id='szrow"+uid+"'>";
+      p.sizes.forEach(function(sz,i){szHtml+="<button class='sz-btn"+(i===(selectedSizes[p.id]||0)?" active":"")+"' data-pid='"+p.id+"' data-idx='"+i+"'>"+sz.label+"<br>S$"+sz.price.toFixed(2)+"</button>";});
+      szHtml+="</div>";
+    }
+    div.innerHTML="<div class='slime-art'>"+getSlimeArt(p)+"<div class='card-badges'>"+sc+"</div></div>"
+      +"<div class='product-info'><div class='product-name'>"+p.name+"</div>"
+      +"<div class='product-desc'>"+p.desc+"</div>"
+      +szHtml
+      +"<div class='product-footer'>"
+      +"<div class='product-price' id='pr"+uid+"'>S$"+dp.toFixed(2)+"</div>"
+      +"<button class='add-btn' id='btn"+uid+"'>&#x2726; Quick Add</button>"
+      +"</div></div></div>";
+    grid.appendChild(div);
+    if(p.sizes){var row=div.querySelector(".size-row");row.querySelectorAll(".sz-btn").forEach(function(btn){btn.addEventListener("click",function(){setSize(this.dataset.pid,parseInt(this.dataset.idx));});});}
+    div.querySelector(".add-btn").addEventListener("click",function(){addToCart(p.id);});
+  });
+}
+function bid(id){return"btn"+id.replace(/[^a-zA-Z0-9]/g,"");}
+function getP(id){return products.find(function(x){return x.id===id;});}
+function getSubtotal(){return Object.keys(cart).reduce(function(s,ck){return s+keyPrice(ck)*cart[ck];},0);}
+function getItemCount(){return Object.keys(cart).reduce(function(s,ck){return s+cart[ck];},0);}
+function getDeliveryFee(){if(orderType==="collection")return 0;var sub=getSubtotal();if(sub>=40)return 0;var sel=document.getElementById("deliverySpeed");return(sel&&sel.value==="express")?9:4.5;}
+function addToCart(pid){var ck=makeCartKey(pid);cart[ck]=(cart[ck]||0)+1;refreshCart();var total=Object.keys(cart).filter(function(k){return keyToPid(k)===pid;}).reduce(function(s,k){return s+cart[k];},0);var btn=document.getElementById(bid(pid));if(btn){btn.textContent="\u2713 ("+total+")";btn.classList.add("added");}var badge=document.getElementById("cartCount");badge.classList.remove("bump");void badge.offsetWidth;badge.classList.add("bump");}
+function removeFromCart(ck){if(cart[ck]>1)cart[ck]--;else delete cart[ck];refreshCart();var pid=keyToPid(ck);var total=Object.keys(cart).filter(function(k){return keyToPid(k)===pid;}).reduce(function(s,k){return s+cart[k];},0);var btn=document.getElementById(bid(pid));if(btn){total>0?(btn.textContent="\u2713 ("+total+")",btn.classList.add("added")):(btn.textContent="✦ Quick Add",btn.classList.remove("added"));}}
+function refreshCart(){var sub=getSubtotal(),count=getItemCount();document.getElementById("cartCount").textContent=count;document.getElementById("cartTotal").textContent="S$"+sub.toFixed(2);document.getElementById("checkoutBtn").disabled=count===0;var div=document.getElementById("cartItems");if(!count){div.innerHTML="<div class='empty-cart'><span class='emoji'>&#x1FAE7;</span><p>Your cart is empty!<br>Add some slimes to get started.</p></div>";return;}div.innerHTML=Object.keys(cart).map(function(ck){var p=getP(keyToPid(ck)),qty=cart[ck];if(!p)return"";var lbl=keyLabel(ck),prc=keyPrice(ck);var szTag=lbl?"<span style='font-size:.72rem;color:var(--lavender);font-weight:700;display:block'>"+lbl+"</span>":"";return"<div class='cart-item'><div class='cart-thumb'>"+getSlimeArt(p)+"</div><div class='cart-item-info'><div class='cart-item-name'>"+p.name+"</div>"+szTag+"<div class='cart-item-price'>S$"+(prc*qty).toFixed(2)+" ("+qty+"\u00d7)</div></div><div class='cart-item-controls'><button class='qty-btn' onclick=\"removeFromCart('"+ck+"')\">\u2212</button><span class='qty-num'>"+qty+"</span><button class='qty-btn' onclick=\"addToCart('"+keyToPid(ck)+"')\">+</button></div></div>";}).join("");}
+function openCart(){document.getElementById("cartOverlay").classList.add("open");document.getElementById("cartSidebar").classList.add("open");}
+function closeCart(){document.getElementById("cartOverlay").classList.remove("open");document.getElementById("cartSidebar").classList.remove("open");}
+function setOrderType(type){orderType=type;["delivery","collection"].forEach(function(t){document.getElementById("btn-"+t).classList.toggle("active",t===type);});document.getElementById("deliverySection").classList.toggle("hide",type==="collection");document.getElementById("cardSection").classList.toggle("hide",type==="collection");document.getElementById("collectionSection").classList.toggle("hide",type==="delivery");updateSummary();}
+function openCheckout(){closeCart();var sub=getSubtotal();var fo=document.getElementById("freeOption"),sel=document.getElementById("deliverySpeed");if(sub>=40){fo.disabled=false;fo.textContent="&#x1F389; Free Delivery (eligible!)";sel.value="free";}else{fo.disabled=true;if(sel.value==="free")sel.value="standard";}updateSummary();document.getElementById("checkoutModal").classList.add("open");}
+function closeCheckout(){document.getElementById("checkoutModal").classList.remove("open");}
+function updateSummary(){var sub=getSubtotal(),fee=getDeliveryFee(),grand=sub+fee;document.getElementById("summaryItems").innerHTML=Object.keys(cart).map(function(ck){var p=getP(keyToPid(ck)),qty=cart[ck];if(!p)return"";var lbl=keyLabel(ck),prc=keyPrice(ck);return"<div class='s-row'><span>"+p.name+(lbl?" ("+lbl+")":"")+" x"+qty+"</span><span>S$"+(prc*qty).toFixed(2)+"</span></div>";}).join("");document.getElementById("grandTotal").textContent="S$"+grand.toFixed(2);var lbl=document.getElementById("feeLbl"),amt=document.getElementById("feeAmt");if(orderType==="collection"){lbl.textContent="Payment";amt.textContent="Cash on collection";}else{lbl.textContent="Delivery fee";amt.textContent=fee===0?"FREE &#x1F389;":"S$"+fee.toFixed(2);}}
+function formatCard(el){var v=el.value.replace(/\D/g,"").substring(0,16);el.value=v.replace(/(.{4})/g,"$1 ").trim();}
+function formatExpiry(el){var v=el.value.replace(/\D/g,"").substring(0,4);if(v.length>=3)v=v.substring(0,2)+"/"+v.substring(2);el.value=v;}
+function showAbout(){document.getElementById("aboutPage").classList.remove("hide");document.body.style.overflow="hidden";}
+function hideAbout(){document.getElementById("aboutPage").classList.add("hide");document.body.style.overflow="";}
+async function placeOrder(){var first=document.getElementById("firstName").value.trim(),last=document.getElementById("lastName").value.trim(),phone=document.getElementById("phone").value.trim(),email=document.getElementById("email").value.trim();if(!first||!last||!phone||!email){alert("Please fill in all your details!");return;}if(!email.includes("@")){alert("Please enter a valid email.");return;}var address="Self-Collection (address via WhatsApp)",speedLabel="Self-Collection";if(orderType==="delivery"){var addr=document.getElementById("address").value.trim(),postal=document.getElementById("postal").value.trim();var cname=document.getElementById("cardName").value.trim(),cnum=document.getElementById("cardNumber").value.replace(/\s/g,""),cexp=document.getElementById("cardExpiry").value.trim(),ccvv=document.getElementById("cardCvv").value.trim();if(!addr||!postal){alert("Please enter your delivery address!");return;}if(postal.length!==6||isNaN(postal)){alert("Please enter a valid 6-digit postal code.");return;}if(!cname||cnum.length<16||!cexp||!ccvv){alert("Please fill in all card details!");return;}address=addr+", Singapore "+postal;var sp={standard:"Standard (3-5 days)",express:"Express (Next day)",free:"Free Delivery"};speedLabel=sp[document.getElementById("deliverySpeed").value]||"Standard";}var orderId="SLD-"+Date.now().toString(36).toUpperCase();var sub=getSubtotal(),fee=getDeliveryFee(),grand=sub+fee;var payMethod=orderType==="delivery"?"Credit/Debit Card (Visa / Amex)":"Cash on Collection";var itemsText=Object.keys(cart).map(function(ck){var p=getP(keyToPid(ck));if(!p)return"";var lbl=keyLabel(ck),prc=keyPrice(ck);return p.name+(lbl?" ("+lbl+")":"")+" x"+cart[ck]+" - S$"+(prc*cart[ck]).toFixed(2);}).join("\n");var btn=document.getElementById("placeOrderBtn");btn.textContent="Sending receipt...";btn.disabled=true;var sent=false;try{await emailjs.send(EJ_SERVICE,EJ_TEMPLATE,{order_id:orderId,to_name:first+" "+last,to_email:email,phone:phone,order_type:orderType==="delivery"?"Home Delivery":"Self-Collection",address:address,items_text:itemsText,subtotal:"S$"+sub.toFixed(2),delivery_fee:orderType==="delivery"?(fee===0?"FREE":"S$"+fee.toFixed(2)):"N/A",grand_total:"S$"+grand.toFixed(2),payment_method:payMethod,delivery_info:speedLabel});sent=true;}catch(e){console.warn("EmailJS not configured:",e);}var rows=Object.keys(cart).map(function(ck){var p=getP(keyToPid(ck)),qty=cart[ck];if(!p)return"";var lbl=keyLabel(ck),prc=keyPrice(ck);return"<div class='r-row'><span>"+p.name+(lbl?" ("+lbl+")":"")+" x"+qty+"</span><span>S$"+(prc*qty).toFixed(2)+"</span></div>";}).join("");document.getElementById("modalContent").innerHTML="<div class='success-wrap'><span class='big-emoji'>&#x1F389;</span><h2>Order Placed!</h2><p>Thanks, <strong>"+first+"</strong>! We will WhatsApp you on <strong>"+phone+"</strong> to confirm shortly.</p><div class='order-id'>"+orderId+"</div><div class='pay-badge'>&#x1F4B3; "+payMethod+"</div>"+(sent?"<div class='email-ok'>&#x2705; Receipt sent to <strong>"+email+"</strong>!</div>":"<div class='email-demo'>&#x26A0;&#xFE0F; Email could not send &mdash; please check your EmailJS template settings.</div>")+"<div class='receipt-box'><div class='r-title'>&#x1F9FE; Your Receipt</div>"+rows+"<div class='r-row'><span>Subtotal</span><span>S$"+sub.toFixed(2)+"</span></div><div class='r-row'><span>"+(orderType==="delivery"?"Delivery":"Collection")+"</span><span>"+(orderType==="delivery"?(fee===0?"FREE":"S$"+fee.toFixed(2)):"Cash")+"</span></div><div class='r-row'><span>Total</span><span>S$"+grand.toFixed(2)+"</span></div></div><p style='font-size:.8rem;margin-bottom:16px'>"+speedLabel+"</p><button class='back-btn' onclick='finishOrder()'>&#x1FAE7; Keep Sliming</button></div>";}
+function finishOrder(){cart={};products.forEach(function(p){selectedSizes[p.id]=0;var b=document.getElementById(bid(p.id));if(b){b.textContent="+ Add";b.classList.remove("added");}var row=document.getElementById("szrow"+p.id.replace(/[^a-zA-Z0-9]/g,""));if(row){row.querySelectorAll(".sz-btn").forEach(function(b2,i){b2.classList.toggle("active",i===0);});}});refreshCart();closeCheckout();}
+
+var products=[
+  {id:"00001",name:"Peachy Paradise",category:"glossy",price:8,scent:"Peach",fillType:"standard",charmType:"sprinkles",colors:["#ff9eb5","#e05580","#ffd6e6"],desc:"Gorgeous glossy &amp; thick slime in light pink &amp; deep pink. Loaded with sprinkles. 130ml."},
+  {id:"00002",name:"Melon Sorbet",category:"glossy",price:8,scent:"Peach",fillType:"standard",charmType:"glitter",colors:["#78c840","#e8760a","#d0f0a8"],desc:"Refreshing orange-green glossy slime. Smells like summer! 130ml."},
+  {id:"00003",name:"Yam Paste",category:"glossy",price:8,scent:"Rose",fillType:"standard",charmType:"sprinkles",colors:["#8b3aaa","#5a1a7a","#d4a8ee"],desc:"Thick glossy slime in deep purple. Rose-scented and deeply satisfying."},
+  {id:"STR-PRD",name:"Strawberry Paradise",category:"butter",price:8,scent:"Strawberry",fillType:"standard",charmType:"strawberry",colors:["#ffb3c6","#c0406a","#ffe6ec"],desc:"Silky butter slime with realistic strawberry charms &amp; sprinkles. 200ml."},
+  {id:"BBB",name:"Bubblegum",category:"glossy",price:8,sizes:[{label:"Small 130ml",price:8},{label:"Large 200ml",price:13}],scent:"Bubblegum",fillType:"standard",charmType:"sprinkles",colors:["#ff80bf","#cc2878","#ffccdd"],desc:"Ultra glossy pink bubblegum-scented slime with sprinkles."},
+  {id:"XTR-CRN-PNK",name:"Extreme Crunch Pink",category:"crunch",price:8,sizes:[{label:"Small 130ml",price:8},{label:"Large 200ml",price:13}],scent:"Strawberry",fillType:"standard",charmType:"foam",colors:["#ff85b3","#ff3370","#ffd0e4"],desc:"Satisfying crunchy pink slime packed with foam balls &amp; sprinkles."},
+  {id:"PNK-FLF-NCR",name:"Pink Fluffy Unicorn",category:"butter",price:8,sizes:[{label:"Small 130ml",price:8},{label:"Large 200ml",price:13}],scent:"Bubblegum",fillType:"standard",charmType:"unicorn",colors:["#ffc2d6","#d880a8","#fff0f8"],desc:"Dreamy butter slime with a detailed unicorn head charm."},
+  {id:"RNB-MGC",name:"Rainbow Magic",category:"glossy",price:12,scent:"Peach",fillType:"rainbow7",charmType:"rainbow7",colors:["#ff9966","#cc44ff","#fff8ff"],desc:"All 7 rainbow colours layered one by one in one magical slime. 200ml!"},
+  {id:"MRS-FLF",name:"Marshmallow Fluff",category:"fluffy",price:10,scent:"Mint",fillType:"white",charmType:"foam",colors:["#ffffff","#e0e0e0","#ffffff"],desc:"Pure white pillowy shaving foam fluff loaded with foam balls. 200ml."},
+  {id:"DNC-LVS",name:"Dancing Elves",category:"butter",price:8,sizes:[{label:"Small 130ml",price:8},{label:"Large 200ml",price:13}],scent:"Bubblegum",fillType:"standard",charmType:"elf",colors:["#6dbf72","#2a7a2e","#b0e6b3"],desc:"Elf green melted butter slime with a dancing elf charm!"},
+  {id:"WLD-CRR",name:"Wilde Carrots",category:"fluffy",price:13,scent:"Peach",fillType:"standard",charmType:"glitter",colors:["#ff8c42","#c04000","#ffc090"],desc:"Fox orange shaving foam fluff with glitter &amp; sprinkles. 200ml."},
+  {id:"SWT-DRM",name:"Sweet Dreams",category:"butter",price:13,scent:"Peach",fillType:"gradient_h",charmType:"glitterstars",colors:["#ff9dd6","#8030b0","#fce0f0"],desc:"Butter slime in a gorgeous pink-to-purple gradient with silver glitter. 200ml."},
+  {id:"SCH-IN-PND",name:"Duck in Pond",category:"glossy",price:8,sizes:[{label:"Small 130ml",price:8},{label:"Large 200ml",price:12}],scent:"Ocean",fillType:"standard",charmType:"duck",colors:["#7dd8e8","#1898b8","#c0eef8"],desc:"Ocean-scented light blue glossy slime with a cute duck charm!"},
+  {id:"CLD-FLF",name:"Cloud Fluff",category:"ice",price:13,scent:"None",fillType:"standard",charmType:"foam",colors:["#bde8ff","#5ab8e8","#e8f8ff"],desc:"Light baby blue ice-texture slime &mdash; cool, crisp and satisfying. 200ml."},
+  {id:"FRW",name:"Fireworks",category:"glossy",price:12,scent:"Peach",fillType:"fireworks",charmType:"fireworks",colors:["#ff3370","#ffe840","#ffffff"],desc:"Colourful multi-hued glossy slime bursting with glitter! 200ml."},
+  {id:"NCR-CHR-5PC",name:"Unicorn Charms 5pc",category:"extras",price:3,scent:"",fillType:"display",charmType:"unicorn_charms",colors:["#ffd1e8","#b888f0","#fff8ff"],charmDisplay:"<polygon points='150,45 145,62 155,62' fill='#FFD700' opacity='.95'/><circle cx='98' cy='80' r='22' fill='#FFD6E8' stroke='#FF6EB4' stroke-width='2'/><circle cx='202' cy='80' r='20' fill='#FFD6E8' stroke='#C67EFF' stroke-width='2'/><circle cx='150' cy='130' r='26' fill='#FFD6E8' stroke='#FFD700' stroke-width='2.5'/><text x='150' y='135' text-anchor='middle' font-size='18'>&#x1F984;</text><text x='98' y='85' text-anchor='middle' font-size='14'>&#x1F338;</text><text x='202' y='85' text-anchor='middle' font-size='14'>&#x2B50;</text><text x='150' y='170' text-anchor='middle' font-family='Arial' font-size='9' font-weight='700' fill='#b888f0'>Choose any 5!</text>",desc:"Pick any 5 adorable unicorn charms for S$3!"},
+  {id:"CHR-CHR-10P",name:"Christmas Charms",category:"extras",price:5,scent:"",fillType:"display",charmType:"christmas_charms",colors:["#e82020","#1a8a22","#ffd700"],charmDisplay:"<text x='98' y='90' text-anchor='middle' font-size='28'>&#x1F384;</text><text x='202' y='86' text-anchor='middle' font-size='24'>&#x26C4;</text><text x='150' y='140' text-anchor='middle' font-size='32'>&#x1F385;</text><text x='110' y='155' text-anchor='middle' font-size='20'>&#x2B50;</text><text x='190' y='150' text-anchor='middle' font-size='20'>&#x1F514;</text><text x='150' y='175' text-anchor='middle' font-family='Arial' font-size='9' font-weight='700' fill='#1a8a22'>Choose any 10!</text>",desc:"Any 10 festive Christmas charms for S$5!"},
+  {id:"RS1",name:"Rose",category:"glossy",price:9,scent:"Rose",fillType:"standard",charmType:"rose",colors:["#ff7b9c","#b02050","#ffb8cc"],desc:"Rose-scented glossy slime with beautiful rose flower charms. 130ml."},
+  {id:"STC-PCK",name:"Sticker Packs 5pc",category:"extras",price:2.5,scent:"",fillType:"display",charmType:"none",colors:["#ff9eb5","#60a8e8","#ffe680"],desc:"Cute stickers imported from Japan! Each pack contains 5 adorable stickers."},
+  {id:"JST-BTT",name:"Just Butter",category:"butter",price:13,scent:"None",fillType:"standard",charmType:"glitter",colors:["#f5e6a3","#b89020","#fef8d8"],desc:"Pale yellow butter slime with matching glitter. Pure and satisfying. 200ml."},
+  {id:"MRL",name:"Emerald",category:"glossy",price:12,scent:"Ocean",fillType:"standard",charmType:"glitterstars",colors:["#2ab870","#087040","#88e0b8"],desc:"Stunning emerald green ocean-scented glossy slime with sprinkles. 200ml."},
+  {id:"MDN-HWC",name:"Midnight Hwachae",category:"butter",price:8,sizes:[{label:"Small 130ml",price:8},{label:"Large 200ml",price:13}],scent:"Peach",fillType:"standard",charmType:"pink_fruit",colors:["#ffb3d9","#ff4499","#ffe0f0"],desc:"Pink melted butter slime with circle fruit charms &amp; glitter."},
+  {id:"SNT-CLS",name:"Santa Claus is Coming to Town",category:"ice",price:13,scent:"Peach",fillType:"standard",charmType:"santa",colors:["#e02020","#800000","#ff8888"],desc:"Bright red ice-texture slime with Christmas charms &amp; snowflakes. 200ml."},
+  {id:"LLY",name:"Lily",category:"glossy",price:9,scent:"Lily",fillType:"split_lr_wh",charmType:"lily_split",colors:["#7d3c98","#500880","#d8a8f0"],desc:"Half white, half purple lily-scented glossy slime. 130ml."},
+  {id:"XTR-CRN",name:"Extreme Crunch Blue",category:"crunch",price:8,sizes:[{label:"Small 130ml",price:8},{label:"Large 200ml",price:13}],scent:"Ocean",fillType:"standard",charmType:"foamblue",colors:["#4da8e8","#0858a8","#a8d8f8"],desc:"Ocean-scented glossy blue crunch slime with foam balls &amp; sprinkles."},
+  {id:"BLC",name:"Blackpink",category:"butter",price:8,sizes:[{label:"Small 130ml",price:8},{label:"Large 200ml",price:14}],scent:"Bubblegum",fillType:"split_lr",charmType:"blackpink",colors:["#ff5b96","#1a1a1a","#ffb0cc"],desc:"Striking half-pink, half-black butter slime. No colour mixing! 200ml."},
+  {id:"PND-FLF",name:"Pandan Fluff",category:"butter",price:8,sizes:[{label:"Small 130ml",price:8},{label:"Large 200ml",price:13}],scent:"None",fillType:"standard",charmType:"foamstars",colors:["#a8d8a8","#407840","#d4f0d4"],desc:"Pale green melted butter slime inspired by SG's favourite flavour!"},
+  {id:"STR-PST",name:"Sunday Sundae",category:"glossy",price:12,scent:"Peach",fillType:"standard",charmType:"fruit_circles",colors:["#ff8fab","#c02858","#ffc8d8"],desc:"Glossy pink peach-scented slime with circle fruit charms. 200ml."},
+  {id:"CLD-DGH",name:"Cloud Dough",category:"fluffy",price:13,scent:"Bubblegum",fillType:"standard",charmType:"foam",colors:["#87ceeb","#2880c0","#e0f4ff"],desc:"Blue &amp; white cloud dough &mdash; fluffy yet doughy, squishy &amp; beautiful. 200ml."},
+  {id:"BRR-GRP",name:"Berry Grape",category:"glossy",price:9,sizes:[{label:"Small 130ml",price:9},{label:"Large 200ml",price:12}],scent:"Peach",fillType:"standard",charmType:"sprinkles",colors:["#9b3dca","#500080","#d8a8f0"],desc:"Rich purple/red glossy slime."},
+  {id:"POOH",name:"Pooh's Hunny Hunt",category:"glossy",price:12,scent:"Mango",fillType:"standard",charmType:"honeybee",colors:["#ffd700","#b07000","#fff5a0"],desc:"Mango-scented clear yellow glossy slime with Winnie the Pooh charms! 200ml."},
+  {id:"CTV-AND",name:"Activator Set",category:"extras",price:6,scent:"",fillType:"display",charmType:"none",colors:["#b0c4de","#607090","#d8e8f8"],desc:"Set of Activator (100ml) &amp; Deactivator (100ml) &mdash; keep your slime perfect!"},
+  {id:"BB-BLST",name:"Boba Blast!",category:"fluffy",price:8,scent:"Coffee",fillType:"standard",charmType:"foam",colors:["#c8a06a","#6b3a1f","#f5e6cc"],desc:"Fluffy coffee-scented slime loaded with foam balls &amp; coffee charms. 200ml."},
+  {id:"PNT-BTTR-N-JLLY-TST-TP-P",name:"PB&amp;J Toast Top-Up",category:"extras",price:5,scent:"None",fillType:"standard",charmType:"sprinkles",colors:["#d4a055","#8b2252","#f7e4c0"],desc:"Clay, slushy &amp; thick texture that turns buttery when mixed. 90ml top-up."},
+  {id:"MNG-SG-DLGHT",name:"Mango Sago Delight",category:"butter",price:16,scent:"Mango",fillType:"standard",charmType:"fruit_circles",colors:["#FFD700","#e8860a","#fff5a0"],desc:"Butter slime + jelly cubes with mango scent. Includes yellow clear slime. 200ml."},
+  {id:"CN-SHMMRS",name:"Ocean Shimmers",category:"glossy",price:15,scent:"Ocean",fillType:"standard",charmType:"glitterstars",colors:["#00b4cc","#00607a","#a8f0ff"],desc:"Crystal clear ocean-scented slime with real seashells from Langkawi! 200ml."},
+  {id:"HNY-YZ",name:"Honey Yuzu",category:"glossy",price:13,scent:"Honeysuckle",fillType:"standard",charmType:"pink_fruit",colors:["#FFD700","#e8860a","#fff5a0"],desc:"Clear honeysuckle-scented slime with orange &amp; lemon charms. 200ml."},
+  {id:"WHN-LF-THRWS-Y-LMNS",name:"When Life Gives Lemons",category:"glossy",price:14,scent:"Honeysuckle",fillType:"standard",charmType:"fruit_circles",colors:["#ffe44d","#b8c820","#fffff0"],desc:"Watery glossy honeysuckle-scented slime with lemon charms. 200ml."},
+  {id:"WTRMLN-SGR-HGH",name:"Watermelon Sugar High",category:"glossy",price:14,scent:"Peach",fillType:"standard",charmType:"fruit_circles",colors:["#e83050","#1a8a22","#ffa8b8"],desc:"Thick glossy slime with watermelon charms, red clear slime &amp; pastel pieces. 200ml."},
+  {id:"FSTV-CNY",name:"Festive CNY!!!",category:"fluffy",price:13,scent:"Peach",fillType:"standard",charmType:"glitterstars",colors:["#e82020","#c8900a","#ffd700"],desc:"Clear + shaving foam peach-scented slime with gold glitter. 200ml."},
+  {id:"CLLS-FLFF-MRNG",name:"Callie's Fluff Meringue",category:"fluffy",price:13,scent:"Lily",fillType:"white",charmType:"foam",colors:["#fff8f0","#f0d8e8","#ffffff"],desc:"Lily-scented shaving foam slime with Callie's choice of charms. 200ml."},
+  {id:"PRPL-MTHYST",name:"Purple Amethyst",category:"glossy",price:12,scent:"None",fillType:"standard",charmType:"glitterstars",colors:["#8b35c8","#500880","#d8a8f0"],desc:"Thick glossy purple slime with beautiful rock crystal charms. 200ml."},
+  {id:"DCK-N-SWMP",name:"Duck in Swamp",category:"butter",price:13,scent:"Ocean",fillType:"standard",charmType:"duck",colors:["#6db870","#2a6a2e","#c8f0c8"],desc:"Melted butter ocean-scented slime with duck charms. 250ml."},
+  {id:"PCHY-PRDS-FLFF",name:"Peachy Paradise Fluff",category:"ice",price:13,scent:"Peach",fillType:"standard",charmType:"fruit_circles",colors:["#ffb87a","#e86830","#ffd8b0"],desc:"Butter + ice texture peach-scented slime with peach charms. 200ml."},
+  {id:"HT-SND",name:"Hot Sundae",category:"glossy",price:13,scent:"Mango",fillType:"standard",charmType:"fruit_circles",colors:["#e83820","#c01808","#ff8870"],desc:"Thick mango-scented slime with tropical fruit charms. 200ml."},
+  {id:"KNTC-SND-SLM",name:"Kinetic Sand Slime",category:"crunch",price:13,scent:"Peach",fillType:"standard",charmType:"sprinkles",colors:["#c8a060","#8b6030","#f5e0c0"],desc:"Unique kinetic sand texture with a peach-scented slime base. 220ml."},
+
+];
+
+
+/* ── PAGE NAVIGATION ── */
+function showPage(id){
+  // hide all overlays first
+  ['giftGuide','subscribe','slimeCare'].forEach(function(p){
+    var el=document.getElementById(p);
+    if(el) el.classList.add('hide');
+  });
+  var el=document.getElementById(id);
+  if(el){el.classList.remove('hide');document.body.style.overflow='hidden';}
+}
+function hidePage(id){
+  var el=document.getElementById(id);
+  if(el) el.classList.add('hide');
+  // only restore scroll if no other overlays are open
+  var anyOpen=['giftGuide','subscribe','slimeCare'].some(function(p){
+    var e=document.getElementById(p); return e&&!e.classList.contains('hide');
+  });
+  if(!anyOpen) document.body.style.overflow='';
+}
+
+var selectedPlan='starter';
+function showSubscribeForm(plan){
+  selectedPlan=plan;
+  var wrap=document.getElementById('subFormWrap');
+  var desc=document.getElementById('subFormDesc');
+  if(wrap) wrap.style.display='block';
+  if(desc){
+    desc.textContent = plan==='annual'
+      ? 'Annual Plan: 12 slimes over 12 months for S$115 total. Fill in your details!'
+      : 'Starter Plan: 1 slime/month for 3 months at S$40/month. Fill in your details!';
+  }
+  wrap.scrollIntoView({behavior:'smooth'});
+}
+function submitSubscription(){
+  var first=document.getElementById('subFirst').value.trim();
+  var last=document.getElementById('subLast').value.trim();
+  var phone=document.getElementById('subPhone').value.trim();
+  var email=document.getElementById('subEmail').value.trim();
+  var addr=document.getElementById('subAddress').value.trim();
+  if(!first||!last||!phone||!email||!addr){alert('Please fill in all fields!');return;}
+  document.getElementById('subSuccess').style.display='block';
+  document.getElementById('subSuccess').scrollIntoView({behavior:'smooth'});
+}
+
+renderProducts();updateSummary();
+
+/* ── ASMR VIDEOS ── */
+var asmrVideos = [
+  // Add your YouTube video IDs here — ask Claude to add them!
+  // Example: {id:"dQw4w9WgXcQ", title:"Rainbow Magic ASMR", slime:"Rainbow Magic", type:"glossy", desc:"Satisfying stretchy glossy slime sounds."},
+];
+
+function renderAsmr(filter){
+  var grid = document.getElementById('asmrGrid');
+  if(!grid) return;
+  var list = filter && filter!=='all' ? asmrVideos.filter(function(v){return v.type===filter;}) : asmrVideos;
+
+  if(asmrVideos.length === 0){
+    grid.innerHTML = '<div class="asmr-coming-soon" style="grid-column:1/-1">'
+      +'<span class="cs-icon">&#x1F3A7;</span>'
+      +'<h3>Videos Coming Soon!</h3>'
+      +'<p>We are currently uploading our ASMR video collection. Follow us on Instagram <strong>@slimydotcom</strong> to watch now, and check back here soon for the full library!'
+      +'<br><br>Each slime gets its own satisfying ASMR moment &mdash; glossy stretches, buttery spreads, and satisfying crunches.</p>'
+      +'</div>';
+    return;
+  }
+
+  if(list.length === 0){
+    grid.innerHTML = '<div class="asmr-coming-soon" style="grid-column:1/-1">'
+      +'<span class="cs-icon">&#x1FAE7;</span>'
+      +'<h3>No videos in this category yet!</h3>'
+      +'<p>Check back soon &mdash; we are adding more videos regularly.</p>'
+      +'</div>';
+    return;
+  }
+
+  grid.innerHTML = list.map(function(v){
+    var embedUrl = 'https://www.youtube.com/embed/'+v.id+'?rel=0&modestbranding=1';
+    return '<div class="asmr-card" data-type="'+v.type+'">'
+      +'<div class="asmr-thumb"><iframe src="'+embedUrl+'" title="'+v.title+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>'
+      +'<div class="asmr-info">'
+      +'<h3>'+v.title+'</h3>'
+      +'<p>'+v.desc+'</p>'
+      +'<div class="asmr-tags"><span class="asmr-tag">&#x1FAE7; '+v.slime+'</span></div>'
+      +'</div></div>';
+  }).join('');
+}
+
+function filterAsmr(type, btn){
+  document.querySelectorAll('.asmr-filter').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  renderAsmr(type);
+}
+
+// Render on page load
+renderAsmr('all');
+
+
+
+</script>
+
+<div id="asmrPage" class="page-overlay hide">
+  <div class="page-header">
+    <span class="logo-name">Slimydotcom &#x1FAE7;</span>
+    <button class="back-shop-btn" onclick="hidePage('asmrPage')">&larr; Back to Shop</button>
+  </div>
+  <div class="page-body">
+
+    <div class="page-hero">
+      <div class="page-badge asmr-hero-badge">&#x1F3A7; Slime ASMR</div>
+      <h1 style="background:linear-gradient(135deg,#c67eff,#5cdfff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:'Fredoka One',cursive">Satisfying Slime Sounds &#x1FAE7;</h1>
+      <p>Watch our handmade slimes being stretched, squished, and played with. Pure ASMR bliss.</p>
+    </div>
+
+    <div class="asmr-filter-row">
+      <button class="asmr-filter active" onclick="filterAsmr('all',this)">&#x2728; All</button>
+      <button class="asmr-filter" onclick="filterAsmr('glossy',this)">&#x1F48E; Glossy</button>
+      <button class="asmr-filter" onclick="filterAsmr('butter',this)">&#x1F9C8; Butter</button>
+      <button class="asmr-filter" onclick="filterAsmr('crunch',this)">&#x1F37F; Crunchy</button>
+      <button class="asmr-filter" onclick="filterAsmr('fluffy',this)">&#x2601;&#xFE0F; Fluffy</button>
+    </div>
+
+    <div class="asmr-grid" id="asmrGrid">
+      <!-- Cards rendered by JS -->
+    </div>
+
+    <div class="asmr-follow">
+      <h3>&#x1F3A5; More on Instagram &amp; TikTok</h3>
+      <p>We post new ASMR videos regularly on Instagram and TikTok. Follow us to never miss a satisfying drop &mdash; new slime releases, behind-the-scenes, and plenty of squishing sounds.</p>
+      <a class="asmr-follow-btn" href="https://instagram.com/slimydotcom" target="_blank">&#x1F4F7; @slimydotcom on Instagram</a>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
