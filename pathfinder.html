@@ -1,0 +1,2244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pathfinder - Mindful Productivity & Focus Hub</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Caveat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #eaf4ed 0%, #e3f0f9 100%);
+      --card-bg: rgba(255, 255, 255, 0.90);
+      --card-border: rgba(255, 255, 255, 0.85);
+      --accent-main: #73a863;
+      --accent-light: #d8ebd2;
+      --accent-dark: #3b6b2d;
+      --accent-secondary: #a3cc95;
+      --text-main: #21361c;
+      --text-muted: #56734f;
+      --shadow-sm: 0 4px 15px rgba(115, 168, 99, 0.08);
+      --shadow-lg: 0 12px 35px rgba(115, 168, 99, 0.15);
+      --nav-bg: rgba(255, 255, 255, 0.85);
+      --theme-banner: linear-gradient(135deg, #a8e0a3 0%, #73a863 100%);
+      --theme-name: "Forest & Lush Greenery";
+      --theme-icon: "🌲";
+    }
+
+    [data-theme="ocean"] {
+      --bg-gradient: linear-gradient(135deg, #eaf3f8 0%, #e1eaf5 100%);
+      --card-bg: rgba(255, 255, 255, 0.90);
+      --card-border: rgba(255, 255, 255, 0.85);
+      --accent-main: #4a86b8;
+      --accent-light: #d3e5f5;
+      --accent-dark: #224c70;
+      --accent-secondary: #7cb2dc;
+      --text-main: #142838;
+      --text-muted: #4e6d87;
+      --shadow-sm: 0 4px 15px rgba(74, 134, 184, 0.08);
+      --shadow-lg: 0 12px 35px rgba(74, 134, 184, 0.15);
+      --nav-bg: rgba(255, 255, 255, 0.85);
+      --theme-banner: linear-gradient(135deg, #82bde8 0%, #4a86b8 100%);
+      --theme-name: "Ocean Breeze & Deep Waters";
+      --theme-icon: "🌊";
+    }
+
+    [data-theme="peach"] {
+      --bg-gradient: linear-gradient(135deg, #fff2eb 0%, #fde4d8 100%);
+      --card-bg: rgba(255, 255, 255, 0.90);
+      --card-border: rgba(255, 255, 255, 0.85);
+      --accent-main: #e88d72;
+      --accent-light: #fce2d7;
+      --accent-dark: #9e432a;
+      --accent-secondary: #f3b19e;
+      --text-main: #3d1f16;
+      --text-muted: #825447;
+      --shadow-sm: 0 4px 15px rgba(232, 141, 114, 0.08);
+      --shadow-lg: 0 12px 35px rgba(232, 141, 114, 0.15);
+      --nav-bg: rgba(255, 255, 255, 0.85);
+      --theme-banner: linear-gradient(135deg, #fbb8a5 0%, #e88d72 100%);
+      --theme-name: "Sweet Peach & Cherry Blossoms";
+      --theme-icon: "🍑";
+    }
+
+    [data-theme="galaxy"] {
+      --bg-gradient: linear-gradient(135deg, #101424 0%, #17122b 100%);
+      --card-bg: rgba(26, 30, 51, 0.88);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --accent-main: #9370db;
+      --accent-light: rgba(147, 112, 219, 0.22);
+      --accent-dark: #cbb4f0;
+      --accent-secondary: #6a5acd;
+      --text-main: #f0ecfc;
+      --text-muted: #a39bbd;
+      --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 12px 35px rgba(0, 0, 0, 0.5);
+      --nav-bg: rgba(20, 24, 41, 0.92);
+      --theme-banner: linear-gradient(135deg, #51368a 0%, #22123d 100%);
+      --theme-name: "Starry Night Sky & Galaxy";
+      --theme-icon: "🌌";
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .glass-card-sm {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+    }
+
+    [data-theme="galaxy"] .glass-card-sm {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.09);
+    }
+
+    .btn-pastel {
+      background-color: var(--accent-light);
+      color: var(--text-main);
+      font-weight: 600;
+      border-radius: 14px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-pastel:hover {
+      background-color: var(--accent-main);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-pastel-active {
+      background-color: var(--accent-main) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .nav-item {
+      color: var(--text-muted);
+      border-radius: 16px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .nav-item:hover {
+      color: var(--text-main);
+      background-color: var(--accent-light);
+    }
+
+    .nav-item.active {
+      background-color: var(--accent-main);
+      color: #ffffff !important;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .font-handwriting {
+      font-family: 'Caveat', cursive;
+    }
+
+    /* Timer Ring Animation */
+    .timer-ring-circle {
+      transition: stroke-dashoffset 0.5s ease-in-out;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    /* Page View Transitions */
+    .page-view {
+      display: none;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .page-view.active-view {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent-main);
+      border-radius: 10px;
+      opacity: 0.6;
+    }
+
+    .toast-enter {
+      animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%) scale(0.9); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+  </style>
+</head>
+<body class="p-3 sm:p-5 md:p-8 flex justify-center items-start min-h-screen">
+
+  <div class="container max-w-6xl w-full flex flex-col gap-6">
+
+    <!-- Top Navigation Bar -->
+    <header class="glass-card p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 sticky top-2 z-40" role="banner">
+      <div class="flex items-center gap-3">
+        <div id="app-logo-box" class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shadow-sm" style="background-color: var(--accent-light); color: var(--accent-dark)" aria-hidden="true">
+          🧭
+        </div>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight flex items-center gap-2" style="color: var(--text-main);">
+            Pathfinder <span class="text-[10px] font-bold px-2 py-0.5 rounded-full" style="background-color: var(--accent-light); color: var(--accent-dark)">v3.5</span>
+          </h1>
+          <p class="text-xs font-medium" style="color: var(--text-muted);">Serene Mindful Productivity</p>
+        </div>
+      </div>
+
+      <!-- Main Navigation Tabs -->
+      <nav class="flex items-center gap-1.5 sm:gap-2 p-1.5 glass-card-sm overflow-x-auto max-w-full" aria-label="Main Navigation">
+        <button onclick="switchTab('focus')" id="nav-focus" class="nav-item active px-3.5 py-2 flex items-center gap-2 text-xs sm:text-sm font-semibold" title="Focus Timer & Sounds">
+          <span class="text-base" aria-hidden="true">⏱️</span> <span>Focus</span>
+        </button>
+        <button onclick="switchTab('planner')" id="nav-planner" class="nav-item px-3.5 py-2 flex items-center gap-2 text-xs sm:text-sm font-semibold" title="Tasks, Schedule & Calendar">
+          <span class="text-base" aria-hidden="true">📅</span> <span>Planner</span>
+        </button>
+        <button onclick="switchTab('procrastination')" id="nav-procrastination" class="nav-item px-3.5 py-2 flex items-center gap-2 text-xs sm:text-sm font-semibold" title="Anti-Procrastination Rescue">
+          <span class="text-base" aria-hidden="true">🚀</span> <span>Rescue</span>
+        </button>
+        <button onclick="switchTab('reflection')" id="nav-reflection" class="nav-item px-3.5 py-2 flex items-center gap-2 text-xs sm:text-sm font-semibold" title="Journal & Drawing Canvas">
+          <span class="text-base" aria-hidden="true">📖</span> <span>Journal</span>
+        </button>
+        <button onclick="switchTab('profile')" id="nav-profile" class="nav-item px-3.5 py-2 flex items-center gap-2 text-xs sm:text-sm font-semibold" title="User Profile & Goals">
+          <span class="text-base" aria-hidden="true">👤</span> <span>Profile</span>
+        </button>
+        <button onclick="switchTab('settings')" id="nav-settings" class="nav-item px-3.5 py-2 flex items-center gap-2 text-xs sm:text-sm font-semibold" title="Themes & Customization">
+          <span class="text-base" aria-hidden="true">⚙️</span> <span>Settings</span>
+        </button>
+      </nav>
+
+      <!-- Quick Metrics Header Badge -->
+      <div class="hidden lg:flex items-center gap-3">
+        <div class="glass-card-sm px-3.5 py-1.5 flex items-center gap-2">
+          <span class="text-base" aria-hidden="true">🔥</span>
+          <div class="flex flex-col">
+            <span id="header-streak-count" class="text-xs font-bold leading-none" style="color: var(--text-main)">0 Sessions</span>
+            <span class="text-[10px] font-medium" style="color: var(--text-muted)">Today's Streak</span>
+          </div>
+        </div>
+        <!-- Soundscape Trigger -->
+        <button onclick="toggleAmbientModal()" class="btn-pastel px-3.5 py-2 text-xs font-bold flex items-center gap-1.5" title="Open Ambient Soundscapes">
+          <span>🎧</span> <span>Sounds</span>
+        </button>
+      </div>
+    </header>
+
+
+    <!-- ================= PAGE 1: FOCUS STUDIO ================= -->
+    <main id="view-focus" class="page-view active-view space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Main Pomodoro Card -->
+        <section class="glass-card p-6 lg:col-span-2 flex flex-col items-center justify-between gap-6 relative overflow-hidden" aria-labelledby="timer-heading">
+          <div class="w-full flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xl" aria-hidden="true">⏱️</span>
+              <h2 id="timer-heading" class="text-lg font-bold" style="color: var(--text-main);">Pomodoro Focus Room</h2>
+            </div>
+            
+            <div class="flex p-1 glass-card-sm text-xs font-semibold rounded-xl gap-1" role="tablist">
+              <button id="mode-focus" onclick="setTimerMode('focus')" class="px-3 py-1.5 rounded-lg transition-all btn-pastel-active" role="tab">Focus Mode</button>
+              <button id="mode-short" onclick="setTimerMode('short')" class="px-3 py-1.5 rounded-lg transition-all" role="tab">Short Break</button>
+              <button id="mode-long" onclick="setTimerMode('long')" class="px-3 py-1.5 rounded-lg transition-all" role="tab">Long Break</button>
+            </div>
+          </div>
+
+          <!-- Circular Progress Ring -->
+          <div class="relative flex items-center justify-center my-4">
+            <svg class="w-64 h-64 sm:w-72 sm:h-72" viewBox="0 0 200 200" aria-hidden="true">
+              <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="10" />
+              <circle id="timer-progress-ring" class="timer-ring-circle" cx="100" cy="100" r="85" fill="none" 
+                      stroke="var(--accent-main)" stroke-width="10" stroke-linecap="round" 
+                      stroke-dasharray="534" stroke-dashoffset="0" />
+            </svg>
+
+            <div class="absolute flex flex-col items-center justify-center text-center">
+              <span id="timer-label" class="text-xs uppercase font-bold tracking-widest" style="color: var(--text-muted)">Deep Focus Session</span>
+              <span id="timer-display" class="text-5xl sm:text-6xl font-black tracking-tight my-2" style="color: var(--text-main); font-variant-numeric: tabular-nums;">25:00</span>
+              
+              <div class="flex items-center gap-1 mt-1">
+                <span class="text-xs font-medium" style="color: var(--text-muted)">Working on:</span>
+                <select id="timer-tag" class="text-xs font-bold px-2 py-1 rounded-lg border-none bg-white/80 shadow-sm outline-none cursor-pointer" style="color: var(--text-main)" aria-label="Select focus activity tag">
+                  <option value="📚 Study">📚 Study</option>
+                  <option value="💻 Coding">💻 Coding</option>
+                  <option value="🎨 Design">🎨 Design</option>
+                  <option value="✍️ Writing">✍️ Writing</option>
+                  <option value="🧘 Rest">🧘 Rest</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timer Controls -->
+          <div class="flex items-center justify-center gap-4">
+            <button id="start-btn" onclick="toggleTimer()" class="btn-pastel px-8 py-3.5 text-base font-extrabold flex items-center gap-2.5 shadow-md hover:scale-105 active:scale-95">
+              <span id="play-icon" aria-hidden="true">▶</span> <span id="start-btn-text">Start Focus</span>
+            </button>
+            <button onclick="resetTimer()" class="glass-card-sm px-5 py-3.5 font-bold text-sm hover:bg-white/90 active:scale-95" style="color: var(--text-muted)" title="Reset Timer">
+              🔄 Reset
+            </button>
+          </div>
+
+          <!-- Custom Time Inputs -->
+          <div class="w-full glass-card-sm p-3.5 flex items-center justify-around text-xs font-semibold">
+            <div class="flex items-center gap-2">
+              <label for="focus-mins">Focus (mins):</label>
+              <input type="number" id="focus-mins" value="25" min="1" max="180" onchange="onCustomTimerChange()" class="w-14 px-2 py-1 rounded-lg border border-black/10 text-center font-bold outline-none bg-white/90">
+            </div>
+            <div class="flex items-center gap-2">
+              <label for="break-mins">Break (mins):</label>
+              <input type="number" id="break-mins" value="5" min="1" max="60" onchange="onCustomTimerChange()" class="w-14 px-2 py-1 rounded-lg border border-black/10 text-center font-bold outline-none bg-white/90">
+            </div>
+          </div>
+        </section>
+
+        <!-- Focus Studio Sidebar -->
+        <div class="flex flex-col gap-6">
+          <section class="glass-card p-6 flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold uppercase tracking-wider flex items-center gap-2" style="color: var(--text-main);">
+                <span>🎯</span> Priority Spotlight
+              </h3>
+              <button onclick="switchTab('planner')" class="text-xs font-bold hover:underline" style="color: var(--text-muted)">Planner →</button>
+            </div>
+            <div id="quick-task-spotlight" class="glass-card-sm p-4 flex flex-col gap-2">
+              <span class="text-xs italic" style="color: var(--text-muted)">No priority task set. Add one in Planner!</span>
+            </div>
+          </section>
+
+          <!-- Quick Soundscape Station -->
+          <section class="glass-card p-6 flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold uppercase tracking-wider flex items-center gap-2" style="color: var(--text-main);">
+                <span>🎧</span> Quick Soundscapes
+              </h3>
+              <button onclick="toggleAmbientModal()" class="text-xs font-bold hover:underline" style="color: var(--text-muted)">Full Mixer</button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5 text-xs font-semibold">
+              <button onclick="quickToggleSound('rain')" id="quick-btn-rain" class="glass-card-sm p-3 flex flex-col items-center gap-1 hover:bg-white/90">
+                <span class="text-xl">🌧️</span> Soft Rain
+              </button>
+              <button onclick="quickToggleSound('waves')" id="quick-btn-waves" class="glass-card-sm p-3 flex flex-col items-center gap-1 hover:bg-white/90">
+                <span class="text-xl">🌊</span> Ocean Waves
+              </button>
+              <button onclick="quickToggleSound('bamboo')" id="quick-btn-bamboo" class="glass-card-sm p-3 flex flex-col items-center gap-1 hover:bg-white/90">
+                <span class="text-xl">🎋</span> Bamboo Forest
+              </button>
+              <button onclick="quickToggleSound('lofi')" id="quick-btn-lofi" class="glass-card-sm p-3 flex flex-col items-center gap-1 hover:bg-white/90">
+                <span class="text-xl">🎶</span> Lock-In Music
+              </button>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </main>
+
+
+    <!-- ================= PAGE 2: PLANNER & CALENDAR ================= -->
+    <main id="view-planner" class="page-view space-y-6">
+      
+      <!-- Planner Sub-navigation -->
+      <div class="flex items-center justify-between glass-card p-4">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">📅</span>
+          <div>
+            <h2 class="text-lg font-bold" style="color: var(--text-main);">Master Planner & Schedule</h2>
+            <p class="text-xs" style="color: var(--text-muted)">Organize your tasks, 24-hr time blocks, and calendar timeline</p>
+          </div>
+        </div>
+
+        <div class="flex p-1 glass-card-sm text-xs font-semibold rounded-xl gap-1">
+          <button id="planner-sub-tasks" onclick="switchPlannerSubTab('tasks')" class="px-4 py-2 rounded-lg btn-pastel-active">Tasks & Timetable</button>
+          <button id="planner-sub-calendar" onclick="switchPlannerSubTab('calendar')" class="px-4 py-2 rounded-lg">Calendar View</button>
+        </div>
+      </div>
+
+      <!-- Planner View 1: Tasks & Timetable Grid -->
+      <div id="planner-tab-tasks" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Task Management Card -->
+        <section class="glass-card p-6 flex flex-col justify-between gap-5" aria-labelledby="tasks-heading">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xl" aria-hidden="true">📝</span>
+              <h2 id="tasks-heading" class="text-lg font-bold" style="color: var(--text-main);">Focus Task Hub</h2>
+            </div>
+            <span id="planner-task-stats" class="text-xs font-bold px-3 py-1 rounded-full glass-card-sm" style="color: var(--text-muted)">0/0 Completed</span>
+          </div>
+
+          <!-- Add Task Input Form -->
+          <div class="flex flex-col gap-2.5">
+            <div class="flex gap-2">
+              <input type="text" id="planner-todo-input" placeholder="What task do you want to accomplish?" onkeypress="handlePlannerTodoKey(event)"
+                     class="flex-1 px-4 py-2.5 text-sm rounded-xl border border-black/10 bg-white/90 outline-none focus:ring-2 focus:ring-emerald-300">
+              <button onclick="addPlannerTodo()" class="btn-pastel px-5 py-2.5 text-sm font-bold shadow-sm">Add</button>
+            </div>
+            <div class="flex flex-wrap items-center justify-between text-xs gap-2">
+              <div class="flex items-center gap-2">
+                <label for="planner-todo-date" class="font-medium" style="color: var(--text-muted)">Date:</label>
+                <input type="date" id="planner-todo-date" class="px-2.5 py-1 rounded-lg border border-black/10 bg-white/90 outline-none">
+              </div>
+              <div class="flex items-center gap-2">
+                <label for="planner-todo-priority" class="font-medium" style="color: var(--text-muted)">Priority:</label>
+                <select id="planner-todo-priority" class="px-2.5 py-1 rounded-lg border border-black/10 bg-white/90 outline-none">
+                  <option value="normal">🟢 Normal</option>
+                  <option value="high">🔴 High Priority</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task Lists Container -->
+          <div class="space-y-4">
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-wider mb-2" style="color: var(--text-muted);">Active Priorities</div>
+              <ul id="active-todo-list" class="flex flex-col gap-2 max-h-52 overflow-y-auto pr-1"></ul>
+            </div>
+
+            <div class="pt-3 border-t border-black/5">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider" style="color: var(--text-muted);">Completed Tasks</span>
+                <button onclick="clearCompletedTasks()" class="text-[11px] font-bold hover:underline" style="color: var(--text-muted)">Clear Completed</button>
+              </div>
+              <ul id="completed-todo-list" class="flex flex-col gap-2 max-h-36 overflow-y-auto pr-1"></ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 24-Hour Timetable Card -->
+        <section class="glass-card p-6 flex flex-col justify-between gap-5" aria-labelledby="schedule-heading">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xl" aria-hidden="true">⏱️</span>
+              <h2 id="schedule-heading" class="text-lg font-bold" style="color: var(--text-main);">24-Hour Schedule</h2>
+            </div>
+            <button onclick="resetTimetable()" class="text-xs font-bold hover:underline" style="color: var(--text-muted)">Reset Blocks</button>
+          </div>
+
+          <div class="glass-card-sm p-3.5 flex flex-wrap items-center justify-between gap-2 text-xs font-semibold">
+            <div class="flex items-center gap-1.5">
+              <span>🌙 Sleep Hours:</span>
+              <select id="sleep-start" onchange="renderTimetable()" class="px-2 py-1 rounded-lg border border-black/10 bg-white/90 outline-none"></select>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span>to</span>
+              <select id="sleep-end" onchange="renderTimetable()" class="px-2 py-1 rounded-lg border border-black/10 bg-white/90 outline-none"></select>
+            </div>
+          </div>
+
+          <div id="timetable" class="flex flex-col gap-2 max-h-[360px] overflow-y-auto pr-2"></div>
+
+          <div class="text-center text-[11px] italic" style="color: var(--text-muted);">
+            💡 Click any time block to type your focus plan!
+          </div>
+        </section>
+
+      </div>
+
+
+      <!-- Planner View 2: Interactive Monthly Calendar -->
+      <div id="planner-tab-calendar" class="glass-card p-6 hidden flex-col gap-5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <button onclick="changeCalendarMonth(-1)" class="glass-card-sm px-3 py-1.5 font-bold text-xs hover:bg-white">← Prev</button>
+            <h3 id="calendar-month-year" class="text-base font-extrabold" style="color: var(--text-main);">August 2026</h3>
+            <button onclick="changeCalendarMonth(1)" class="glass-card-sm px-3 py-1.5 font-bold text-xs hover:bg-white">Next →</button>
+          </div>
+          <button onclick="jumpToTodayCalendar()" class="btn-pastel px-3.5 py-1.5 text-xs font-bold">Today</button>
+        </div>
+
+        <!-- Day Names Row -->
+        <div class="calendar-grid text-center font-bold text-xs" style="color: var(--text-muted)">
+          <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+        </div>
+
+        <!-- Calendar Days Grid -->
+        <div id="calendar-days-container" class="calendar-grid"></div>
+
+        <!-- Selected Day Tasks Panel -->
+        <div id="calendar-day-details" class="glass-card-sm p-4 hidden flex-col gap-2 border-l-4 border-emerald-500">
+          <div class="flex items-center justify-between">
+            <span id="calendar-selected-date-title" class="font-bold text-xs" style="color: var(--text-main)">Tasks for Selected Date:</span>
+            <button onclick="closeCalendarDayDetails()" class="text-xs font-bold opacity-60 hover:opacity-100">✕ Close</button>
+          </div>
+          <div id="calendar-selected-tasks-list" class="flex flex-col gap-1 text-xs"></div>
+        </div>
+      </div>
+
+    </main>
+
+
+    <!-- ================= PAGE 3: ANTI-PROCRASTINATION RESCUE ================= -->
+    <main id="view-procrastination" class="page-view space-y-6">
+      <section class="glass-card p-6 md:p-8 flex flex-col gap-6" aria-labelledby="rescue-heading">
+        
+        <!-- Header Banner -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-black/5 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl bg-amber-100 text-amber-800 shadow-sm">
+              ⚡
+            </div>
+            <div>
+              <h2 id="rescue-heading" class="text-xl font-extrabold" style="color: var(--text-main);">Anti-Procrastination Rescue Engine</h2>
+              <p class="text-xs font-medium" style="color: var(--text-muted)">Turn overwhelm into effortless momentum with tiny 1-5 minute icebreakers</p>
+            </div>
+          </div>
+
+          <button onclick="sparkRandomAppetizingQuote()" class="btn-pastel px-4 py-2 text-xs font-bold flex items-center gap-1.5">
+            <span>✨</span> Spark Dopamine
+          </button>
+        </div>
+
+        <!-- Motivation Card -->
+        <div id="rescue-spark-quote" class="glass-card-sm p-4 text-xs sm:text-sm font-bold text-center border-l-4 border-amber-400" style="color: var(--text-main)">
+          "You don't need to feel ready to begin. Just do 60 seconds and give yourself permission to stop."
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Interactive Task Unpacker (7 Cols) -->
+          <div class="lg:col-span-7 glass-card-sm p-6 flex flex-col gap-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold uppercase tracking-wider flex items-center gap-2" style="color: var(--text-main);">
+                <span class="w-6 h-6 rounded-full bg-amber-400 text-amber-950 flex items-center justify-center text-xs font-black">1</span>
+                The 2-Minute Task Unpacker
+              </h3>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">Zero Pressure</span>
+            </div>
+
+            <!-- Task Name -->
+            <div class="flex flex-col gap-1.5">
+              <label for="procrastination-task" class="text-xs font-bold" style="color: var(--text-muted)">What scary task are you putting off?</label>
+              <input type="text" id="procrastination-task" placeholder="e.g., Write essay intro, organize desk, finish math sheet..."
+                     class="w-full px-4 py-3 text-sm font-semibold rounded-xl border border-black/10 bg-white/90 outline-none focus:ring-2 focus:ring-amber-300 shadow-sm">
+            </div>
+
+            <!-- Why it feels hard -->
+            <div class="flex flex-col gap-2">
+              <span class="text-xs font-bold" style="color: var(--text-muted)">Why does starting feel hard right now?</span>
+              <div class="flex flex-wrap gap-2 text-xs">
+                <button onclick="unpackTaskTrigger('too_big')" class="px-3 py-1.5 rounded-xl glass-card hover:bg-amber-100 font-semibold transition-all">🐘 Too Giant</button>
+                <button onclick="unpackTaskTrigger('perfection')" class="px-3 py-1.5 rounded-xl glass-card hover:bg-amber-100 font-semibold transition-all">🎯 Fear of Imperfection</button>
+                <button onclick="unpackTaskTrigger('boring')" class="px-3 py-1.5 rounded-xl glass-card hover:bg-amber-100 font-semibold transition-all">🥱 Boring / Dull</button>
+                <button onclick="unpackTaskTrigger('confused')" class="px-3 py-1.5 rounded-xl glass-card hover:bg-amber-100 font-semibold transition-all">❓ Don't Know Step 1</button>
+              </div>
+            </div>
+
+            <!-- Interactive Micro Steps Checklist -->
+            <div id="unpacker-steps-box" class="pt-3 border-t border-black/5 flex flex-col gap-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold" style="color: var(--text-main)">Bite-Sized 60-Second Micro Actions:</span>
+                <button onclick="autoGenerateMicroSteps()" class="text-[11px] font-bold text-amber-700 hover:underline">✨ Auto-Suggest</button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="micro-chk-1" onchange="checkMicroStepProgress()" class="w-4 h-4 accent-amber-500 rounded cursor-pointer">
+                <input type="text" id="baby-step-1" placeholder="Step 1: Just open the document or app" class="flex-1 px-3 py-2 text-xs font-medium rounded-lg border border-black/10 bg-white/80">
+              </div>
+
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="micro-chk-2" onchange="checkMicroStepProgress()" class="w-4 h-4 accent-amber-500 rounded cursor-pointer">
+                <input type="text" id="baby-step-2" placeholder="Step 2: Type or write just 1 simple line" class="flex-1 px-3 py-2 text-xs font-medium rounded-lg border border-black/10 bg-white/80">
+              </div>
+
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="micro-chk-3" onchange="checkMicroStepProgress()" class="w-4 h-4 accent-amber-500 rounded cursor-pointer">
+                <input type="text" id="baby-step-3" placeholder="Step 3: Work for 2 minutes without stopping" class="flex-1 px-3 py-2 text-xs font-medium rounded-lg border border-black/10 bg-white/80">
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Icebreaker Burst Timer (5 Cols) -->
+          <div class="lg:col-span-5 glass-card-sm p-6 flex flex-col justify-between items-center text-center gap-5 border-2 border-amber-200/50">
+            <div class="flex flex-col items-center gap-1">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-amber-400 text-amber-950 flex items-center justify-center text-xs font-black">2</span>
+                <h3 class="text-sm font-bold uppercase tracking-wider" style="color: var(--text-main)">Icebreaker Burst</h3>
+              </div>
+              <p class="text-xs" style="color: var(--text-muted)">Commit to <strong>1 to 5 minutes</strong>. That's it!</p>
+            </div>
+
+            <!-- Display -->
+            <div id="micro-timer-display" class="text-6xl font-black my-1" style="color: var(--text-main); font-variant-numeric: tabular-nums;">
+              05:00
+            </div>
+
+            <!-- Burst Option Chips -->
+            <div class="flex items-center justify-center gap-2 w-full">
+              <button onclick="resetMicroTimer(1)" class="flex-1 py-2 rounded-xl glass-card hover:bg-white text-xs font-bold">1 Min Icebreaker</button>
+              <button onclick="resetMicroTimer(3)" class="flex-1 py-2 rounded-xl glass-card hover:bg-white text-xs font-bold">3 Min Warmup</button>
+              <button onclick="resetMicroTimer(5)" class="flex-1 py-2 rounded-xl glass-card hover:bg-white text-xs font-bold">5 Min Burst</button>
+            </div>
+
+            <!-- Main Burst Button -->
+            <button id="micro-start-btn" onclick="toggleMicroTimer()" class="w-full btn-pastel py-3.5 text-sm font-extrabold flex items-center justify-center gap-2 shadow-md hover:scale-105 active:scale-95">
+              <span>🚀</span> <span id="micro-btn-text">Start 5-Min Burst</span>
+            </button>
+
+            <!-- Counter -->
+            <div class="w-full p-3 rounded-2xl bg-amber-100/70 text-amber-900 border border-amber-200 flex items-center justify-between text-xs font-bold">
+              <span>🎉 Bursts Completed:</span>
+              <span id="procrastination-slay-count" class="text-base font-black">0</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+
+    <!-- ================= PAGE 4: REFLECTION JOURNAL & CANVAS ================= -->
+    <main id="view-reflection" class="page-view space-y-6">
+      <section class="glass-card p-6 md:p-8 flex flex-col gap-5" aria-labelledby="reflection-heading">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-black/5 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl bg-purple-100 text-purple-700 shadow-sm">
+              📖
+            </div>
+            <div>
+              <h2 id="reflection-heading" class="text-xl font-bold" style="color: var(--text-main);">Daily Reflection & Sketchbook</h2>
+              <p class="text-xs" style="color: var(--text-muted)">Unwind your thoughts with written notes or creative drawings</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <div class="flex p-1 glass-card-sm text-xs font-semibold rounded-xl gap-1 w-full sm:w-auto">
+              <button id="text-tab" onclick="switchJournalMode('text')" class="flex-1 sm:flex-none px-4 py-2 rounded-lg btn-pastel-active">Type Notes</button>
+              <button id="draw-tab" onclick="switchJournalMode('draw')" class="flex-1 sm:flex-none px-4 py-2 rounded-lg">Drawing Canvas</button>
+            </div>
+            <button onclick="getRandomJournalPrompt()" class="btn-pastel px-3.5 py-2 text-xs font-bold flex items-center gap-1" title="Get Inspiring Prompt">
+              💡 Prompt
+            </button>
+          </div>
+        </div>
+
+        <!-- Integrated Prompt Display Banner -->
+        <div id="journal-prompt-banner" class="glass-card-sm p-3.5 text-xs font-semibold flex items-center justify-between border-l-4 border-purple-400" style="background: rgba(255, 255, 255, 0.75)">
+          <span id="journal-prompt-text" style="color: var(--text-main)">✨ Prompt: "What small win brought you peace today?"</span>
+          <button onclick="document.getElementById('journal-prompt-banner').style.display='none'" class="text-xs font-bold opacity-60 hover:opacity-100">✕</button>
+        </div>
+
+        <!-- Text Journal Mode -->
+        <div id="journal-text-container" class="w-full">
+          <textarea id="journal-text" placeholder="Write down your accomplishments, thoughts, or mind dumps for today..."
+                    oninput="saveJournalText()"
+                    class="w-full h-60 p-4 rounded-2xl border border-black/10 bg-white/90 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-emerald-300 resize-none shadow-inner"></textarea>
+        </div>
+
+        <!-- Drawing Canvas Mode -->
+        <div id="journal-draw-container" class="w-full hidden flex-col gap-3">
+          
+          <div class="flex flex-wrap items-center justify-between gap-3 p-3.5 glass-card-sm text-xs font-semibold">
+            <!-- Palette Picks -->
+            <div class="flex items-center gap-2">
+              <span class="font-bold" style="color: var(--text-muted)">Color:</span>
+              <button onclick="setBrushColor('#21361c')" class="w-6 h-6 rounded-full border-2 border-white shadow-sm" style="background:#21361c" title="Dark Leaf"></button>
+              <button onclick="setBrushColor('#73a863')" class="w-6 h-6 rounded-full border-2 border-white shadow-sm" style="background:#73a863" title="Forest Green"></button>
+              <button onclick="setBrushColor('#4a86b8')" class="w-6 h-6 rounded-full border-2 border-white shadow-sm" style="background:#4a86b8" title="Ocean Blue"></button>
+              <button onclick="setBrushColor('#e88d72')" class="w-6 h-6 rounded-full border-2 border-white shadow-sm" style="background:#e88d72" title="Peach Pink"></button>
+              <button onclick="setBrushColor('#9370db')" class="w-6 h-6 rounded-full border-2 border-white shadow-sm" style="background:#9370db" title="Galaxy Purple"></button>
+              <input type="color" id="custom-color-picker" onchange="setBrushColor(this.value)" class="w-6 h-6 rounded-full cursor-pointer border-none bg-transparent">
+            </div>
+
+            <!-- Brush Size & Eraser -->
+            <div class="flex items-center gap-3">
+              <div class="flex items-center gap-2">
+                <span class="font-bold" style="color: var(--text-muted)">Size:</span>
+                <input type="range" id="brush-size" min="1" max="25" value="4" oninput="setBrushSize(this.value)" class="w-20 accent-emerald-500">
+              </div>
+              <button id="eraser-btn" onclick="toggleEraser()" class="px-3 py-1.5 rounded-xl bg-white/90 font-bold border border-black/10 hover:bg-white">Eraser</button>
+            </div>
+
+            <!-- Clear & Save -->
+            <div class="flex items-center gap-2">
+              <button onclick="clearCanvas()" class="px-3 py-1.5 rounded-xl text-rose-600 bg-rose-50 font-bold hover:bg-rose-100">Clear</button>
+              <button onclick="downloadCanvas()" class="btn-pastel px-3.5 py-1.5 font-bold">Save Drawing</button>
+            </div>
+          </div>
+
+          <!-- Canvas Element -->
+          <div id="canvas-wrapper" class="w-full h-80 bg-white rounded-2xl border border-dashed border-slate-300 relative overflow-hidden shadow-inner cursor-crosshair">
+            <canvas id="reflection-canvas" class="w-full h-full block"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+
+
+    <!-- ================= PAGE 5: USER PROFILE ================= -->
+    <main id="view-profile" class="page-view space-y-6">
+      <section class="glass-card p-6 md:p-8 flex flex-col gap-6" aria-labelledby="profile-heading">
+        
+        <div class="flex items-center justify-between border-b border-black/5 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl bg-emerald-100 text-emerald-700 shadow-sm">
+              👤
+            </div>
+            <div>
+              <h2 id="profile-heading" class="text-xl font-bold" style="color: var(--text-main);">My Focus Profile</h2>
+              <p class="text-xs" style="color: var(--text-muted)">Dynamic themes, profile badges, and stats</p>
+            </div>
+          </div>
+          <button onclick="saveUserProfile()" class="btn-pastel px-4 py-2 text-xs font-bold">
+            Save Profile
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Avatar & Theme Badge Card -->
+          <div class="glass-card-sm p-6 flex flex-col items-center justify-center text-center gap-4 relative overflow-hidden">
+            
+            <!-- Dynamic Theme Banner Header -->
+            <div id="profile-theme-banner" class="w-full py-2.5 px-3 rounded-xl text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-sm" style="background: var(--theme-banner)">
+              <span id="profile-theme-icon">🌲</span>
+              <span id="profile-theme-name">Forest & Lush Greenery</span>
+            </div>
+
+            <!-- Avatar -->
+            <div id="profile-avatar-display" class="w-24 h-24 rounded-full flex items-center justify-center text-5xl shadow-md" style="background-color: var(--accent-light)">
+              🌱
+            </div>
+            
+            <div class="flex flex-col">
+              <h3 id="profile-name-display" class="text-lg font-bold" style="color: var(--text-main)">Mindful Scholar</h3>
+              <span id="profile-title-display" class="text-xs font-semibold" style="color: var(--text-muted)">Deep Work Ninja</span>
+            </div>
+
+            <div class="flex flex-col gap-1.5 w-full">
+              <span class="text-[11px] font-bold uppercase tracking-wider" style="color: var(--text-muted)">Avatar Emoji:</span>
+              <div class="flex justify-center gap-2 text-xl">
+                <button onclick="setProfileAvatar('🌱')" class="hover:scale-125 transition-transform">🌱</button>
+                <button onclick="setProfileAvatar('🌊')" class="hover:scale-125 transition-transform">🌊</button>
+                <button onclick="setProfileAvatar('🍑')" class="hover:scale-125 transition-transform">🍑</button>
+                <button onclick="setProfileAvatar('🌌')" class="hover:scale-125 transition-transform">🌌</button>
+                <button onclick="setProfileAvatar('🦊')" class="hover:scale-125 transition-transform">🦊</button>
+                <button onclick="setProfileAvatar('🎓')" class="hover:scale-125 transition-transform">🎓</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Details Editor -->
+          <div class="glass-card-sm p-6 md:col-span-2 flex flex-col gap-4">
+            <h3 class="text-sm font-bold uppercase tracking-wider" style="color: var(--text-main)">Profile Details</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-semibold">
+              <div class="flex flex-col gap-1.5">
+                <label for="profile-name-input">Display Name:</label>
+                <input type="text" id="profile-name-input" value="Mindful Scholar" oninput="updateProfilePreview()" class="px-3.5 py-2.5 rounded-xl border border-black/10 bg-white/90 outline-none">
+              </div>
+
+              <div class="flex flex-col gap-1.5">
+                <label for="profile-title-input">Focus Persona:</label>
+                <input type="text" id="profile-title-input" value="Deep Work Ninja" oninput="updateProfilePreview()" class="px-3.5 py-2.5 rounded-xl border border-black/10 bg-white/90 outline-none">
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5 text-xs font-semibold">
+              <label for="profile-motto-input">Personal Motto:</label>
+              <input type="text" id="profile-motto-input" value="One calm step at a time." class="px-3.5 py-2.5 rounded-xl border border-black/10 bg-white/90 outline-none">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-semibold">
+              <div class="flex flex-col gap-1.5">
+                <label for="profile-target-sessions">Daily Session Target:</label>
+                <input type="number" id="profile-target-sessions" value="4" min="1" max="20" class="px-3.5 py-2.5 rounded-xl border border-black/10 bg-white/90 outline-none">
+              </div>
+
+              <div class="flex flex-col gap-1.5">
+                <label for="profile-fav-tag">Default Work Tag:</label>
+                <select id="profile-fav-tag" class="px-3.5 py-2.5 rounded-xl border border-black/10 bg-white/90 outline-none">
+                  <option value="📚 Study">📚 Study</option>
+                  <option value="💻 Coding">💻 Coding</option>
+                  <option value="🎨 Design">🎨 Design</option>
+                  <option value="✍️ Writing">✍️ Writing</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Dynamic Theme Badges -->
+            <div class="pt-3 border-t border-black/5 flex flex-col gap-2">
+              <span class="text-xs font-bold" style="color: var(--text-main)">Theme Badges Unlocked:</span>
+              <div id="profile-theme-badges" class="flex flex-wrap gap-2 text-xs">
+                <!-- Dynamically rendered based on active theme -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+
+    <!-- ================= PAGE 6: SETTINGS & THEMES ================= -->
+    <main id="view-settings" class="page-view space-y-6">
+      <section class="glass-card p-6 md:p-8 flex flex-col gap-6" aria-labelledby="settings-heading">
+        <div class="flex items-center justify-between border-b border-black/5 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl bg-slate-100 text-slate-700 shadow-sm">
+              ⚙️
+            </div>
+            <div>
+              <h2 id="settings-heading" class="text-xl font-bold" style="color: var(--text-main);">Settings & Aesthetics</h2>
+              <p class="text-xs" style="color: var(--text-muted)">Select color schemes, timer audio, and app options</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Color Themes Selector -->
+        <div class="flex flex-col gap-3">
+          <h3 class="text-sm font-bold uppercase tracking-wider" style="color: var(--text-main)">Choose Theme World</h3>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-bold">
+            <!-- Forest Green -->
+            <button onclick="setTheme('sage', 'Forest & Lush Greenery', '🌲')" class="p-3.5 rounded-2xl border border-black/5 flex flex-col items-center gap-2 hover:scale-105 transition-all bg-emerald-50 text-emerald-900 shadow-sm">
+              <div class="w-10 h-10 rounded-full bg-emerald-500 border-2 border-white shadow-sm flex items-center justify-center text-lg">🌲</div>
+              <span>Forest Green</span>
+            </button>
+
+            <!-- Ocean Blue -->
+            <button onclick="setTheme('ocean', 'Ocean Breeze & Deep Waters', '🌊')" class="p-3.5 rounded-2xl border border-black/5 flex flex-col items-center gap-2 hover:scale-105 transition-all bg-sky-50 text-sky-900 shadow-sm">
+              <div class="w-10 h-10 rounded-full bg-sky-500 border-2 border-white shadow-sm flex items-center justify-center text-lg">🌊</div>
+              <span>Ocean Blue</span>
+            </button>
+
+            <!-- Peach Pink -->
+            <button onclick="setTheme('peach', 'Sweet Peach & Cherry Blossoms', '🍑')" class="p-3.5 rounded-2xl border border-black/5 flex flex-col items-center gap-2 hover:scale-105 transition-all bg-rose-50 text-rose-900 shadow-sm">
+              <div class="w-10 h-10 rounded-full bg-rose-400 border-2 border-white shadow-sm flex items-center justify-center text-lg">🍑</div>
+              <span>Peach Pink</span>
+            </button>
+
+            <!-- Galaxy Dusk -->
+            <button onclick="setTheme('galaxy', 'Starry Night Sky & Galaxy', '🌌')" class="p-3.5 rounded-2xl border border-black/5 flex flex-col items-center gap-2 hover:scale-105 transition-all bg-slate-900 text-slate-100 shadow-sm">
+              <div class="w-10 h-10 rounded-full bg-purple-700 border-2 border-white shadow-sm flex items-center justify-center text-lg">🌌</div>
+              <span>Starry Galaxy</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Preferences -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-black/5">
+          <div class="glass-card-sm p-5 flex flex-col gap-3 text-xs font-semibold">
+            <h3 class="text-sm font-bold uppercase tracking-wider" style="color: var(--text-main)">Audio & Chimes</h3>
+            
+            <label class="flex items-center justify-between cursor-pointer">
+              <span>Timer Completion Chime</span>
+              <input type="checkbox" id="setting-sound-chime" checked class="w-4 h-4 accent-emerald-500">
+            </label>
+
+            <label class="flex items-center justify-between cursor-pointer">
+              <span>Auto-start Break Timer</span>
+              <input type="checkbox" id="setting-auto-break" class="w-4 h-4 accent-emerald-500">
+            </label>
+          </div>
+
+          <div class="glass-card-sm p-5 flex flex-col gap-3 text-xs font-semibold">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-rose-600">Data Management</h3>
+            <p style="color: var(--text-muted)">Clear local storage if you want to reset all tasks, calendar, and profile data.</p>
+            <button onclick="resetAllAppData()" class="px-4 py-2 rounded-xl bg-rose-100 text-rose-700 font-bold hover:bg-rose-200 text-xs text-left">
+              🗑️ Reset All Application Data
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="text-center py-4 text-xs font-medium" style="color: var(--text-muted)">
+      Made with 💚 for mindful focus • Pathfinder v3.5
+    </footer>
+
+  </div>
+
+
+  <!-- ================= AMBIENT SOUNDS MIXER MODAL ================= -->
+  <div id="ambient-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="glass-card max-w-md w-full p-6 flex flex-col gap-5 shadow-2xl" role="dialog" aria-labelledby="ambient-modal-title">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-xl" aria-hidden="true">🎧</span>
+          <h3 id="ambient-modal-title" class="text-lg font-bold" style="color: var(--text-main);">Synthesized Soundscapes</h3>
+        </div>
+        <button onclick="toggleAmbientModal()" class="text-lg font-bold hover:opacity-70" aria-label="Close soundscape mixer">✕</button>
+      </div>
+
+      <p class="text-xs" style="color: var(--text-muted);">
+        Calming synthesized ambient soundscapes generated directly in your browser with Web Audio API.
+      </p>
+
+      <div class="flex flex-col gap-3">
+        <!-- Soft Rain -->
+        <div class="glass-card-sm p-3 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🌧️</span>
+            <div>
+              <div class="text-xs font-bold">Soft Rain</div>
+              <div class="text-[10px]" style="color: var(--text-muted)">Gentle drops & rainfall</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="range" id="vol-rain" min="0" max="1" step="0.01" value="0.3" oninput="updateAmbientVolume('rain', this.value)" class="w-16 accent-emerald-500">
+            <button id="btn-rain" onclick="toggleAmbientSound('rain')" class="btn-pastel px-3 py-1 text-xs">Play</button>
+          </div>
+        </div>
+
+        <!-- Ocean Waves -->
+        <div class="glass-card-sm p-3 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🌊</span>
+            <div>
+              <div class="text-xs font-bold">Ocean Waves</div>
+              <div class="text-[10px]" style="color: var(--text-muted)">Calm shoreline swells</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="range" id="vol-waves" min="0" max="1" step="0.01" value="0.3" oninput="updateAmbientVolume('waves', this.value)" class="w-16 accent-emerald-500">
+            <button id="btn-waves" onclick="toggleAmbientSound('waves')" class="btn-pastel px-3 py-1 text-xs">Play</button>
+          </div>
+        </div>
+
+        <!-- Bamboo Forest & Wind Chimes & Bird Peep -->
+        <div class="glass-card-sm p-3 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🎋</span>
+            <div>
+              <div class="text-xs font-bold">Bamboo Forest</div>
+              <div class="text-[10px]" style="color: var(--text-muted)">Wind, leaves, chime & soft bird</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="range" id="vol-bamboo" min="0" max="1" step="0.01" value="0.35" oninput="updateAmbientVolume('bamboo', this.value)" class="w-16 accent-emerald-500">
+            <button id="btn-bamboo" onclick="toggleAmbientSound('bamboo')" class="btn-pastel px-3 py-1 text-xs">Play</button>
+          </div>
+        </div>
+
+        <!-- Relaxing Lock-In Music -->
+        <div class="glass-card-sm p-3 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🎶</span>
+            <div>
+              <div class="text-xs font-bold">Lock-In Music</div>
+              <div class="text-[10px]" style="color: var(--text-muted)">Relaxing ambient chords</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="range" id="vol-lofi" min="0" max="1" step="0.01" value="0.25" oninput="updateAmbientVolume('lofi', this.value)" class="w-16 accent-emerald-500">
+            <button id="btn-lofi" onclick="toggleAmbientSound('lofi')" class="btn-pastel px-3 py-1 text-xs">Play</button>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="toggleAmbientModal()" class="btn-pastel py-2.5 text-xs font-bold text-center w-full mt-1">
+        Close Mixer
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none" aria-live="polite"></div>
+
+
+  <script>
+    let audioCtx = null;
+    
+    // Timer State
+    let timerInterval = null;
+    let timeLeft = 25 * 60;
+    let totalTimerDuration = 25 * 60;
+    let isTimerRunning = false;
+    let timerMode = 'focus';
+    let todaySessionsCount = 0;
+
+    // Procrastination Rescue State
+    let microTimerInterval = null;
+    let microTimeLeft = 5 * 60;
+    let isMicroTimerRunning = false;
+    let procrastinationSlayCount = 0;
+
+    // Calendar State
+    let calendarCurrentDate = new Date();
+
+    // Ambient Synthesizer Nodes
+    let ambientNodes = {
+      rain: { active: false, gainNode: null, source: null },
+      waves: { active: false, gainNode: null, source: null, lfo: null },
+      bamboo: { active: false, gainNode: null, noiseSource: null, chimeTimer: null, birdTimer: null },
+      lofi: { active: false, gainNode: null, chordInterval: null, oscs: [] }
+    };
+
+    // Canvas drawing state
+    const canvas = document.getElementById('reflection-canvas');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    let isDrawing = false;
+    let currentBrushColor = '#21361c';
+    let currentBrushSize = 4;
+    let isEraser = false;
+
+    // Prompts
+    const reflectionPrompts = [
+      "What small win brought you peace today?",
+      "What was the most rewarding moment of your focus session?",
+      "Name 3 things you are grateful for right now.",
+      "What distracted you today, and how can you minimize it tomorrow?",
+      "How did you care for your mind and body today?",
+      "What is one small goal you are excited to tackle next?"
+    ];
+
+    const appetizingQuotes = [
+      "You don't need to feel ready to begin. Just do 60 seconds and give yourself permission to stop.",
+      "Action creates momentum, not the other way around!",
+      "Even 2 minutes of focus beats 0 minutes. Celebrate every micro-step!",
+      "Progress over perfection, always.",
+      "Break the ice, ride the flow!"
+    ];
+
+    /* Initialization */
+    window.addEventListener('DOMContentLoaded', () => {
+      loadStoredData();
+      renderTimetable();
+      renderCalendar();
+      setupCanvasEvents();
+      updateQuickTaskSpotlight();
+      
+      window.addEventListener('resize', resizeCanvas);
+    });
+
+    /* Tab Switcher */
+    function switchTab(viewId) {
+      document.querySelectorAll('.page-view').forEach(view => {
+        view.classList.remove('active-view');
+      });
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      const targetView = document.getElementById(`view-${viewId}`);
+      const targetNav = document.getElementById(`nav-${viewId}`);
+
+      if (targetView) targetView.classList.add('active-view');
+      if (targetNav) targetNav.classList.add('active');
+
+      if (viewId === 'reflection') {
+        setTimeout(resizeCanvas, 100);
+      }
+    }
+
+    /* Toast System */
+    function showToast(message, icon = '✨') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'glass-card-sm px-4 py-3 shadow-xl flex items-center gap-3 text-xs font-bold text-slate-800 toast-enter pointer-events-auto border-l-4 border-emerald-400';
+      toast.style.background = 'rgba(255, 255, 255, 0.95)';
+      toast.innerHTML = `<span aria-hidden="true">${icon}</span><span>${escapeHtml(message)}</span>`;
+      
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    /* Pomodoro Timer Engine */
+    function setTimerMode(mode) {
+      if (isTimerRunning) pauseTimer();
+      timerMode = mode;
+
+      document.getElementById('mode-focus').classList.remove('btn-pastel-active');
+      document.getElementById('mode-short').classList.remove('btn-pastel-active');
+      document.getElementById('mode-long').classList.remove('btn-pastel-active');
+
+      document.getElementById(`mode-${mode}`).classList.add('btn-pastel-active');
+
+      const focusMins = parseInt(document.getElementById('focus-mins').value) || 25;
+      const breakMins = parseInt(document.getElementById('break-mins').value) || 5;
+
+      if (mode === 'focus') {
+        totalTimerDuration = focusMins * 60;
+        document.getElementById('timer-label').textContent = 'Deep Focus Session';
+      } else if (mode === 'short') {
+        totalTimerDuration = breakMins * 60;
+        document.getElementById('timer-label').textContent = 'Short Break';
+      } else if (mode === 'long') {
+        totalTimerDuration = 15 * 60;
+        document.getElementById('timer-label').textContent = 'Long Break';
+      }
+
+      timeLeft = totalTimerDuration;
+      updateTimerDisplay();
+    }
+
+    function onCustomTimerChange() {
+      setTimerMode(timerMode);
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      const displayStr = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      document.getElementById('timer-display').textContent = displayStr;
+
+      document.title = `(${displayStr}) Pathfinder`;
+
+      const circle = document.getElementById('timer-progress-ring');
+      if (circle) {
+        const circumference = 2 * Math.PI * 85;
+        const progressRatio = timeLeft / totalTimerDuration;
+        const offset = circumference * (1 - progressRatio);
+        circle.style.strokeDashoffset = offset;
+      }
+    }
+
+    function toggleTimer() {
+      initAudioCtx();
+      if (isTimerRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    }
+
+    function startTimer() {
+      if (isTimerRunning) return;
+      isTimerRunning = true;
+      document.getElementById('start-btn-text').textContent = 'Pause';
+      document.getElementById('play-icon').textContent = '⏸';
+
+      playChimeSound(600, 0.1);
+
+      timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateTimerDisplay();
+        } else {
+          onTimerComplete();
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      isTimerRunning = false;
+      document.getElementById('start-btn-text').textContent = 'Resume';
+      document.getElementById('play-icon').textContent = '▶';
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      setTimerMode(timerMode);
+      document.getElementById('start-btn-text').textContent = 'Start Focus';
+      document.getElementById('play-icon').textContent = '▶';
+    }
+
+    function onTimerComplete() {
+      pauseTimer();
+      
+      const soundChimeEnabled = document.getElementById('setting-sound-chime').checked;
+      if (soundChimeEnabled) playCompletionChime();
+
+      if (timerMode === 'focus') {
+        todaySessionsCount++;
+        document.getElementById('header-streak-count').textContent = `${todaySessionsCount} Sessions`;
+        saveData('focus_streak', todaySessionsCount);
+        showToast("Focus session complete! Great work 🎉", "🌟");
+        triggerConfetti();
+
+        const autoBreak = document.getElementById('setting-auto-break').checked;
+        setTimerMode('short');
+        if (autoBreak) startTimer();
+      } else {
+        showToast("Break finished! Ready to focus?", "🌱");
+        setTimerMode('focus');
+      }
+    }
+
+    /* Anti-Procrastination Rescue Engine */
+    function toggleMicroTimer() {
+      initAudioCtx();
+      if (isMicroTimerRunning) {
+        pauseMicroTimer();
+      } else {
+        startMicroTimer();
+      }
+    }
+
+    function startMicroTimer() {
+      if (isMicroTimerRunning) return;
+      isMicroTimerRunning = true;
+      document.getElementById('micro-btn-text').textContent = 'Pause Burst';
+
+      microTimerInterval = setInterval(() => {
+        if (microTimeLeft > 0) {
+          microTimeLeft--;
+          updateMicroTimerDisplay();
+        } else {
+          onMicroTimerComplete();
+        }
+      }, 1000);
+    }
+
+    function pauseMicroTimer() {
+      clearInterval(microTimerInterval);
+      microTimerInterval = null;
+      isMicroTimerRunning = false;
+      document.getElementById('micro-btn-text').textContent = 'Resume';
+    }
+
+    function resetMicroTimer(mins = 5) {
+      pauseMicroTimer();
+      microTimeLeft = mins * 60;
+      updateMicroTimerDisplay();
+      document.getElementById('micro-btn-text').textContent = `Start ${mins}-Min Burst`;
+    }
+
+    function updateMicroTimerDisplay() {
+      const mins = Math.floor(microTimeLeft / 60);
+      const secs = microTimeLeft % 60;
+      document.getElementById('micro-timer-display').textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function onMicroTimerComplete() {
+      pauseMicroTimer();
+      playCompletionChime();
+      procrastinationSlayCount++;
+      document.getElementById('procrastination-slay-count').textContent = procrastinationSlayCount;
+      saveData('procrastination_slay', procrastinationSlayCount);
+      triggerConfetti();
+      showToast("Icebreaker Burst completed! You broke through resistance! ⚡", "🎉");
+    }
+
+    function unpackTaskTrigger(trigger) {
+      const input1 = document.getElementById('baby-step-1');
+      const input2 = document.getElementById('baby-step-2');
+      const input3 = document.getElementById('baby-step-3');
+
+      if (trigger === 'too_big') {
+        input1.placeholder = "Step 1: Open document & write 1 single sentence";
+        input2.placeholder = "Step 2: Bullet-point 3 main ideas";
+        input3.placeholder = "Step 3: Work for 2 minutes without judging";
+      } else if (trigger === 'perfection') {
+        input1.placeholder = "Step 1: Make a rough mess draft (embracing flaws)";
+        input2.placeholder = "Step 2: Spend 3 mins sketching or typing bad ideas";
+        input3.placeholder = "Step 3: Refine 1 small piece";
+      } else if (trigger === 'boring') {
+        input1.placeholder = "Step 1: Turn on ambient lock-in music";
+        input2.placeholder = "Step 2: Do 2 minutes as fast as a game";
+        input3.placeholder = "Step 3: Reward yourself with a quick stretch";
+      } else {
+        input1.placeholder = "Step 1: Search or open the instructions";
+        input2.placeholder = "Step 2: Write down what done looks like in 5 words";
+        input3.placeholder = "Step 3: Do the easiest 1-minute step";
+      }
+
+      showToast("Unpacked task strategy! Ready for a 1-5 min burst?", "💡");
+    }
+
+    function autoGenerateMicroSteps() {
+      const taskName = document.getElementById('procrastination-task').value || 'this task';
+      document.getElementById('baby-step-1').value = `Open materials for ${taskName}`;
+      document.getElementById('baby-step-2').value = `Write/do the first 1 minute of ${taskName}`;
+      document.getElementById('baby-step-3').value = `Set 5-min burst timer and keep going`;
+      showToast("Auto-generated 3 baby steps!", "✨");
+    }
+
+    function checkMicroStepProgress() {
+      const c1 = document.getElementById('micro-chk-1').checked;
+      const c2 = document.getElementById('micro-chk-2').checked;
+      const c3 = document.getElementById('micro-chk-3').checked;
+
+      if (c1 && c2 && c3) {
+        triggerConfetti();
+        showToast("All micro-steps checked! Momentum unlocked!", "🚀");
+      }
+    }
+
+    function sparkRandomAppetizingQuote() {
+      const quote = appetizingQuotes[Math.floor(Math.random() * appetizingQuotes.length)];
+      document.getElementById('rescue-spark-quote').textContent = `"${quote}"`;
+    }
+
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 60, spread: 60, origin: { y: 0.7 } });
+      }
+    }
+
+    /* Task Engine */
+    function addPlannerTodo() {
+      const input = document.getElementById('planner-todo-input');
+      const dateInput = document.getElementById('planner-todo-date');
+      const prioritySelect = document.getElementById('planner-todo-priority');
+
+      const text = input.value.trim();
+      if (!text) return;
+
+      const task = {
+        id: Date.now(),
+        text: text,
+        date: dateInput.value || new Date().toISOString().slice(0, 10),
+        priority: prioritySelect.value,
+        completed: false
+      };
+
+      const tasks = getStoredTasks();
+      tasks.push(task);
+      saveTasks(tasks);
+
+      input.value = '';
+      renderTasks();
+      renderCalendar();
+      updateQuickTaskSpotlight();
+      showToast("Task added to planner & calendar", "✏️");
+    }
+
+    function handlePlannerTodoKey(e) {
+      if (e.key === 'Enter') addPlannerTodo();
+    }
+
+    function getStoredTasks() {
+      return JSON.parse(localStorage.getItem('pastel_tasks') || '[]');
+    }
+
+    function saveTasks(tasks) {
+      localStorage.setItem('pastel_tasks', JSON.stringify(tasks));
+    }
+
+    function toggleTaskComplete(id) {
+      const tasks = getStoredTasks();
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        task.completed = !task.completed;
+        saveTasks(tasks);
+        renderTasks();
+        renderCalendar();
+        updateQuickTaskSpotlight();
+
+        if (task.completed) {
+          playChimeSound(800, 0.15);
+          showToast("Task completed!", "✅");
+        }
+      }
+    }
+
+    function deleteTask(id) {
+      let tasks = getStoredTasks();
+      tasks = tasks.filter(t => t.id !== id);
+      saveTasks(tasks);
+      renderTasks();
+      renderCalendar();
+      updateQuickTaskSpotlight();
+    }
+
+    function clearCompletedTasks() {
+      let tasks = getStoredTasks();
+      tasks = tasks.filter(t => !t.completed);
+      saveTasks(tasks);
+      renderTasks();
+      renderCalendar();
+      updateQuickTaskSpotlight();
+      showToast("Cleared completed tasks", "🧹");
+    }
+
+    function renderTasks() {
+      const tasks = getStoredTasks();
+      const activeList = document.getElementById('active-todo-list');
+      const completedList = document.getElementById('completed-todo-list');
+
+      activeList.innerHTML = '';
+      completedList.innerHTML = '';
+
+      let doneCount = 0;
+
+      tasks.forEach(task => {
+        if (task.completed) doneCount++;
+
+        const li = document.createElement('li');
+        li.className = `glass-card-sm p-3 flex items-center justify-between gap-2 text-xs font-semibold ${task.completed ? 'opacity-60 bg-gray-50/50' : 'hover:bg-white'}`;
+        
+        const priorityBadge = task.priority === 'high' 
+          ? `<span class="w-2.5 h-2.5 rounded-full bg-rose-400" title="High Priority"></span>` 
+          : `<span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>`;
+
+        li.innerHTML = `
+          <div class="flex items-center gap-2.5 flex-1 min-w-0">
+            <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTaskComplete(${task.id})" 
+                   class="w-4 h-4 rounded accent-emerald-500 cursor-pointer">
+            ${priorityBadge}
+            <div class="flex flex-col min-w-0 flex-1">
+              <span class="truncate ${task.completed ? 'line-through text-slate-400' : ''}" style="color: var(--text-main)">${escapeHtml(task.text)}</span>
+              ${task.date ? `<span class="text-[10px] text-slate-400">📅 ${task.date}</span>` : ''}
+            </div>
+          </div>
+          <button onclick="deleteTask(${task.id})" class="text-slate-400 hover:text-rose-500 px-1 py-0.5 font-bold">✕</button>
+        `;
+
+        if (task.completed) {
+          completedList.appendChild(li);
+        } else {
+          activeList.appendChild(li);
+        }
+      });
+
+      document.getElementById('planner-task-stats').textContent = `${doneCount}/${tasks.length} Completed`;
+    }
+
+    function updateQuickTaskSpotlight() {
+      const tasks = getStoredTasks().filter(t => !t.completed);
+      const spotlight = document.getElementById('quick-task-spotlight');
+
+      if (tasks.length > 0) {
+        const priorityTask = tasks.find(t => t.priority === 'high') || tasks[0];
+        spotlight.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="text-base">📌</span>
+            <span class="font-bold text-xs" style="color: var(--text-main)">${escapeHtml(priorityTask.text)}</span>
+          </div>
+          ${priorityTask.date ? `<span class="text-[10px] text-slate-500">📅 Date: ${priorityTask.date}</span>` : ''}
+        `;
+      } else {
+        spotlight.innerHTML = `<span class="text-xs italic" style="color: var(--text-muted)">No active tasks. Time to plan!</span>`;
+      }
+    }
+
+    /* Timetable Renderer */
+    function renderTimetable() {
+      const sleepStartSel = document.getElementById('sleep-start');
+      const sleepEndSel = document.getElementById('sleep-end');
+
+      if (sleepStartSel.children.length === 0) {
+        for (let i = 0; i < 24; i++) {
+          const hourStr = `${i.toString().padStart(2, '0')}:00`;
+          sleepStartSel.innerHTML += `<option value="${i}" ${i === 23 ? 'selected' : ''}>${hourStr}</option>`;
+          sleepEndSel.innerHTML += `<option value="${i}" ${i === 7 ? 'selected' : ''}>${hourStr}</option>`;
+        }
+      }
+
+      const startSleep = parseInt(sleepStartSel.value);
+      const endSleep = parseInt(sleepEndSel.value);
+      const container = document.getElementById('timetable');
+      container.innerHTML = '';
+
+      const savedSchedule = JSON.parse(localStorage.getItem('pastel_schedule') || '{}');
+
+      for (let i = 0; i < 24; i++) {
+        const timeLabel = `${i.toString().padStart(2, '0')}:00`;
+        const isSleep = (startSleep > endSleep) 
+          ? (i >= startSleep || i < endSleep) 
+          : (i >= startSleep && i < endSleep);
+
+        const savedValue = savedSchedule[i] || '';
+
+        const div = document.createElement('div');
+        div.className = `flex items-center gap-2 p-1.5 rounded-xl text-xs font-semibold ${isSleep ? 'bg-slate-100/60 opacity-60' : 'glass-card-sm hover:bg-white'}`;
+        
+        div.innerHTML = `
+          <span class="w-12 text-[11px] font-bold text-slate-500 text-center flex-shrink-0">${timeLabel}</span>
+          <input type="text" value="${isSleep ? '😴 Sleep Block' : escapeHtml(savedValue)}" 
+                 placeholder="${isSleep ? '' : 'Click to plan...'}" 
+                 ${isSleep ? 'disabled' : ''} 
+                 onchange="saveScheduleBlock(${i}, this.value)"
+                 class="flex-1 px-2.5 py-1 rounded-lg bg-transparent border-none outline-none focus:bg-white/80 transition-all text-xs font-medium">
+        `;
+        container.appendChild(div);
+      }
+    }
+
+    function saveScheduleBlock(hour, text) {
+      const savedSchedule = JSON.parse(localStorage.getItem('pastel_schedule') || '{}');
+      savedSchedule[hour] = text;
+      localStorage.setItem('pastel_schedule', JSON.stringify(savedSchedule));
+    }
+
+    function resetTimetable() {
+      localStorage.removeItem('pastel_schedule');
+      renderTimetable();
+      showToast("Time schedule reset", "📅");
+    }
+
+    /* Planner Calendar Engine */
+    function switchPlannerSubTab(tab) {
+      const tasksTab = document.getElementById('planner-tab-tasks');
+      const calTab = document.getElementById('planner-tab-calendar');
+      const btnTasks = document.getElementById('planner-sub-tasks');
+      const btnCal = document.getElementById('planner-sub-calendar');
+
+      if (tab === 'tasks') {
+        tasksTab.classList.remove('hidden');
+        tasksTab.classList.add('grid');
+        calTab.classList.add('hidden');
+        calTab.classList.remove('flex');
+        btnTasks.classList.add('btn-pastel-active');
+        btnCal.classList.remove('btn-pastel-active');
+      } else {
+        tasksTab.classList.add('hidden');
+        tasksTab.classList.remove('grid');
+        calTab.classList.remove('hidden');
+        calTab.classList.add('flex');
+        btnCal.classList.add('btn-pastel-active');
+        btnTasks.classList.remove('btn-pastel-active');
+        renderCalendar();
+      }
+    }
+
+    function changeCalendarMonth(offset) {
+      calendarCurrentDate.setMonth(calendarCurrentDate.getMonth() + offset);
+      renderCalendar();
+    }
+
+    function jumpToTodayCalendar() {
+      calendarCurrentDate = new Date();
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const year = calendarCurrentDate.getFullYear();
+      const month = calendarCurrentDate.getMonth();
+
+      document.getElementById('calendar-month-year').textContent = `${monthNames[month]} ${year}`;
+
+      const firstDayIndex = new Date(year, month, 1).getDay();
+      const totalDays = new Date(year, month + 1, 0).getDate();
+
+      const container = document.getElementById('calendar-days-container');
+      container.innerHTML = '';
+
+      const tasks = getStoredTasks();
+      const todayStr = new Date().toISOString().slice(0, 10);
+
+      // Blank padding cells
+      for (let i = 0; i < firstDayIndex; i++) {
+        const blank = document.createElement('div');
+        blank.className = 'p-2 min-h-[60px] opacity-20';
+        container.appendChild(blank);
+      }
+
+      // Day cells
+      for (let day = 1; day <= totalDays; day++) {
+        const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        const dayTasks = tasks.filter(t => t.date === dateStr);
+        const isToday = dateStr === todayStr;
+
+        const dayCell = document.createElement('div');
+        dayCell.className = `glass-card-sm p-1.5 min-h-[64px] flex flex-col justify-between cursor-pointer hover:bg-white transition-all ${isToday ? 'border-2 border-emerald-500 font-extrabold bg-emerald-50/40' : ''}`;
+        dayCell.onclick = () => selectCalendarDay(dateStr, dayTasks);
+
+        let taskDots = '';
+        if (dayTasks.length > 0) {
+          taskDots = `<div class="flex flex-wrap gap-1 mt-1">` + 
+            dayTasks.slice(0, 3).map(t => `<span class="w-2 h-2 rounded-full ${t.completed ? 'bg-slate-300' : (t.priority === 'high' ? 'bg-rose-400' : 'bg-emerald-400')}"></span>`).join('') +
+            (dayTasks.length > 3 ? `<span class="text-[9px] font-bold text-slate-400">+${dayTasks.length - 3}</span>` : '') +
+            `</div>`;
+        }
+
+        dayCell.innerHTML = `
+          <div class="flex justify-between items-center text-xs font-bold" style="color: var(--text-main)">
+            <span>${day}</span>
+            ${dayTasks.length > 0 ? `<span class="text-[9px] px-1 rounded bg-black/5">${dayTasks.length}</span>` : ''}
+          </div>
+          ${taskDots}
+        `;
+
+        container.appendChild(dayCell);
+      }
+    }
+
+    function selectCalendarDay(dateStr, dayTasks) {
+      const detailsBox = document.getElementById('calendar-day-details');
+      const title = document.getElementById('calendar-selected-date-title');
+      const list = document.getElementById('calendar-selected-tasks-list');
+
+      detailsBox.classList.remove('hidden');
+      detailsBox.classList.add('flex');
+
+      title.textContent = `Tasks for ${dateStr}:`;
+      list.innerHTML = '';
+
+      if (dayTasks.length === 0) {
+        list.innerHTML = `<span class="italic text-slate-400">No tasks scheduled for this date.</span>`;
+      } else {
+        dayTasks.forEach(task => {
+          const div = document.createElement('div');
+          div.className = 'flex items-center gap-2 p-1.5 rounded-lg bg-white/80';
+          div.innerHTML = `
+            <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTaskComplete(${task.id})" class="accent-emerald-500">
+            <span class="${task.completed ? 'line-through text-slate-400' : ''}">${escapeHtml(task.text)}</span>
+          `;
+          list.appendChild(div);
+        });
+      }
+    }
+
+    function closeCalendarDayDetails() {
+      document.getElementById('calendar-day-details').classList.add('hidden');
+    }
+
+    /* Reflection Journal & Canvas Engine */
+    function switchJournalMode(mode) {
+      const textC = document.getElementById('journal-text-container');
+      const drawC = document.getElementById('journal-draw-container');
+      const textTab = document.getElementById('text-tab');
+      const drawTab = document.getElementById('draw-tab');
+
+      if (mode === 'text') {
+        textC.classList.remove('hidden');
+        drawC.classList.add('hidden');
+        textTab.classList.add('btn-pastel-active');
+        drawTab.classList.remove('btn-pastel-active');
+      } else {
+        textC.classList.add('hidden');
+        drawC.classList.remove('hidden');
+        drawTab.classList.add('btn-pastel-active');
+        textTab.classList.remove('btn-pastel-active');
+        setTimeout(resizeCanvas, 50);
+      }
+    }
+
+    function getRandomJournalPrompt() {
+      const prompt = reflectionPrompts[Math.floor(Math.random() * reflectionPrompts.length)];
+      document.getElementById('journal-prompt-text').textContent = `✨ Prompt: "${prompt}"`;
+      document.getElementById('journal-prompt-banner').style.display = 'flex';
+    }
+
+    function saveJournalText() {
+      const text = document.getElementById('journal-text').value;
+      localStorage.setItem('pastel_journal_text', text);
+    }
+
+    function setupCanvasEvents() {
+      if (!canvas) return;
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mouseup', stopDrawing);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseleave', stopDrawing);
+
+      canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        startDrawing(e.touches[0]);
+      }, { passive: false });
+
+      canvas.addEventListener('touchend', stopDrawing);
+      canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        draw(e.touches[0]);
+      }, { passive: false });
+    }
+
+    function resizeCanvas() {
+      const wrapper = document.getElementById('canvas-wrapper');
+      if (!wrapper || wrapper.clientWidth === 0 || !canvas) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      const tempCtx = tempCanvas.getContext('2d');
+      if (canvas.width > 0 && canvas.height > 0) {
+        tempCtx.drawImage(canvas, 0, 0);
+      }
+
+      canvas.width = wrapper.clientWidth * dpr;
+      canvas.height = wrapper.clientHeight * dpr;
+      ctx.scale(dpr, dpr);
+
+      if (tempCanvas.width > 0 && tempCanvas.height > 0) {
+        ctx.drawImage(tempCanvas, 0, 0, wrapper.clientWidth, wrapper.clientHeight);
+      }
+
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+
+    function startDrawing(e) {
+      isDrawing = true;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      if (isEraser) {
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = currentBrushSize * 4;
+      } else {
+        ctx.strokeStyle = currentBrushColor;
+        ctx.lineWidth = currentBrushSize;
+      }
+
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
+
+    function stopDrawing() {
+      if (isDrawing) {
+        isDrawing = false;
+        ctx.closePath();
+        saveCanvasData();
+      }
+    }
+
+    function setBrushColor(color) {
+      isEraser = false;
+      currentBrushColor = color;
+      document.getElementById('eraser-btn').classList.remove('bg-amber-100');
+    }
+
+    function setBrushSize(size) {
+      currentBrushSize = size;
+    }
+
+    function toggleEraser() {
+      isEraser = !isEraser;
+      const btn = document.getElementById('eraser-btn');
+      if (isEraser) {
+        btn.classList.add('bg-amber-100');
+      } else {
+        btn.classList.remove('bg-amber-100');
+      }
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      localStorage.removeItem('pastel_canvas_img');
+      showToast("Canvas cleared", "🧼");
+    }
+
+    function saveCanvasData() {
+      const dataURL = canvas.toDataURL();
+      localStorage.setItem('pastel_canvas_img', dataURL);
+    }
+
+    function downloadCanvas() {
+      const link = document.createElement('a');
+      link.download = `Pathfinder-Sketch-${new Date().toISOString().slice(0,10)}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast("Drawing saved!", "🖼️");
+    }
+
+    /* User Profile System */
+    function setProfileAvatar(emoji) {
+      document.getElementById('profile-avatar-display').textContent = emoji;
+      saveData('profile_avatar', emoji);
+    }
+
+    function updateProfilePreview() {
+      const name = document.getElementById('profile-name-input').value || 'Mindful Scholar';
+      const title = document.getElementById('profile-title-input').value || 'Deep Work Ninja';
+      document.getElementById('profile-name-display').textContent = name;
+      document.getElementById('profile-title-display').textContent = title;
+    }
+
+    function saveUserProfile() {
+      const name = document.getElementById('profile-name-input').value;
+      const title = document.getElementById('profile-title-input').value;
+      const motto = document.getElementById('profile-motto-input').value;
+      const target = document.getElementById('profile-target-sessions').value;
+      const favTag = document.getElementById('profile-fav-tag').value;
+
+      saveData('profile_name', name);
+      saveData('profile_title', title);
+      saveData('profile_motto', motto);
+      saveData('profile_target', target);
+      saveData('profile_fav_tag', favTag);
+
+      showToast("Profile updated successfully!", "👤");
+    }
+
+    /* Web Audio Synthesizer Engine */
+    function initAudioCtx() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playChimeSound(freq = 520, duration = 0.2) {
+      try {
+        initAudioCtx();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playCompletionChime() {
+      try {
+        initAudioCtx();
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          setTimeout(() => playChimeSound(freq, 0.4), idx * 120);
+        });
+      } catch(e) {}
+    }
+
+    function toggleAmbientModal() {
+      const modal = document.getElementById('ambient-modal');
+      modal.classList.toggle('hidden');
+    }
+
+    function quickToggleSound(type) {
+      toggleAmbientSound(type);
+      const btn = document.getElementById(`quick-btn-${type}`);
+      if (ambientNodes[type].active) {
+        btn.classList.add('btn-pastel-active');
+      } else {
+        btn.classList.remove('btn-pastel-active');
+      }
+    }
+
+    function toggleAmbientSound(type) {
+      initAudioCtx();
+      const sound = ambientNodes[type];
+      const btn = document.getElementById(`btn-${type}`);
+
+      if (sound.active) {
+        stopAmbientSound(type);
+        sound.active = false;
+        if (btn) btn.textContent = 'Play';
+        if (btn) btn.classList.remove('btn-pastel-active');
+      } else {
+        const vol = parseFloat(document.getElementById(`vol-${type}`).value);
+        if (type === 'rain') createRainNoise(vol);
+        if (type === 'waves') createWavesNoise(vol);
+        if (type === 'bamboo') createBambooForestSoundscape(vol);
+        if (type === 'lofi') createLockInMusic(vol);
+
+        sound.active = true;
+        if (btn) btn.textContent = 'Stop';
+        if (btn) btn.classList.add('btn-pastel-active');
+      }
+    }
+
+    function stopAmbientSound(type) {
+      const sound = ambientNodes[type];
+      if (sound.source) sound.source.stop();
+      if (sound.noiseSource) sound.noiseSource.stop();
+      if (sound.lfo) sound.lfo.stop();
+      if (sound.chimeTimer) clearInterval(sound.chimeTimer);
+      if (sound.birdTimer) clearInterval(sound.birdTimer);
+      if (sound.chordInterval) clearInterval(sound.chordInterval);
+      if (sound.oscs) {
+        sound.oscs.forEach(o => { try { o.stop(); } catch(e){} });
+        sound.oscs = [];
+      }
+    }
+
+    function updateAmbientVolume(type, val) {
+      const sound = ambientNodes[type];
+      if (sound.active && sound.gainNode) {
+        sound.gainNode.gain.setValueAtTime(parseFloat(val), audioCtx.currentTime);
+      }
+    }
+
+    /* Soft Rain */
+    function createRainNoise(volume) {
+      const bufferSize = audioCtx.sampleRate * 2;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+      noise.loop = true;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.value = 1000;
+
+      const gain = audioCtx.createGain();
+      gain.gain.value = volume;
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      noise.start();
+      ambientNodes.rain.source = noise;
+      ambientNodes.rain.gainNode = gain;
+    }
+
+    /* Ocean Waves */
+    function createWavesNoise(volume) {
+      const bufferSize = audioCtx.sampleRate * 3;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+      noise.loop = true;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.value = 400;
+
+      const gain = audioCtx.createGain();
+      gain.gain.value = volume;
+
+      const lfo = audioCtx.createOscillator();
+      lfo.frequency.value = 0.12;
+      const lfoGain = audioCtx.createGain();
+      lfoGain.gain.value = volume * 0.5;
+
+      lfo.connect(lfoGain);
+      lfoGain.connect(gain.gain);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      noise.start();
+      lfo.start();
+
+      ambientNodes.waves.source = noise;
+      ambientNodes.waves.lfo = lfo;
+      ambientNodes.waves.gainNode = gain;
+    }
+
+    /* Bamboo Forest (Wind + Leaves + Wind Chimes + Quiet Occasional Bird Peep) */
+    function createBambooForestSoundscape(volume) {
+      // Wind & Leaf Rustle
+      const bufferSize = audioCtx.sampleRate * 3;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+      noise.loop = true;
+
+      const bandpass = audioCtx.createBiquadFilter();
+      bandpass.type = 'bandpass';
+      bandpass.frequency.value = 800;
+      bandpass.Q.value = 1.2;
+
+      const gain = audioCtx.createGain();
+      gain.gain.value = volume * 0.6;
+
+      const lfo = audioCtx.createOscillator();
+      lfo.frequency.value = 0.2;
+      const lfoGain = audioCtx.createGain();
+      lfoGain.gain.value = 300;
+      lfo.connect(lfoGain);
+      lfoGain.connect(bandpass.frequency);
+
+      noise.connect(bandpass);
+      bandpass.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      noise.start();
+      lfo.start();
+
+      ambientNodes.bamboo.noiseSource = noise;
+      ambientNodes.bamboo.gainNode = gain;
+
+      // Wind Chimes (Occasional random twinkle)
+      ambientNodes.bamboo.chimeTimer = setInterval(() => {
+        if (!ambientNodes.bamboo.active) return;
+        if (Math.random() < 0.6) playWindChimeSparkle();
+      }, 4500);
+
+      // Quiet Bird Peep (Occasional infrequent gentle chirp)
+      ambientNodes.bamboo.birdTimer = setInterval(() => {
+        if (!ambientNodes.bamboo.active) return;
+        if (Math.random() < 0.4) playQuietBirdPeep();
+      }, 14000);
+    }
+
+    function playWindChimeSparkle() {
+      try {
+        const chimeFreqs = [2093, 2349, 2637, 3135, 3520];
+        const freq = chimeFreqs[Math.floor(Math.random() * chimeFreqs.length)];
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+
+        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 1.8);
+      } catch(e) {}
+    }
+
+    function playQuietBirdPeep() {
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        const now = audioCtx.currentTime;
+        osc.type = 'sine';
+        
+        // Gentle bird chirp frequency sweep
+        osc.frequency.setValueAtTime(2800, now);
+        osc.frequency.exponentialRampToValueAtTime(3400, now + 0.08);
+        osc.frequency.exponentialRampToValueAtTime(3000, now + 0.15);
+
+        gain.gain.setValueAtTime(0.015, now);
+        gain.gain.linearRampToValueAtTime(0.0001, now + 0.16);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.16);
+      } catch(e) {}
+    }
+
+    /* Relaxing Lock-In Ambient Chords (No binaural beats, pure calm pads) */
+    function createLockInMusic(volume) {
+      const masterGain = audioCtx.createGain();
+      masterGain.gain.value = volume * 0.5;
+      masterGain.connect(audioCtx.destination);
+
+      const chordProgressions = [
+        [261.63, 329.63, 392.00, 493.88], // Cmaj7
+        [220.00, 261.63, 329.63, 392.00], // Am7
+        [174.61, 220.00, 261.63, 349.23], // Fmaj7
+        [196.00, 246.94, 293.66, 392.00]  // G
+      ];
+
+      let chordIdx = 0;
+
+      function playCurrentChord() {
+        if (!ambientNodes.lofi.active) return;
+
+        // Stop existing chord oscillators
+        if (ambientNodes.lofi.oscs) {
+          ambientNodes.lofi.oscs.forEach(o => { try { o.stop(); } catch(e){} });
+          ambientNodes.lofi.oscs = [];
+        }
+
+        const freqs = chordProgressions[chordIdx];
+        chordIdx = (chordIdx + 1) % chordProgressions.length;
+
+        freqs.forEach(f => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = 'triangle';
+          osc.frequency.value = f;
+
+          const now = audioCtx.currentTime;
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(0.08, now + 2);
+          gain.gain.linearRampToValueAtTime(0.001, now + 5.8);
+
+          osc.connect(gain);
+          gain.connect(masterGain);
+
+          osc.start(now);
+          osc.stop(now + 6);
+
+          ambientNodes.lofi.oscs.push(osc);
+        });
+      }
+
+      playCurrentChord();
+      ambientNodes.lofi.chordInterval = setInterval(playCurrentChord, 6000);
+      ambientNodes.lofi.gainNode = masterGain;
+    }
+
+    /* Theme Management linked with Profile Aesthetics */
+    function setTheme(themeKey, themeName, themeIcon) {
+      document.body.setAttribute('data-theme', themeKey);
+      saveData('pastel_theme', themeKey);
+      saveData('pastel_theme_name', themeName);
+      saveData('pastel_theme_icon', themeIcon);
+
+      updateProfileThemeAesthetics(themeKey, themeName, themeIcon);
+      showToast(`Switched theme to ${themeName}`, themeIcon);
+    }
+
+    function updateProfileThemeAesthetics(themeKey, name, icon) {
+      const banner = document.getElementById('profile-theme-banner');
+      const nameEl = document.getElementById('profile-theme-name');
+      const iconEl = document.getElementById('profile-theme-icon');
+      const badgesContainer = document.getElementById('profile-theme-badges');
+
+      if (nameEl) nameEl.textContent = name || "Forest & Lush Greenery";
+      if (iconEl) iconEl.textContent = icon || "🌲";
+
+      if (badgesContainer) {
+        if (themeKey === 'ocean') {
+          badgesContainer.innerHTML = `
+            <span class="px-3 py-1 rounded-lg bg-sky-100 text-sky-800 font-bold">🌊 Deep Ocean Voyager</span>
+            <span class="px-3 py-1 rounded-lg bg-blue-100 text-blue-800 font-bold">🐬 Tidal Flow</span>
+            <span class="px-3 py-1 rounded-lg bg-teal-100 text-teal-800 font-bold">🐚 Sea Serenity</span>
+          `;
+        } else if (themeKey === 'peach') {
+          badgesContainer.innerHTML = `
+            <span class="px-3 py-1 rounded-lg bg-rose-100 text-rose-800 font-bold">🍑 Sweet Orchard</span>
+            <span class="px-3 py-1 rounded-lg bg-orange-100 text-orange-800 font-bold">🌸 Cherry Blossom</span>
+            <span class="px-3 py-1 rounded-lg bg-amber-100 text-amber-800 font-bold">✨ Soft Glow</span>
+          `;
+        } else if (themeKey === 'galaxy') {
+          badgesContainer.innerHTML = `
+            <span class="px-3 py-1 rounded-lg bg-purple-900/60 text-purple-200 font-bold">🌌 Cosmic Stargazer</span>
+            <span class="px-3 py-1 rounded-lg bg-indigo-900/60 text-indigo-200 font-bold">🪐 Galactic Focus</span>
+            <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-200 font-bold">✨ Nebula Explorer</span>
+          `;
+        } else {
+          badgesContainer.innerHTML = `
+            <span class="px-3 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-bold">🌲 Forest Keeper</span>
+            <span class="px-3 py-1 rounded-lg bg-green-100 text-green-800 font-bold">🎋 Bamboo Grove</span>
+            <span class="px-3 py-1 rounded-lg bg-lime-100 text-lime-800 font-bold">🌱 Evergreen Mind</span>
+          `;
+        }
+      }
+    }
+
+    function saveData(key, val) {
+      localStorage.setItem(`pastel_${key}`, val);
+    }
+
+    function resetAllAppData() {
+      localStorage.clear();
+      showToast("All application data reset!", "🧹");
+      setTimeout(() => location.reload(), 1000);
+    }
+
+    function loadStoredData() {
+      const savedTheme = localStorage.getItem('pastel_pastel_theme') || 'sage';
+      const savedThemeName = localStorage.getItem('pastel_pastel_theme_name') || 'Forest & Lush Greenery';
+      const savedThemeIcon = localStorage.getItem('pastel_pastel_theme_icon') || '🌲';
+
+      document.body.setAttribute('data-theme', savedTheme);
+      updateProfileThemeAesthetics(savedTheme, savedThemeName, savedThemeIcon);
+
+      const streak = localStorage.getItem('pastel_focus_streak') || 0;
+      todaySessionsCount = parseInt(streak);
+      document.getElementById('header-streak-count').textContent = `${todaySessionsCount} Sessions`;
+
+      const slay = localStorage.getItem('pastel_procrastination_slay') || 0;
+      procrastinationSlayCount = parseInt(slay);
+      document.getElementById('procrastination-slay-count').textContent = procrastinationSlayCount;
+
+      renderTasks();
+
+      const name = localStorage.getItem('pastel_profile_name');
+      if (name) document.getElementById('profile-name-input').value = name;
+      
+      const title = localStorage.getItem('pastel_profile_title');
+      if (title) document.getElementById('profile-title-input').value = title;
+
+      const avatar = localStorage.getItem('pastel_profile_avatar');
+      if (avatar) document.getElementById('profile-avatar-display').textContent = avatar;
+
+      updateProfilePreview();
+
+      const journalText = localStorage.getItem('pastel_journal_text');
+      if (journalText) {
+        document.getElementById('journal-text').value = journalText;
+      }
+
+      const canvasData = localStorage.getItem('pastel_canvas_img');
+      if (canvasData && canvas) {
+        const img = new Image();
+        img.onload = () => {
+          setTimeout(() => {
+            resizeCanvas();
+            ctx.drawImage(img, 0, 0);
+          }, 100);
+        };
+        img.src = canvasData;
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+  </script>
+</body>
+</html>
